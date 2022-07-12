@@ -9,5 +9,10 @@
   },
   "devDependencies": {
     "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "alpinejs": "^3.10.2",
+    "cors": "^2.8.5",
+    "flatpickr": "^4.6.13"
   }
 }
