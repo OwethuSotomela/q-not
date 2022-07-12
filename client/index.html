@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <title>Q-Not</title>
 </head>
 
@@ -13,11 +15,56 @@
   <div x-data="isOpen" class="container">
     <div class="row">
       <div class="col-12">
-        <h1>No Queue This Side</h1>
+        <center>
+          <h1>No Queue This Side</h1>
+        </center>
       </div>
+
+      <div x-show="appState == 'SIGNUP'" class="signup">
+        <center>
+          <h4>Signup</h4>
+        </center>
+
+        <label>Fullname</label>
+        <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
+        <label>Username</label>
+        <input type="text" x-model="user.username" placeholder="Enter your lastname">
+        <br>
+        <label>Password</label>
+        <input type="text" x-model="user.password" placeholder="Create a username">
+        <label>Card Number</label>
+        <input type="text" x-model="user.card_number" placeholder="Enter your password">
+        <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
+        <br>
+        <a href="#" @click="gotToLogin()">Already have an account? Login</a>
+        <hr>
+      </div>
+
+      <div x-show="appState == 'LOGIN'" class="login">
+        <center>
+          <h4>Login</h4>
+        </center>
+        <label>Username</label>
+        <input type="text" x-model="logUser.username" placeholder="Enter your username">
+        <label>Password</label>
+        <input type="password" x-model="logUser.password" placeholder="Enter your password">
+        <button @click="login()" class="btn btn-outline-success">Login</button>
+        <br>
+        <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
+        <hr>
+      </div>
+      <div x-show="appState == 'HOME'" class="vh-100">
+        <div >
+          <input class="form-control" type="datetime-local" placeholder="Select DateTime">
+        </div>
+      </div>
+
     </div>
   </div>
-  <script type="module" src="/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  
+  <script type="module" src="./main.js"></script>
 </body>
 
 </html>
