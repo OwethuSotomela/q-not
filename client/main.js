@@ -5,6 +5,8 @@ import EQueue from './noQueue';
 
 window.Alpine = Alpine
 
+console.log(EQueue);
+
 Alpine.data('isOpen', EQueue);
 
 Alpine.start()

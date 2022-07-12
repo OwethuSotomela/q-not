@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const appState = {
-    Login: 'LOGIN',
+    Login: 'LOGIN', 
     Signup: 'SIGNUP',
     Home: 'HOME',
     Playlist: 'PLAYLIST'

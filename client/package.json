@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "alpinejs": "^3.10.2",
+    "axios": "^0.27.2",
     "cors": "^2.8.5",
     "flatpickr": "^4.6.13"
   }
