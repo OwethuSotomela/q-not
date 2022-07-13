@@ -78,5 +78,33 @@ module.exports = function (app, db) {
         }
     })
 
+    app.post('/api/book/:dateAndTimeStr', async function (req, res) {
+        try {
+            const { username } = req.body
+
+            const { dateAndTimeStr } = req.params;
+
+            const user = await db.oneOrNone(`SELECT * FROM patients WHERE username = $1`, [username])
+
+            if (!user) {
+                throw Error('No user')
+            } else {
+
+                await db.none(`INSERT INTO appointments (dateAndTime, patients_id) VALUES ($1, $2)`, [dateAndTimeStr, user.id])
+
+                res.status(200).json({
+                    message: 'A movie added into the playlist',
+                    user
+                })
+            }
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
 }
 
