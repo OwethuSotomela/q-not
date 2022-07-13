@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS;
+DROP TABLE IF EXISTS patients CASCADE;
 CREATE TABLE patients(
     id SERIAL NOT NULL PRIMARY KEY,
     fullname VARCHAR NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE patients(
     card_number VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS;
+DROP TABLE IF EXISTS admin CASCADE;
 CREATE TABLE admin(
     id SERIAL NOT NULL PRIMARY KEY,
     fullname VARCHAR NOT NULL,
@@ -15,11 +15,10 @@ CREATE TABLE admin(
     password varchar(255) NOT NULL
 );
 
-DROP TABLE IF EXISTS;
+DROP TABLE IF EXISTS appointments CASCADE;
 CREATE TABLE appointments(
     id SERIAL NOT NULL PRIMARY KEY,
-    date VARCHAR NOT NULL,
-    time VARCHAR NOT NULL,
+    dateAndTime VARCHAR NOT NULL,
     patients_id int,
     FOREIGN KEY (patients_id) REFERENCES patients(id)
 );
