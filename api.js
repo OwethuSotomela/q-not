@@ -12,9 +12,9 @@ module.exports = function (app, db) {
 
     app.post('/api/signup', async function (req, res) {
         try {
-            const { fullname, username, password, card_number } = req.body;
+            const { fullname, username, password, role,  id_number, contact_number} = req.body;
 
-            console.log({ fullname, username, password, card_number });
+            console.log({ fullname, username, password, role, id_number, contact_number });
 
             console.log({ username });
 
@@ -26,7 +26,7 @@ module.exports = function (app, db) {
                 throw new Error("Password should be entered")
             }
 
-            var newUser = await db.oneOrNone("SELECT * FROM patients WHERE username = $1", [username])
+            var newUser = await db.oneOrNone("SELECT * FROM users WHERE username = $1", [username])
 
             if (newUser !== null) {
                 throw new Error('User already exist!')
@@ -34,7 +34,7 @@ module.exports = function (app, db) {
 
             const encrypted = await bcrypt.hash(password, 10)
 
-            await db.none(`INSERT INTO patients (fullname, username, password, card_number) VALUES ($1, $2, $3, $4)`, [fullname, username, encrypted, card_number]);
+            await db.none(`INSERT INTO users (fullname, username, password, role, id_number, contact_number) VALUES ($1, $2, $3, $4, $5, $6)`, [fullname, username, encrypted, role, id_number, contact_number]);
             res.status(200).json({
                 message: 'New user successfully registered'
             })
@@ -52,7 +52,7 @@ module.exports = function (app, db) {
         try {
             const { username, password } = req.body;
 
-            const user = await db.oneOrNone(`SELECT * FROM patients WHERE username = $1`, [username]);
+            const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username]);
 
             if (!user) {
                 throw Error('User does not exist! Register new account')
@@ -78,22 +78,27 @@ module.exports = function (app, db) {
         }
     })
 
-    app.post('/api/book/:dateAndTimeStr', async function (req, res) {
+    app.post('/api/book/:bookByDay', async function (req, res) {
         try {
-            const { username } = req.body
+            const { username } = req.body;
+            console.log({username})
 
-            const { dateAndTimeStr } = req.params;
+            const bookByDay  = req.params;
+            console.log(bookByDay)
 
-            const user = await db.oneOrNone(`SELECT * FROM patients WHERE username = $1`, [username])
+            const  description  = req.body;
+            console.log(description)
 
+            const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
+            console.log({ user })
             if (!user) {
                 throw Error('No user')
             } else {
 
-                await db.none(`INSERT INTO appointments (dateAndTime, patients_id) VALUES ($1, $2)`, [dateAndTimeStr, user.id])
+                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description])
 
                 res.status(200).json({
-                    message: 'A movie added into the playlist',
+                    message: 'A booking has been made',
                     user
                 })
             }
