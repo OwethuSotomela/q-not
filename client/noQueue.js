@@ -5,11 +5,12 @@ const appState = {
     Signup: 'SIGNUP',
     Home: 'HOME'
 }
+
 export default function EQueue() {
     return {
+        booking: [],
         appState: 'HOME',
         init() {
-
             this.callFlatPicker()
         },
         callFlatPicker() {
@@ -25,13 +26,18 @@ export default function EQueue() {
                 altFormat: "F j, Y (h:S K)",
                 disable: ["2022-07-30", "2022-07-21", "2022-08-08", new Date(2025, 4, 9)],
                 onChange(selectedDates, dateAndTimeStr, instance) {
-                    console.log('on change')
 
                     console.log({ selectedDates, dateAndTimeStr, instance }, 'on change')
 
                     instance.config.disable.push(selectedDates[0])
 
+                    this.booking = instance.selectedDates
+                    console.log(this.booking)
+
+                    localStorage.setItem('Booking', this.booking);
+
                     console.log(instance.config.disable);
+
                 },
             })
         },
@@ -40,15 +46,16 @@ export default function EQueue() {
             fullname: '',
             username: '',
             password: '',
-            card_number: ''
+            role: '',
+            id_number: '',
+            contact_number: ''
         },
         logUser: {
             username: '',
             password: ''
         },
-        patients: [],
         token: '',
-        ourDayTime: '',
+        description: null,
         gotToSignUp() {
             this.appState = appState.Signup;
         },
@@ -102,47 +109,18 @@ export default function EQueue() {
 
                 });
         },
-        selectDayTime() {
-            // alert('Time')
-            return {
-                autoSelect() {
-                    alert('Hi, 360-Degrees')
-                    const config =
 
-                    {
-                        enableTime: true,
-                        inline: true,
-                        dateFormat: "Y-m-d H:i",
-                        weekNumbers: true,
-                        allowInput: true,
-                        time_24hr: true,
-                        minTime: "09:00",
-                        maxTime: "16:00",
-                        altFormat: "F j, Y (h:S K)",
-                        disable: ["2022-07-30", "2022-07-21", "2022-08-08", new Date(2025, 4, 9)],
-                        onChange(selectedDates, dateAndTimeStr, instance) {
-                            console.log('on change')
-
-                            console.log({ selectedDates, dateAndTimeStr, instance }, 'on change')
-
-                            instance.config.disable.push(selectedDates[0])
-
-                            console.log(instance.config.disable);
-                        },
-                    }
-                    flatpickr(".flatpickr", config)
-                }
-            }
-        },
-
-        makeAnAppo(day) {
-            alert(day)
+        makeAnAppo() {
             try {
-                alert(day)
+                const appoReason = this.description;
+                const bookedDay  = this.Booking ? this.Booking : localStorage.getItem('Booking')
+
+                alert( bookedDay )
+                alert( appoReason )
 
                 const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
                 axios
-                    .post(`http://localhost:5050/api/book/${day.dateAndTimeStr}`, { username })
+                    .post(`http://localhost:5050/api/book/${bookedDay}`, { username, appoReason})
                     .then(result => result.data)
                     .then((data) => {
                         console.log(data)
