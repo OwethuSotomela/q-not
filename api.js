@@ -125,15 +125,9 @@ module.exports = function (app, db) {
             const bookingByIds = await db.manyOrNone(`SELECT * FROM appointments WHERE users_id = $1`, [user.id]);
             console.log(bookingByIds)
 
-            // const moviesPromises = movieIds.map(async (movie) => {
-            //     return await getMovieById(movie.movie_list)
-            // })
-
-            // const movies = await Promise.all(moviesPromises)
-
             res.json({
                 user: user,
-                data: appointments,
+                data: bookingByIds,
             })
         } catch (e) {
             console.log(e)
