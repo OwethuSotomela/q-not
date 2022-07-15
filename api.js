@@ -83,10 +83,10 @@ module.exports = function (app, db) {
             const { username } = req.body;
             console.log({username})
 
-            const bookByDay  = req.params;
+            const { bookByDay }  = req.params;
             console.log(bookByDay)
 
-            const  description  = req.body;
+            const description = req.body;
             console.log(description)
 
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
@@ -95,7 +95,7 @@ module.exports = function (app, db) {
                 throw Error('No user')
             } else {
 
-                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description])
+                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
 
                 res.status(200).json({
                     message: 'A booking has been made',
@@ -107,6 +107,38 @@ module.exports = function (app, db) {
             console.error(error.message);
             res.status(500).json({
                 error: error.message
+            })
+        }
+    })
+
+    app.get('/api/booking/:username', async function (req, res) {
+        try {
+
+            const { username } = req.params
+
+            const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
+
+            if (!user) {
+                console.log('No user here')
+            }
+
+            const bookingByIds = await db.manyOrNone(`SELECT * FROM appointments WHERE users_id = $1`, [user.id]);
+            console.log(bookingByIds)
+
+            // const moviesPromises = movieIds.map(async (movie) => {
+            //     return await getMovieById(movie.movie_list)
+            // })
+
+            // const movies = await Promise.all(moviesPromises)
+
+            res.json({
+                user: user,
+                data: appointments,
+            })
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({
+                error: e.message
             })
         }
     })
