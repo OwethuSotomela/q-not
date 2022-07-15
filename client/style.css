@@ -9,9 +9,10 @@
 .homePage{
   margin-top: 2em;
 }
-/* .col-12{
+.col-12{
   text-align: center;
-} */
+  margin: 3em;
+}
 /* .flatpickr{ */
   /* display: flex; */
   /* justify-content: center; */

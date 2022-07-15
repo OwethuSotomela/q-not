@@ -113,7 +113,7 @@ export default function EQueue() {
         makeAnAppo() {
             try {
                 const appoReason = this.description;
-                const bookedDay  = this.Booking ? this.Booking : localStorage.getItem('Booking')
+                const bookedDay = this.Booking ? this.Booking : localStorage.getItem('Booking')
 
                 alert( bookedDay )
                 alert( appoReason )
