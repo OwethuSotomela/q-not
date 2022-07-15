@@ -15,13 +15,9 @@
 </head>
 
 <body>
-  <!-- <div id="app"></div> -->
   <div x-data="isOpen" class="container">
     <div class="row">
       <div class="col-12">
-        <!-- <center>
-          <h1>No Queue This Side</h1>
-        </center> -->
 
         <div x-show="appState == 'SIGNUP'" class="signup">
           <center>
@@ -64,28 +60,84 @@
 
         <div x-show="appState == 'HOME'" class="homePage">
 
-          <div class="flatpickr">
 
-            <label>Reason</label>
+          <div class="card text-center">
+            <div class="card-header">
+              <label>Book Appointment</label>
+            </div>
+            <h6 x-show="loading" align="center">Loading...</h6>
+            <div x-show="!loading" class="card-body">
+              <div class="flatpickr">
+                <label>Reason</label>
 
-            <input type="text" x-model="description" placeholder="Enter a reason for your Appointment" size="40">
-            <br>
-            <br>
-            <input type="text" placeholder="Select Date.." data-input>
-            <!-- input is mandatory -->
-            <a class="input-button" title="toggle" data-toggle>
-              <i class="icon-calendar"></i>
-            </a>
+                <input type="text" x-model="description" placeholder="Enter a reason for your Appointment" size="40">
+                <br>
+                <br>
+                <label>Select date and time</label>
+                <a class="input-button" title="toggle" data-toggle>
+                  <i class="icon-calendar"></i>
+                </a>
 
-            <a class="input-button" title="clear" data-clear>
-              <i class="icon-close"></i>
-            </a>
+                <a class="input-button" title="clear" data-clear>
+                  <i class="icon-close"></i>
+                </a>
+
+              </div>
+            </div>
+
+            <div class="card-footer text-muted">
+              <a href="#" @click="goToConfirmation()">Get your booking confirmation</a>
+            </div>
+
           </div>
 
+          <!-- end  -->
+
           <br>
-          <button @click="makeAnAppo()" class="btn btn-outline-secondary">Book an Appointment</button>
+          <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
 
         </div>
+
+        <div x-show="appState == 'CONFIRMATION'" class="confirmation">
+
+          <div class="card text-center">
+
+            <div class="card-header">
+              <label>Your Appointments</label>
+            </div>
+
+            <div class="card-body">
+              <a href="#" @click="gettingUserBooking()">View Confirmation</a>
+
+              <template x-for="slot in myBooking">
+                <div>
+                  <table>
+                    <tr>
+                      <th>Description</th>
+                      <th>Date & Time</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h6 x-text="slot.description"></h6>
+                      </td>
+                      <td>
+                        <h6 x-text="slot.slot"></h6>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </template>
+
+            </div>
+
+            <div class="card-footer text-muted">
+              <a href="#" @click="goToMakeAnAppointment()">Go to booking an Appointment</a>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
     </div>
 

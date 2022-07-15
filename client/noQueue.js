@@ -3,17 +3,19 @@ import axios from 'axios';
 const appState = {
     Login: 'LOGIN',
     Signup: 'SIGNUP',
-    Home: 'HOME'
+    Home: 'HOME',
+    Confirmation: 'CONFIRMATION'
 }
 
 export default function EQueue() {
     return {
         booking: [],
-        appState: 'HOME',
+        appState: 'LOGIN',
         init() {
             this.callFlatPicker()
         },
         callFlatPicker() {
+            // alert('Ongi123')
             flatpickr(".flatpickr", {
                 enableTime: true,
                 inline: true,
@@ -51,11 +53,13 @@ export default function EQueue() {
             contact_number: ''
         },
         logUser: {
-            username: '',
-            password: ''
+            username: 'OwSoto',
+            password: 'owe123'
         },
         token: '',
+        loading: true,
         description: null,
+        myBooking: [],
         gotToSignUp() {
             this.appState = appState.Signup;
         },
@@ -87,20 +91,27 @@ export default function EQueue() {
                 .then((myApp) => {
                     console.log(myApp.data)
                     var { access_token, user } = myApp.data;
-
+                    
                     if (!access_token) {
                         return false
                     }
-
+                    
                     this.appState = appState.Home
                     this.isOpen = true;
                     this.user = user;
                     localStorage.setItem('user', JSON.stringify(user));
                     this.token = access_token
                     localStorage.setItem('access_token', this.token);
+
+                    setTimeout(()=> {
+                    this.loading = false;
+
+                    },1990)
                     setTimeout(() => {
+                        this.callFlatPicker()
+
                         this.token = ''
-                    }, 3000);
+                    }, 2000);
                     return true;
                 })
                 .catch((err) => {
@@ -129,5 +140,30 @@ export default function EQueue() {
                 alert(err.message);
             }
         },
+        gettingUserBooking() {
+            const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
+            axios
+                .get(`http://localhost:5050/api/booking/${username}`)
+                .then(r => r.data)
+                .then((clinicDate) => {
+
+                    this.myBooking = clinicDate.data
+                    console.log(this.myBooking)
+                    this.user = clinicDate.user;
+                    console.log(this.user)
+
+
+                    localStorage.setItem('user', JSON.stringify(this.user));
+                }).catch(e => {
+                    console.log(e);
+                    // alert('Error')
+                })
+        },
+        goToConfirmation(){
+            this.appState = appState.Confirmation
+        },
+        goToMakeAnAppointment(){
+            this.appState = appState.Home
+        }
     }
 }
