@@ -52,7 +52,8 @@
           <input type="text" x-model="logUser.username" placeholder="Enter your username">
           <label>Password</label>
           <input type="password" x-model="logUser.password" placeholder="Enter your password">
-          <button @click="login()" class="btn btn-outline-success">Login</button>
+          <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
+          <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>
           <br>
           <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
           <hr>
@@ -60,14 +61,13 @@
 
         <div x-show="appState == 'HOME'" class="homePage">
 
-
           <div class="card text-center">
             <div class="card-header">
               <label>Book Appointment</label>
             </div>
             <h6 x-show="loading" align="center">Loading...</h6>
             <div x-show="!loading" class="card-body">
-              <div class="flatpickr">
+              <div class="flatpickr" align="center">
                 <label>Reason</label>
 
                 <input type="text" x-model="description" placeholder="Enter a reason for your Appointment" size="40">
@@ -90,8 +90,6 @@
             </div>
 
           </div>
-
-          <!-- end  -->
 
           <br>
           <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
@@ -131,11 +129,49 @@
             </div>
 
             <div class="card-footer text-muted">
-              <a href="#" @click="goToMakeAnAppointment()">Go to booking an Appointment</a>
+              <a href="#" @click="goToMakeAnAppointment()">Go back to booking an Appointment</a>
             </div>
 
           </div>
 
+        </div>
+
+        <!-- Ace  -->
+        <div x-show="appState == 'ADMINISTRATOR'" class="manage">
+          <div class="card text-center">
+            <div class="card-header">
+              <label>Confirm Appointments</label>
+            </div>
+
+            <div class="card-body">
+              <button @click="confirmBookings()" class="btn btn-outline-secondary">Confirm Bookings</button>
+
+              <template x-for="slot in myBooking">
+                <div>
+                  <table>
+                    <tr>
+                      <th>Description</th>
+                      <th>Date & Time</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h6 x-text="slot.description"></h6>
+                      </td>
+                      <td>
+                        <h6 x-text="slot.slot"></h6>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </template>
+              
+            </div>
+
+            <div class="card-footer text-muted">
+              <a href="#" @click="goToLogin()">Go back to Login</a>
+            </div>
+
+          </div>
         </div>
 
       </div>

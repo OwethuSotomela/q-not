@@ -1,10 +1,15 @@
 import axios from 'axios';
 
+// const URL_BASE = import.meta.env.VITE_SERVER_URL;
+const URL_Heroku = 'https://q-not-360-degrees.herokuapp.com';
+
 const appState = {
     Login: 'LOGIN',
     Signup: 'SIGNUP',
     Home: 'HOME',
-    Confirmation: 'CONFIRMATION'
+    AdminHome: 'ADMINISTRATOR',
+    Confirmation: 'CONFIRMATION',
+    Manage: 'MANAGE'
 }
 
 export default function EQueue() {
@@ -15,7 +20,6 @@ export default function EQueue() {
             this.callFlatPicker()
         },
         callFlatPicker() {
-            // alert('Ongi123')
             flatpickr(".flatpickr", {
                 enableTime: true,
                 inline: true,
@@ -73,7 +77,7 @@ export default function EQueue() {
                 const signupUser = this.user
                 console.log({ signupUser: this.user });
                 axios
-                    .post(`http://localhost:5050/api/signup`, signupUser)
+                    .post(`${URL_Heroku}/api/signup`, signupUser)
                     .then((myApp) => {
                         console.log(myApp.data)
                     }).catch(err => {
@@ -87,7 +91,7 @@ export default function EQueue() {
         login() {
             const loginUser = this.logUser;
             axios
-                .post(`http://localhost:5050/api/login`, loginUser)
+                .post(`${URL_Heroku}/api/login`, loginUser)
                 .then((myApp) => {
                     console.log(myApp.data)
                     var { access_token, user } = myApp.data;
@@ -120,6 +124,35 @@ export default function EQueue() {
 
                 });
         },
+        // Ace 
+        loginAdmin() {
+            const loginUser = this.logUser;
+            axios
+                .post(`${URL_Heroku}/api/login`, loginUser)
+                .then((myApp) => {
+                    console.log(myApp.data)
+                    var { access_token, user } = myApp.data;
+                    
+                    if (!access_token) {
+                        return false
+                    }
+                    
+                    this.appState = appState.AdminHome
+                    this.isOpen = true;
+                    this.user = user;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    this.token = access_token
+                    localStorage.setItem('access_token', this.token);
+
+                    return true;
+                })
+                .catch((err) => {
+                    console.log(err)
+                    // console.log(err.response.data.message)
+
+                });
+        },
+        // end 
 
         makeAnAppo() {
             try {
@@ -131,7 +164,7 @@ export default function EQueue() {
 
                 const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
                 axios
-                    .post(`http://localhost:5050/api/book/${bookedDay}`, { username, appoReason})
+                    .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason})
                     .then(result => result.data)
                     .then((data) => {
                         console.log(data)
@@ -143,7 +176,7 @@ export default function EQueue() {
         gettingUserBooking() {
             const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
             axios
-                .get(`http://localhost:5050/api/booking/${username}`)
+                .get(`${URL_Heroku}/api/booking/${username}`)
                 .then(r => r.data)
                 .then((clinicDate) => {
 
@@ -164,6 +197,12 @@ export default function EQueue() {
         },
         goToMakeAnAppointment(){
             this.appState = appState.Home
+        },
+        goToLogin(){
+            this.appState = appState.Login
+        },
+        confirmBookings(){
+            alert('Hi, All. Bye-All See you Monday')
         }
     }
 }
