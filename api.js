@@ -137,5 +137,22 @@ module.exports = function (app, db) {
         }
     })
 
+    app.get('/api/booking', async function (req, res) {
+        try {
+
+            const bookingBy = await db.manyOrNone(`SELECT * FROM appointments`);
+            console.log(bookingBy)
+
+            res.json({
+                data: bookingBy,
+            })
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({
+                error: e.message
+            })
+        }
+    })
+
 }
 
