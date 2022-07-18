@@ -18,8 +18,12 @@
   <div x-data="isOpen" class="container">
     <div class="row">
       <div class="col-12">
+        <div class="col-12">
+          <h1>Q-Not</h1>
+        </div>
 
         <div x-show="appState == 'SIGNUP'" class="signup">
+          <span x-text="feedback" class="feedback">Feedback</span>
           <center>
             <h4>Signup</h4>
           </center>
@@ -83,17 +87,19 @@
                 </a>
 
               </div>
+              <br>
+
+              <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
+
             </div>
 
             <div class="card-footer text-muted">
+              <a href="#" @click="goToLogin()">Go back to Login</a>
+              <br>
               <a href="#" @click="goToConfirmation()">Get your booking confirmation</a>
             </div>
 
           </div>
-
-          <br>
-          <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
-
         </div>
 
         <div x-show="appState == 'CONFIRMATION'" class="confirmation">
@@ -105,32 +111,33 @@
             </div>
 
             <div class="card-body">
-              <a href="#" @click="gettingUserBooking()">View Confirmation</a>
+              <!-- <a href="#" @click="gettingUserBooking()">View Confirmation</a> -->
 
-              <template x-for="slot in myBooking">
-                <div>
-                  <table>
-                    <tr>
-                      <th>Description</th>
-                      <th>Date & Time</th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h6 x-text="slot.description"></h6>
-                      </td>
-                      <td>
-                        <h6 x-text="slot.slot"></h6>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </template>
+              <table>
+                <tr>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                </tr>
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+
 
             </div>
 
             <div class="card-footer text-muted">
               <a href="#" @click="goToMakeAnAppointment()">Go back to booking an Appointment</a>
             </div>
+
+            <button @click="logout()" class="btn btn-outline-danger">Logout</button>
 
           </div>
 
@@ -144,27 +151,36 @@
             </div>
 
             <div class="card-body">
-              <button @click="confirmBookings()" class="btn btn-outline-secondary">Confirm Bookings</button>
+              <caption>Data</caption>
+              <table>
 
-              <template x-for="slot in myBooking">
-                <div>
-                  <table>
-                    <tr>
-                      <th>Description</th>
-                      <th>Date & Time</th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h6 x-text="slot.description"></h6>
-                      </td>
-                      <td>
-                        <h6 x-text="slot.slot"></h6>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </template>
-              
+                <tr>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                </tr>
+
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                    <td>
+                      <button @ class="btn btn-outline-secondary">Confirm to Child
+                        Services</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-outline-secondary">Confirm
+                        to Adult Services</button>
+                    </td>
+                  </tr>
+                </template>
+
+              </table>
+
+
             </div>
 
             <div class="card-footer text-muted">

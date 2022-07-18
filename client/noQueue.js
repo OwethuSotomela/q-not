@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const URL_BASE = import.meta.env.VITE_SERVER_URL;
-const URL_Heroku = 'https://q-not-360-degrees.herokuapp.com';
+const URL_BASE = import.meta.env.VITE_SERVER_URL;
+// const URL_Heroku = 'https://q-not-360-degrees.herokuapp.com';
 
 const appState = {
     Login: 'LOGIN',
@@ -71,19 +71,22 @@ export default function EQueue() {
             this.appState = appState.Login;
         },
         signup() {
-            alert('Hi')
-            console.log('Hi, Ongi')
             try {
                 const signupUser = this.user
                 console.log({ signupUser: this.user });
                 axios
-                    .post(`${URL_Heroku}/api/signup`, signupUser)
+                    .post(`${URL_BASE}/api/signup`, signupUser)
                     .then((myApp) => {
                         console.log(myApp.data)
+                        this.feedback = myApp.data.message
+                        this.users = myApp.data;
                     }).catch(err => {
                         console.log(err)
+                        this.feedback = err.response.data.message
+                        setTimeout(() => {
+                            this.feedback = ''
+                        }, 3000)
                     })
-
             } catch (err) {
             }
         },
@@ -91,7 +94,7 @@ export default function EQueue() {
         login() {
             const loginUser = this.logUser;
             axios
-                .post(`${URL_Heroku}/api/login`, loginUser)
+                .post(`${URL_BASE}/api/login`, loginUser)
                 .then((myApp) => {
                     console.log(myApp.data)
                     var { access_token, user } = myApp.data;
@@ -128,7 +131,7 @@ export default function EQueue() {
         loginAdmin() {
             const loginUser = this.logUser;
             axios
-                .post(`${URL_Heroku}/api/login`, loginUser)
+                .post(`${URL_BASE}/api/login`, loginUser)
                 .then((myApp) => {
                     console.log(myApp.data)
                     var { access_token, user } = myApp.data;
@@ -143,6 +146,10 @@ export default function EQueue() {
                     localStorage.setItem('user', JSON.stringify(user));
                     this.token = access_token
                     localStorage.setItem('access_token', this.token);
+
+                    setTimeout(()=>{
+                        this.getBookings()
+                    }, 1000)
 
                     return true;
                 })
@@ -159,12 +166,12 @@ export default function EQueue() {
                 const appoReason = this.description;
                 const bookedDay = this.Booking ? this.Booking : localStorage.getItem('Booking')
 
-                alert( bookedDay )
-                alert( appoReason )
+                alert( 'You have selected' + ' ' + bookedDay )
+                alert( 'For' + ' ' + appoReason + ' ' + 'appointment' )
 
                 const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
                 axios
-                    .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason})
+                    .post(`${URL_BASE}/api/book/${bookedDay}`, { username, appoReason})
                     .then(result => result.data)
                     .then((data) => {
                         console.log(data)
@@ -176,15 +183,12 @@ export default function EQueue() {
         gettingUserBooking() {
             const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
             axios
-                .get(`${URL_Heroku}/api/booking/${username}`)
+                .get(`${URL_BASE}/api/booking/${username}`)
                 .then(r => r.data)
                 .then((clinicDate) => {
 
                     this.myBooking = clinicDate.data
-                    console.log(this.myBooking)
                     this.user = clinicDate.user;
-                    console.log(this.user)
-
 
                     localStorage.setItem('user', JSON.stringify(this.user));
                 }).catch(e => {
@@ -194,6 +198,9 @@ export default function EQueue() {
         },
         goToConfirmation(){
             this.appState = appState.Confirmation
+            setTimeout(()=>{
+                this.gettingUserBooking()
+            }, 1000)
         },
         goToMakeAnAppointment(){
             this.appState = appState.Home
@@ -203,6 +210,31 @@ export default function EQueue() {
         },
         confirmBookings(){
             alert('Hi, All. Bye-All See you Monday')
+        },
+
+        // here 
+        getBookings(){
+            axios
+            .get(`${URL_BASE}/api/booking`)
+            .then(r => r.data)
+            .then((clinicDate) => {
+
+                this.myBooking = clinicDate.data
+                console.log(this.myBooking)
+
+            }).catch(e => {
+                console.log(e);
+                // alert('Error')
+            })
+        }, confirmAdultBookings(){
+            alert('Hi, All. Bye-All See you Monday')
+        },
+        // end
+
+        logout() {
+            this.isOpen = !this.isOpen
+            this.appState = appState.Login
+            localStorage.clear()
         }
     }
 }
