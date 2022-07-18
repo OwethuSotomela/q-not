@@ -18,6 +18,25 @@ export default function EQueue() {
         appState: 'LOGIN',
         init() {
             this.callFlatPicker()
+            if (localStorage['user'] !== 'undefined') {
+                this.isOpen = true;
+                if(localStorage['screen']){
+                    this.appState = localStorage.getItem('screen')
+                    
+                } else {
+                    this.changeScreen(appState.Home)
+                }
+                if (localStorage['user']) {
+                    this.user = localStorage.getItem('user')
+                }
+            }
+        },
+        changeScreen(name){
+            this.appState = name;
+            localStorage.setItem('screen', name);
+            if(this.appState == appState.Confirmation) {
+                this.gettingUserBooking()
+            }
         },
         callFlatPicker() {
             flatpickr(".flatpickr", {
@@ -48,6 +67,7 @@ export default function EQueue() {
             })
         },
         isOpen: false,
+        feedback: '',
         user: {
             fullname: '',
             username: '',
@@ -181,7 +201,8 @@ export default function EQueue() {
             }
         },
         gettingUserBooking() {
-            const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
+            alert('username')
+            const { username } = (this.user && this.user.username) ? this.user : JSON.parse(localStorage.getItem('user'))
             axios
                 .get(`${URL_Heroku}/api/booking/${username}`)
                 .then(r => r.data)
@@ -197,16 +218,16 @@ export default function EQueue() {
                 })
         },
         goToConfirmation(){
-            this.appState = appState.Confirmation
+            this.changeScreen(appState.Confirmation)
             setTimeout(()=>{
                 this.gettingUserBooking()
             }, 1000)
         },
         goToMakeAnAppointment(){
-            this.appState = appState.Home
+            this.changeScreen(appState.Home)
         },
         goToLogin(){
-            this.appState = appState.Login
+            this.changeScreen(appState.Login)
         },
         confirmBookings(){
             alert('Hi, All. Bye-All See you Monday')
