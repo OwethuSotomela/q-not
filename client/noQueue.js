@@ -22,7 +22,6 @@ export default function EQueue() {
                 this.isOpen = true;
                 if(localStorage['screen']){
                     this.appState = localStorage.getItem('screen')
-                    
                 } else {
                     this.changeScreen(appState.Home)
                 }
@@ -36,6 +35,9 @@ export default function EQueue() {
             localStorage.setItem('screen', name);
             if(this.appState == appState.Confirmation) {
                 this.gettingUserBooking()
+            }
+            if(this.appState == appState.Home){
+                this.callFlatPicker()
             }
         },
         callFlatPicker() {
@@ -85,10 +87,10 @@ export default function EQueue() {
         description: null,
         myBooking: [],
         gotToSignUp() {
-            this.appState = appState.Signup;
+            this.changeScreen(appState.Signup);
         },
         gotToLogin() {
-            this.appState = appState.Login;
+            this.changeScreen(appState.Login);
         },
         signup() {
             try {
@@ -123,12 +125,13 @@ export default function EQueue() {
                         return false
                     }
                     
-                    this.appState = appState.Home
+                    this.changeScreen(appState.Home)
                     this.isOpen = true;
                     this.user = user;
                     localStorage.setItem('user', JSON.stringify(user));
                     this.token = access_token
                     localStorage.setItem('access_token', this.token);
+                    this.feedback = myApp.data.message
 
                     setTimeout(()=> {
                     this.loading = false;
@@ -201,7 +204,7 @@ export default function EQueue() {
             }
         },
         gettingUserBooking() {
-            alert('username')
+            // alert('username')
             const { username } = (this.user && this.user.username) ? this.user : JSON.parse(localStorage.getItem('user'))
             axios
                 .get(`${URL_Heroku}/api/booking/${username}`)
@@ -225,6 +228,9 @@ export default function EQueue() {
         },
         goToMakeAnAppointment(){
             this.changeScreen(appState.Home)
+            setTimeout(()=>{
+                this.callFlatPicker()
+            }, 1000)
         },
         goToLogin(){
             this.changeScreen(appState.Login)
@@ -254,7 +260,7 @@ export default function EQueue() {
 
         logout() {
             this.isOpen = !this.isOpen
-            this.appState = appState.Login
+            this.changeScreen(appState.Login)
             localStorage.clear()
         }
     }

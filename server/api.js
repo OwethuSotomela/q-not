@@ -65,7 +65,8 @@ module.exports = function (app, db) {
                     return res.json({
                         success: true,
                         access_token: token,
-                        user: user
+                        user: user,
+                        message: 'Login successfull'
                     });
                 })
             }

@@ -21,7 +21,7 @@
         <div class="col-12">
           <h1>Q-Not</h1>
         </div>
-
+        <img src="../client/images/queue-icon-person-waiting-sign-check-time-tick-clock-symbols-calendar-internet-globe-report-linear-icons-star-vote-88152421.jpeg">
         <div x-show="appState == 'SIGNUP'" class="signup">
           <span x-text="feedback" class="feedback">Feedback</span>
           <br>
@@ -29,20 +29,22 @@
             <h4>Signup</h4>
           </center>
 
-          <label>Fullname</label>
-          <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
-          <label>Username</label>
-          <input type="text" x-model="user.username" placeholder="Enter your lastname">
-          <br>
-          <label>Password</label>
-          <input type="password" x-model="user.password" placeholder="Create a password">
-          <label>Role</label>
-          <input type="text" x-model="user.role" placeholder="Enter as your Role">
-          <br>
-          <label>ID #</label>
-          <input type="password" x-model="user.id_number" placeholder="Enter your ID #">
-          <label>Contact #</label>
-          <input type="text" x-model="user.contact_number" placeholder="Enter your contact #">
+          <!-- <div class="form"> -->
+            <label>Fullname</label>
+            <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
+            <label>Username</label>
+            <input type="text" x-model="user.username" placeholder="Enter your lastname">
+            <br>
+            <label>Password</label>
+            <input type="password" x-model="user.password" placeholder="Create a password">
+            <label>Role</label>
+            <input type="text" x-model="user.role" placeholder="Enter as your Role">
+            <br>
+            <label>ID #</label>
+            <input type="password" x-model="user.id_number" placeholder="Enter your ID #">
+            <label>Contact #</label>
+            <input type="text" x-model="user.contact_number" placeholder="Enter your contact #">
+          <!-- </div> -->
           <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
           <br>
           <a href="#" @click="gotToLogin()">Already have an account? Login</a>
@@ -53,10 +55,12 @@
           <center>
             <h4>Login</h4>
           </center>
-          <label>Username</label>
-          <input type="text" x-model="logUser.username" placeholder="Enter your username">
-          <label>Password</label>
-          <input type="password" x-model="logUser.password" placeholder="Enter your password">
+          <!-- <div class="form"> -->
+            <label>Username</label>
+            <input type="text" x-model="logUser.username" placeholder="Enter your username">
+            <label>Password</label>
+            <input type="password" x-model="logUser.password" placeholder="Enter your password">
+          <!-- </div> -->
           <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
           <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>
           <br>
@@ -199,5 +203,3 @@
 </body>
 
 </html>
-
-
