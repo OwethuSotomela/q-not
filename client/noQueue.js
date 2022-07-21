@@ -226,9 +226,8 @@ export default function EQueue() {
             try {
 
                 const appoReason = this.description;
-                // const appoReason = this.description;
                 const bookedDay = this.Booking ? this.Booking : localStorage.getItem('Booking')
-                alert(appoReason)
+                
                 alert('You have selected' + ' ' + bookedDay)
                 alert('For' + ' ' + appoReason + ' ' + 'appointment')
 
@@ -295,16 +294,28 @@ export default function EQueue() {
         }, confirmAdultBookings() {
             alert('Hi, All. Bye-All See you Monday')
         },
+
+        cancelAppo(myAppointment) {
+            alert(myAppointment)
+            console.log(myAppointment.id)
+            try {
+                axios
+                    .delete(`/api/booking/${myAppointment.id}`)
+                    .then(() => this.gettingUserBooking())
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+                
+            } catch {
+
+            }
+        },
         // end
 
         logout() {
             this.isOpen = !this.isOpen
             this.changeScreen(appState.Login)
             localStorage.clear()
-        },
-        fam() {
-            let plan = 'Family planning'
-            alert(plan)
         }
     }
 }

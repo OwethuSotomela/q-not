@@ -143,7 +143,6 @@
             </div>
 
             <div class="card-body">
-              <!-- <a href="#" @click="gettingUserBooking()">View Confirmation</a> -->
               <table>
                 <tr>
                   <th>Description</th>
@@ -157,11 +156,12 @@
                     <td>
                       <h6 x-text="slot.slot"></h6>
                     </td>
+                    <td>
+                      <button @click="cancelAppo(slot)" class="btn btn-outline-danger">Cancel Appointment</button>
+                    </td>
                   </tr>
                 </template>
               </table>
-
-
             </div>
 
             <div class="card-footer text-muted">
