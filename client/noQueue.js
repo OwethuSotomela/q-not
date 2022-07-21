@@ -300,7 +300,7 @@ export default function EQueue() {
             console.log(myAppointment)
             try {
                 axios
-                    .delete(`api/cancel/${myAppointment.id}`)
+                    .delete(`/api/cancel/${myAppointment.id}`)
                     .then(() => this.gettingUserBooking())
                     .catch((err)=>{
                         console.log(err.message)
