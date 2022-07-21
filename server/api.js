@@ -143,7 +143,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.delete('/api/booking/:id', async function (req, res) {
+    app.delete('/api/cancel/:id', async function (req, res) {
 
         try {
             const { id } = req.params;
@@ -156,6 +156,7 @@ module.exports = function (app, db) {
                 data: bookings
             })
         } catch (err) {
+            console.log(err)
             res.json({
                 status: 'Failed to cancel appointment',
                 error: err.stack
