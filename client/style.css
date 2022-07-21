@@ -29,14 +29,21 @@ body{
   background-color: rgba(228, 128, 41, 0.125);
   background-color: #FFF1ED;
 }
-
+.form{
+  display: flex;
+  flex-direction: row;
+}
+.tag label{
+    display: block;
+    width: 5em;
+    margin-top: 0.5em;
+}
 .row {
   display: flex;
 }
 .image{
   width: 20em;
   height: 20em;
-  /* border-radius: 50%; */
 }
 
 table {

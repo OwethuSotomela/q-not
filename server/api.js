@@ -12,7 +12,7 @@ module.exports = function (app, db) {
 
     app.post('/api/signup', async function (req, res) {
         try {
-            const { fullname, username, password, role,  id_number, contact_number} = req.body;
+            const { fullname, username, password, role, id_number, contact_number } = req.body;
 
             console.log({ fullname, username, password, role, id_number, contact_number });
 
@@ -53,7 +53,12 @@ module.exports = function (app, db) {
             const { username, password } = req.body;
 
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username]);
+            console.log(user)
 
+            // start 
+            // const patient = await db.oneOrNone(`SELECT * FROM users WHERE role = $1`, [user.patient])
+            // console.log({patient})
+            // end 
             if (!user) {
                 throw Error('User does not exist! Register new account')
             } else {
@@ -82,9 +87,9 @@ module.exports = function (app, db) {
     app.post('/api/book/:bookByDay', async function (req, res) {
         try {
             const { username } = req.body;
-            console.log({username})
+            console.log({ username })
 
-            const { bookByDay }  = req.params;
+            const { bookByDay } = req.params;
             console.log(bookByDay)
 
             const description = req.body;
@@ -134,6 +139,26 @@ module.exports = function (app, db) {
             console.log(e)
             res.status(500).json({
                 error: e.message
+            })
+        }
+    })
+
+    app.delete('/api/booking/:id', async function (req, res) {
+
+        try {
+            const { id } = req.params;
+            const bookings = await db.one(`DELETE FROM appointments WHERE id = $1`, [id])
+
+            console.log({ id })
+
+            res.json({
+                status: 'Appointment Cancelled',
+                data: bookings
+            })
+        } catch (err) {
+            res.json({
+                status: 'Failed to cancel appointment',
+                error: err.stack
             })
         }
     })
