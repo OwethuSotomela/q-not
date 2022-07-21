@@ -29,22 +29,32 @@
             <h4>Signup</h4>
           </center>
 
-          <!-- <div class="form"> -->
-            <label>Fullname</label>
-            <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
-            <label>Username</label>
-            <input type="text" x-model="user.username" placeholder="Enter your lastname">
-            <br>
-            <label>Password</label>
-            <input type="password" x-model="user.password" placeholder="Create a password">
-            <label>Role</label>
-            <input type="text" x-model="user.role" placeholder="Enter as your Role">
-            <br>
-            <label>ID #</label>
-            <input type="password" x-model="user.id_number" placeholder="Enter your ID #">
-            <label>Contact #</label>
-            <input type="text" x-model="user.contact_number" placeholder="Enter your contact #">
-          <!-- </div> -->
+          <div class="form">
+            <div class="tag">
+              <label>Fullname</label>
+              <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
+            </div>
+            <div class="tag">
+              <label>Username</label>
+              <input type="text" x-model="user.username" placeholder="Enter your lastname">
+            </div>
+            <div class="tag">
+              <label>Password</label>
+              <input type="password" x-model="user.password" placeholder="Create a password">
+            </div>
+            <div class="tag">
+              <label>Role</label>
+              <input type="text" x-model="user.role" placeholder="Enter as your Role">
+            </div>
+            <div class="tag">
+              <label>ID #</label>
+              <input type="password" x-model="user.id_number" placeholder="Enter your ID #">
+            </div>
+            <div class="tag">
+              <label>Contact #</label>
+              <input type="text" x-model="user.contact_number" placeholder="Enter your contact #">
+            </div>
+          </div>
           <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
           <br>
           <a href="#" @click="gotToLogin()">Already have an account? Login</a>
@@ -56,10 +66,10 @@
             <h4>Login</h4>
           </center>
           <!-- <div class="form"> -->
-            <label>Username</label>
-            <input type="text" x-model="logUser.username" placeholder="Enter your username">
-            <label>Password</label>
-            <input type="password" x-model="logUser.password" placeholder="Enter your password">
+          <label>Username</label>
+          <input type="text" x-model="logUser.username" placeholder="Enter your username">
+          <label>Password</label>
+          <input type="password" x-model="logUser.password" placeholder="Enter your password">
           <!-- </div> -->
           <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
           <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>
@@ -77,9 +87,26 @@
             <h6 x-show="loading" align="center">Loading...</h6>
             <div x-show="!loading" class="card-body">
               <div class="flatpickr" align="center">
-                <label>Reason</label>
 
-                <input type="text" x-model="description" placeholder="Enter a reason for your Appointment" size="40">
+                <div class="dropdown" x-data="{open: false}">
+                  <select id="reason" x-on:click="open = !open" x-model="description">
+
+                    <div x-show="open">
+                      <br>
+                      <option>Mental health care</option>
+                      <option>Dental Health</option>
+                      <option>Family planning</option>
+                      <option>NBAC</option>
+                      <option>ART</option>
+                      <option>Clinic for chronic diseases</option>
+                      <option>Child Immunization</option>
+                    </div>
+
+                  </select>
+                </div>
+
+                <!-- end  -->
+
                 <br>
                 <br>
                 <label>Select date and time</label>
@@ -183,7 +210,6 @@
                 </template>
 
               </table>
-
 
             </div>
 
