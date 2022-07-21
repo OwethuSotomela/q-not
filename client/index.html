@@ -1,205 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <title>Q-Not</title>
+   </head>
+   <body>
+      <div x-data="isOpen" class="container">
+         <div class="row">
+            <div class="col-12">
+               <div class="col-12">
+                  <!-- <h1>Q-Not</h1> -->
+               </div>
+               <img src="./images/diff.jpg" class="image">
+               <div x-show="appState == 'SIGNUP'" class="signup">
+                  <span x-text="feedback" class="feedback">Feedback</span>
+                  <br>
+                  <center>
+                     <p>Sign Up</p>
+                  </center>
+                  <div class="row g-2">
+                    <div class="col-md">
+                    <div class="form-floating">
+                  <div class="col-auto">
+                     <label>Fullname</label><br>
+                     <input type="text"  class="input" x-model="user.fullname" placeholder="Enter your firstname">
+                  </div>
+                  <div class="col-auto">
+                     <label>Username</label><br>
+                     <input type="text"  class="input"  x-model="user.username" placeholder="Enter your lastname">
+                  </div>
+                  <div class="col-auto">
+                     <label>Password</label><br>
+                     <input type="password"  class="input" x-model="user.password" placeholder="Create a password">
+                  </div>
+                  <div class="col-auto">
+                     <label>Role</label><br>
+                     <input type="text"  class="input" x-model="user.role" placeholder="Enter as your Role">
+                  </div>
+                  <div class="col-auto">
+                     <label>ID #</label><br>
+                     <input type="password"   class="input" x-model="user.id_number" placeholder="Enter your ID #">
+                  </div>
+                  <div class="col-auto">
+                     <label>Contact #</label><br>
+                     <input type="text"  class="input" x-model="user.contact_number" placeholder="Enter your contact #">
+                  </div><br>
+                  <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                  </div><br>
+                  <div class="signUp">
+                    <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
+                  </div><br>
+                </div>
+                </div>
+                 </div>
+                  <a href="#" @click="gotToLogin()">Already have an account? Login</a>
+                  <hr>
+               </div>
+               <div x-show="appState == 'LOGIN'" class="login">
+                  <center>
+                     <p>Login</p>
+                  </center>
+                  <!-- <div class="form"> -->
+                   <div class="row g-2">
+                  <div class="col-md">
+                  <div class="form-floating">
+                   <div class="col-auto">
+                  <label>Username</label><br>
+                  <input type="text"  class="input" x-model="logUser.username" placeholder="Enter your username">
+                </div>
+                <div class="col-auto">
+                  <label>Password</label><br>
+                  <input type="password"  class="input" x-model="logUser.password" placeholder="Enter your password">
+                </div><br>
+                  <!-- </div> -->
+                  <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
+                  <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button><br>
+                  <br>
+                  <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
+                  <hr>
+               </div>
+               </div>
+               </div>
+               </div>
+             
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>Q-Not</title>
-</head>
-
-<body>
-  <div x-data="isOpen" class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="col-12">
-          <!-- <h1>Q-Not</h1> -->
-        </div>
-        <img src="./images/diff.jpg" class="image">
-        <div x-show="appState == 'SIGNUP'" class="signup">
-          <span x-text="feedback" class="feedback">Feedback</span>
-          <br>
-          <center>
-            <h4>Signup</h4>
-          </center>
-
-          <!-- <div class="form"> -->
-            <label>Fullname</label>
-            <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
-            <label>Username</label>
-            <input type="text" x-model="user.username" placeholder="Enter your lastname">
-            <br>
-            <label>Password</label>
-            <input type="password" x-model="user.password" placeholder="Create a password">
-            <label>Role</label>
-            <input type="text" x-model="user.role" placeholder="Enter as your Role">
-            <br>
-            <label>ID #</label>
-            <input type="password" x-model="user.id_number" placeholder="Enter your ID #">
-            <label>Contact #</label>
-            <input type="text" x-model="user.contact_number" placeholder="Enter your contact #">
-          <!-- </div> -->
-          <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
-          <br>
-          <a href="#" @click="gotToLogin()">Already have an account? Login</a>
-          <hr>
-        </div>
-
-        <div x-show="appState == 'LOGIN'" class="login">
-          <center>
-            <h4>Login</h4>
-          </center>
-          <!-- <div class="form"> -->
-            <label>Username</label>
-            <input type="text" x-model="logUser.username" placeholder="Enter your username">
-            <label>Password</label>
-            <input type="password" x-model="logUser.password" placeholder="Enter your password">
-          <!-- </div> -->
-          <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
-          <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>
-          <br>
-          <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
-          <hr>
-        </div>
-
-        <div x-show="appState == 'HOME'" class="homePage">
-
-          <div class="card text-center">
-            <div class="card-header">
-              <label>Book Appointment</label>
+               <div x-show="appState == 'HOME'" class="homePage">
+                  <div class="card text-center">
+                     <div class="card-header">
+                        <label>Book Appointment</label>
+                     </div>
+                     <h6 x-show="loading" align="center">Loading...</h6>
+                     <div x-show="!loading" class="card-body">
+                        <div class="flatpickr" align="center">
+                           <label>Reason</label>
+                           <input type="text" x-model="description" placeholder="Enter a reason for your Appointment" size="40">
+                           <br>
+                           <br>
+                           <label>Select date and time</label>
+                           <a class="input-button" title="toggle" data-toggle>
+                           <i class="icon-calendar"></i>
+                           </a>
+                           <a class="input-button" title="clear" data-clear>
+                           <i class="icon-close"></i>
+                           </a>
+                        </div>
+                        <br>
+                        <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
+                     </div>
+                     <div class="card-footer text-muted">
+                        <a href="#" @click="goToLogin()">Go back to Login</a>
+                        <br>
+                        <a href="#" @click="goToConfirmation()">Get your booking confirmation</a>
+                     </div>
+                  </div>
+               </div>
+               <div x-show="appState == 'CONFIRMATION'" class="confirmation">
+                  <div class="card text-center">
+                     <div class="card-header">
+                        <label>Your Appointments</label>
+                     </div>
+                     <div class="card-body">
+                        <!-- <a href="#" @click="gettingUserBooking()">View Confirmation</a> -->
+                        <table>
+                           <tr>
+                              <th>Description</th>
+                              <th>Date & Time</th>
+                           </tr>
+                           <template x-for="slot in myBooking">
+                              <tr>
+                                 <td>
+                                    <h6 x-text="slot.description"></h6>
+                                 </td>
+                                 <td>
+                                    <h6 x-text="slot.slot"></h6>
+                                 </td>
+                              </tr>
+                           </template>
+                        </table>
+                     </div>
+                     <div class="card-footer text-muted">
+                        <a href="#" @click="goToMakeAnAppointment()">Go back to booking an Appointment</a>
+                     </div>
+                     <button @click="logout()" class="btn btn-outline-danger">Logout</button>
+                  </div>
+               </div>
+               <!-- Ace  -->
+               <div x-show="appState == 'ADMINISTRATOR'" class="manage">
+                  <div class="card text-center">
+                     <div class="card-header">
+                        <label>Confirm Appointments</label>
+                     </div>
+                     <div class="card-body">
+                        <caption>Data</caption>
+                        <table>
+                           <tr>
+                              <th>Description</th>
+                              <th>Date & Time</th>
+                           </tr>
+                           <template x-for="slot in myBooking">
+                              <tr>
+                                 <td>
+                                    <h6 x-text="slot.description"></h6>
+                                 </td>
+                                 <td>
+                                    <h6 x-text="slot.slot"></h6>
+                                 </td>
+                                 <td>
+                                    <button @ class="btn btn-outline-secondary">Confirm to Child
+                                    Services</button>
+                                 </td>
+                                 <td>
+                                    <button class="btn btn-outline-secondary">Confirm
+                                    to Adult Services</button>
+                                 </td>
+                              </tr>
+                           </template>
+                        </table>
+                     </div>
+                     <div class="card-footer text-muted">
+                        <a href="#" @click="goToLogin()">Go back to Login</a>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <h6 x-show="loading" align="center">Loading...</h6>
-            <div x-show="!loading" class="card-body">
-              <div class="flatpickr" align="center">
-                <label>Reason</label>
-
-                <input type="text" x-model="description" placeholder="Enter a reason for your Appointment" size="40">
-                <br>
-                <br>
-                <label>Select date and time</label>
-                <a class="input-button" title="toggle" data-toggle>
-                  <i class="icon-calendar"></i>
-                </a>
-
-                <a class="input-button" title="clear" data-clear>
-                  <i class="icon-close"></i>
-                </a>
-
-              </div>
-              <br>
-
-              <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
-
-            </div>
-
-            <div class="card-footer text-muted">
-              <a href="#" @click="goToLogin()">Go back to Login</a>
-              <br>
-              <a href="#" @click="goToConfirmation()">Get your booking confirmation</a>
-            </div>
-
-          </div>
-        </div>
-
-        <div x-show="appState == 'CONFIRMATION'" class="confirmation">
-
-          <div class="card text-center">
-
-            <div class="card-header">
-              <label>Your Appointments</label>
-            </div>
-
-            <div class="card-body">
-              <!-- <a href="#" @click="gettingUserBooking()">View Confirmation</a> -->
-              <table>
-                <tr>
-                  <th>Description</th>
-                  <th>Date & Time</th>
-                </tr>
-                <template x-for="slot in myBooking">
-                  <tr>
-                    <td>
-                      <h6 x-text="slot.description"></h6>
-                    </td>
-                    <td>
-                      <h6 x-text="slot.slot"></h6>
-                    </td>
-                  </tr>
-                </template>
-              </table>
-
-
-            </div>
-
-            <div class="card-footer text-muted">
-              <a href="#" @click="goToMakeAnAppointment()">Go back to booking an Appointment</a>
-            </div>
-
-            <button @click="logout()" class="btn btn-outline-danger">Logout</button>
-
-          </div>
-
-        </div>
-
-        <!-- Ace  -->
-        <div x-show="appState == 'ADMINISTRATOR'" class="manage">
-          <div class="card text-center">
-            <div class="card-header">
-              <label>Confirm Appointments</label>
-            </div>
-
-            <div class="card-body">
-              <caption>Data</caption>
-              <table>
-
-                <tr>
-                  <th>Description</th>
-                  <th>Date & Time</th>
-                </tr>
-
-                <template x-for="slot in myBooking">
-                  <tr>
-                    <td>
-                      <h6 x-text="slot.description"></h6>
-                    </td>
-                    <td>
-                      <h6 x-text="slot.slot"></h6>
-                    </td>
-                    <td>
-                      <button @ class="btn btn-outline-secondary">Confirm to Child
-                        Services</button>
-                    </td>
-                    <td>
-                      <button class="btn btn-outline-secondary">Confirm
-                        to Adult Services</button>
-                    </td>
-                  </tr>
-                </template>
-
-              </table>
-
-
-            </div>
-
-            <div class="card-footer text-muted">
-              <a href="#" @click="goToLogin()">Go back to Login</a>
-            </div>
-
-          </div>
-        </div>
-
+         </div>
       </div>
-    </div>
-
-  </div>
-
-  <script type="module" src="./main.js"></script>
-</body>
-
+      <script type="module" src="./main.js"></script>
+   </body>
 </html>

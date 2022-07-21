@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "alpinejs": "^3.10.2"
+    "alpinejs": "^3.10.2",
+    "pg-promise": "^10.11.1"
   }
 }
