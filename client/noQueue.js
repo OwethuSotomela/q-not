@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const URL_BASE = import.meta.env.VITE_SERVER_URL;
-// const URL_Heroku = 'https://q-not-360-degrees.herokuapp.com';
+const URL_Heroku = 'https://q-not-360-degrees.herokuapp.com';
 // const URL_Heroku = import.meta.env.VITE_SERVER_URL;
 
 const appState = {
@@ -142,7 +142,7 @@ export default function EQueue() {
             try {
                 const loginUser = this.logUser;
                 axios
-                    .post(`${URL_BASE}/api/login`, loginUser)
+                    .post(`${URL_Heroku}/api/login`, loginUser)
                     .then((myApp) => {
                         console.log(myApp.data)
                         var { access_token, user } = myApp.data;
@@ -188,7 +188,7 @@ export default function EQueue() {
         loginAdmin() {
             const loginUser = this.logUser;
             axios
-                .post(`${URL_BASE}/api/login`, loginUser)
+                .post(`${URL_Heroku}/api/login`, loginUser)
                 .then((myApp) => {
                     console.log(myApp.data)
                     var { access_token, user } = myApp.data;
@@ -233,7 +233,7 @@ export default function EQueue() {
 
                 const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
                 axios
-                    .post(`${URL_BASE}/api/book/${bookedDay}`, { username, appoReason })
+                    .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
                     .then(result => result.data)
                     .then((data) => {
                         console.log(data)
@@ -245,7 +245,7 @@ export default function EQueue() {
         gettingUserBooking() {
             const { username } = (this.user && this.user.username) ? this.user : JSON.parse(localStorage.getItem('user'))
             axios
-                .get(`${URL_BASE}/api/booking/${username}`)
+                .get(`${URL_Heroku}/api/booking/${username}`)
                 .then(r => r.data)
                 .then((clinicDate) => {
 
@@ -280,7 +280,7 @@ export default function EQueue() {
         // here 
         getBookings() {
             axios
-                .get(`${URL_BASE}/api/booking`)
+                .get(`${URL_Heroku}/api/booking`)
                 .then(r => r.data)
                 .then((clinicDate) => {
 
