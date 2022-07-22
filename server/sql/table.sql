@@ -5,6 +5,7 @@ CREATE TABLE users(
 	username VARCHAR(255) NOT NULL UNIQUE,
     password varchar(255) NOT NULL,
     role VARCHAR(255) NOT NULL, 
+    persal_number VARCHAR(255),
     id_number VARCHAR(255),
     contact_number VARCHAR(255)
 );

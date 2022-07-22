@@ -88,6 +88,7 @@ export default function EQueue() {
             username: '',
             password: '',
             role: '',
+            persal_number: '',
             id_number: '',
             contact_number: ''
         },
@@ -312,7 +313,7 @@ export default function EQueue() {
                 setTimeout(() => {
                     this.feedback = ''
                 }, 3000)
-                
+
                     .catch((err) => {
                         console.log(err.message)
                     })
