@@ -143,27 +143,6 @@ module.exports = function (app, db) {
         }
     })
 
-    app.delete('/api/cancel/:id', async function (req, res) {
-
-        try {
-            const { id } = req.params;
-            const bookings = await db.one(`DELETE FROM appointments WHERE id = $1`, [id])
-
-            console.log({ id })
-
-            res.json({
-                status: 'Appointment Cancelled',
-                data: bookings
-            })
-        } catch (err) {
-            console.log(err)
-            res.json({
-                status: 'Failed to cancel appointment',
-                error: err.stack
-            })
-        }
-    })
-
     app.get('/api/booking', async function (req, res) {
         try {
 
@@ -177,6 +156,29 @@ module.exports = function (app, db) {
             console.log(e)
             res.status(500).json({
                 error: e.message
+            })
+        }
+    })
+
+    app.delete('/api/cancel/:id', async function (req, res) {
+
+        try {
+            const { id } = req.params;
+            // const bookings = await db.one(`DELETE FROM appointments WHERE id = $1`, [id])
+            const bookings = await db.one(`DELETE FROM appointments WHERE id = ${id}`)
+
+
+            console.log({ id })
+
+            res.json({
+                status: 'Appointment Cancelled',
+                data: bookings
+            })
+        } catch (err) {
+            console.log(err)
+            res.json({
+                status: 'Failed to cancel appointment',
+                error: err.stack
             })
         }
     })
