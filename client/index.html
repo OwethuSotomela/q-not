@@ -85,15 +85,6 @@
           <input type="text" x-model="logUser.username" placeholder="Enter your username">
           <label>Password</label>
           <input type="password" x-model="logUser.password" placeholder="Enter your password">
-          <select id="reason" x-on:click="open = !open" x-model="user.role">
-
-            <div x-show="open">
-              <br>
-              <option>Admin</option>
-              <option>Patient</option>
-            </div>
-
-          </select>
 
           <button @click="login()" class="btn btn-outline-success">Login</button>
           <br>
