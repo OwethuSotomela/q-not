@@ -56,18 +56,18 @@
             </div>
             <div class="tag">
               <label>Persal #</label>
-              <input type="text" x-model="user.persal_number" placeholder="Gov employees enter your persal_number" required minlength="2" maxlength="4"
-              size="15">
+              <input type="text" x-model="user.persal_number" placeholder="Gov employees enter your persal_number"
+                required minlength="2" maxlength="4" size="15">
             </div>
             <div class="tag">
               <label>ID #</label>
-              <input type="password" x-model="user.id_number" placeholder="Enter your ID #" required minlength="10" maxlength="13"
-              size="15">
+              <input type="password" x-model="user.id_number" placeholder="Enter your ID #" required minlength="10"
+                maxlength="13" size="15">
             </div>
             <div class="tag">
               <label>Contact #</label>
-              <input type="text" x-model="user.contact_number" placeholder="Enter your contact #" required minlength="9" maxlength="10"
-              size="15">
+              <input type="text" x-model="user.contact_number" placeholder="Enter your contact #" required minlength="9"
+                maxlength="10" size="15">
             </div>
           </div>
           <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
@@ -95,8 +95,7 @@
 
           </select>
 
-          <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
-          <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>
+          <button @click="login()" class="btn btn-outline-success">Login</button>
           <br>
           <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
           <hr>
