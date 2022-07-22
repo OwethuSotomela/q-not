@@ -52,7 +52,7 @@ module.exports = function (app, db) {
             const { username, password } = req.body;
 
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username]);
-            // console.log(user)
+            console.log(user)
 
             if (!user) {
                 throw Error('User does not exist! Register new account')
