@@ -12,9 +12,9 @@ module.exports = function (app, db) {
 
     app.post('/api/signup', async function (req, res) {
         try {
-            const { fullname, username, password, role, persal_number, id_number, contact_number } = req.body;
+            const { fullname, username, password, role, id_number, contact_number } = req.body
 
-            console.log({ fullname, username, password, role, persal_number, id_number, contact_number });
+            console.log({ fullname, username, password, role, id_number, contact_number })
 
             console.log({ username });
 
@@ -34,7 +34,7 @@ module.exports = function (app, db) {
 
             const encrypted = await bcrypt.hash(password, 10)
 
-            await db.none(`INSERT INTO users (fullname, username, password, role, persal_number, id_number, contact_number) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [fullname, username, encrypted, role, persal_number, id_number, contact_number]);
+            await db.none(`INSERT INTO users (fullname, username, password, role, id_number, contact_number) VALUES ($1, $2, $3, $4, $5, $6)`, [fullname, username, encrypted, role, id_number, contact_number]);
             res.status(200).json({
                 message: 'New user successfully registered'
             })

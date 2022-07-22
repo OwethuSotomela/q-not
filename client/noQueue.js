@@ -91,7 +91,6 @@ export default function EQueue() {
             username: "",
             password: "",
             role: "",
-            persal_number: "",
             id_number: "",
             contact_number: "",
         },
@@ -115,9 +114,9 @@ export default function EQueue() {
                 if (
                     this.user.fullname == "" ||
                     this.user.username == "" ||
-                    this.user.id_number == "" ||
                     this.user.password == "" ||
                     this.user.role == "" ||
+                    this.user.id_number == "" ||
                     this.user.contact_number == ""
                 ) {
                     this.feedback = "Fill in all required fields to register";
