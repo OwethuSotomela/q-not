@@ -56,9 +56,10 @@ module.exports = function (app, db) {
             console.log(user)
 
             // start 
-            // const patient = await db.oneOrNone(`SELECT * FROM users WHERE role = $1`, [user.patient])
-            // console.log({patient})
+            const patient = await db.oneOrNone(`SELECT * FROM users WHERE role = $1`, [user.patient])
+            console.log(patient)
             // end 
+
             if (!user) {
                 throw Error('User does not exist! Register new account')
             } else {
@@ -166,7 +167,6 @@ module.exports = function (app, db) {
             const { id } = req.params;
             // const bookings = await db.one(`DELETE FROM appointments WHERE id = $1`, [id])
             const bookings = await db.one(`DELETE FROM appointments WHERE id = ${id}`)
-
 
             console.log({ id })
 

@@ -44,7 +44,16 @@
             </div>
             <div class="tag">
               <label>Role</label>
-              <input type="text" x-model="user.role" placeholder="Enter as your Role">
+              <!-- <input type="text" x-model="user.role" placeholder="Enter as your Role"> -->
+              <select id="reason" x-on:click="open = !open" x-model="user.role">
+
+                <div x-show="open">
+                  <br>
+                  <option>Admin</option>
+                  <option>Patient</option>
+                </div>
+
+              </select>
             </div>
             <div class="tag">
               <label>ID #</label>
@@ -65,12 +74,12 @@
           <center>
             <h4>Login</h4>
           </center>
-          <!-- <div class="form"> -->
+
           <label>Username</label>
           <input type="text" x-model="logUser.username" placeholder="Enter your username">
           <label>Password</label>
           <input type="password" x-model="logUser.password" placeholder="Enter your password">
-          <!-- </div> -->
+
           <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
           <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>
           <br>
@@ -110,6 +119,7 @@
                 <br>
                 <br>
                 <label>Select date and time</label>
+                <input type="">
                 <a class="input-button" title="toggle" data-toggle>
                   <i class="icon-calendar"></i>
                 </a>
@@ -225,7 +235,7 @@
 
   </div>
 
-  <script type="module" src="/main.js"></script>
+  <script type="module" src="./main.js"></script>
 </body>
 
 </html>
