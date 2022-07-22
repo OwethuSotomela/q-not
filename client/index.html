@@ -44,7 +44,6 @@
             </div>
             <div class="tag">
               <label>Role</label>
-              <!-- <input type="text" x-model="user.role" placeholder="Enter as your Role"> -->
               <select id="reason" x-on:click="open = !open" x-model="user.role">
 
                 <div x-show="open">
@@ -57,11 +56,13 @@
             </div>
             <div class="tag">
               <label>ID #</label>
-              <input type="password" x-model="user.id_number" placeholder="Enter your ID #">
+              <input type="password" x-model="user.id_number" placeholder="Enter your ID #" required minlength="10" maxlength="13"
+              size="15">
             </div>
             <div class="tag">
               <label>Contact #</label>
-              <input type="text" x-model="user.contact_number" placeholder="Enter your contact #">
+              <input type="text" x-model="user.contact_number" placeholder="Enter your contact #" required minlength="9" maxlength="10"
+              size="15">
             </div>
           </div>
           <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
@@ -79,6 +80,15 @@
           <input type="text" x-model="logUser.username" placeholder="Enter your username">
           <label>Password</label>
           <input type="password" x-model="logUser.password" placeholder="Enter your password">
+          <select id="reason" x-on:click="open = !open" x-model="user.role">
+
+            <div x-show="open">
+              <br>
+              <option>Admin</option>
+              <option>Patient</option>
+            </div>
+
+          </select>
 
           <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
           <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button>

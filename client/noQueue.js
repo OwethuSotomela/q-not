@@ -93,7 +93,8 @@ export default function EQueue() {
         },
         logUser: {
             username: 'OwSoto',
-            password: 'owe123'
+            password: 'owe123',
+            role: ''
         },
         token: '',
         loading: true,
@@ -137,10 +138,16 @@ export default function EQueue() {
             } catch (err) {
             }
         },
-
+        LoginRole(){
+            role = this.logUser.role
+            if(role === 'Patient'){
+                this.login()
+            }
+        },
         login() {
             try {
                 const loginUser = this.logUser;
+                
                 axios
                     .post(`${URL_Heroku}/api/login`, loginUser)
                     .then((myApp) => {

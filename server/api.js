@@ -55,11 +55,6 @@ module.exports = function (app, db) {
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username]);
             console.log(user)
 
-            // start 
-            const patient = await db.oneOrNone(`SELECT * FROM users WHERE role = $1`, [user.patient])
-            console.log(patient)
-            // end 
-
             if (!user) {
                 throw Error('User does not exist! Register new account')
             } else {
@@ -148,7 +143,7 @@ module.exports = function (app, db) {
         try {
 
             const bookingBy = await db.manyOrNone(`SELECT * FROM appointments`);
-            console.log(bookingBy)
+            // console.log(bookingBy)
 
             res.json({
                 data: bookingBy,
@@ -165,14 +160,14 @@ module.exports = function (app, db) {
 
         try {
             const { id } = req.params;
-            // const bookings = await db.one(`DELETE FROM appointments WHERE id = $1`, [id])
-            const bookings = await db.one(`DELETE FROM appointments WHERE id = ${id}`)
+            await db.none(`DELETE FROM appointments WHERE id = $1`, [id])
+            // const bookings = await db.one(`DELETE FROM appointments WHERE id = ${id}`)
 
-            console.log({ id })
+            // console.log({ id })
 
             res.json({
                 status: 'Appointment Cancelled',
-                data: bookings
+                data: []
             })
         } catch (err) {
             console.log(err)
