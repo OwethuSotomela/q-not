@@ -138,16 +138,16 @@ export default function EQueue() {
             } catch (err) {
             }
         },
-        LoginRole(){
+        LoginRole() {
             role = this.logUser.role
-            if(role === 'Patient'){
+            if (role === 'Patient') {
                 this.login()
             }
         },
         login() {
             try {
                 const loginUser = this.logUser;
-                
+
                 axios
                     .post(`${URL_Heroku}/api/login`, loginUser)
                     .then((myApp) => {
@@ -234,7 +234,7 @@ export default function EQueue() {
 
                 const appoReason = this.description;
                 const bookedDay = this.Booking ? this.Booking : localStorage.getItem('Booking')
-                
+
                 alert('You have selected' + ' ' + bookedDay)
                 alert('For' + ' ' + appoReason + ' ' + 'appointment')
 
@@ -303,13 +303,17 @@ export default function EQueue() {
         },
 
         cancelAppo(myAppointment) {
-            alert(myAppointment.id)
-            console.log(myAppointment)
             try {
                 axios
                     .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
                     .then(() => this.gettingUserBooking())
-                    .catch((err)=>{
+
+                this.feedback = 'Your appointment has been cancelled'
+                setTimeout(() => {
+                    this.feedback = ''
+                }, 3000)
+                
+                    .catch((err) => {
                         console.log(err.message)
                     })
             } catch (err) {
