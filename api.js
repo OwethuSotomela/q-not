@@ -161,13 +161,9 @@ module.exports = function (app, db) {
         try {
             const { id } = req.params;
             await db.none(`DELETE FROM appointments WHERE id = $1`, [id])
-            // const bookings = await db.one(`DELETE FROM appointments WHERE id = ${id}`)
-
-            // console.log({ id })
 
             res.json({
                 status: 'Appointment Cancelled',
-                data: []
             })
         } catch (err) {
             console.log(err)
