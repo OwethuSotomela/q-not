@@ -113,19 +113,18 @@ export default function EQueue() {
             try {
                 const signupUser = this.user;
                 if (
-                    this.user.fullname == "" ||
-                    this.user.username == "" ||
-                    this.user.password == "" ||
-                    this.user.role == "" ||
-                    this.user.id_number == "" ||
-                    this.user.contact_number == ""
+                    this.user.fullname == undefined ||
+                    this.user.username == undefined ||
+                    this.user.password == undefined ||
+                    this.user.role == undefined ||
+                    this.user.id_number == undefined ||
+                    this.user.contact_number == undefined
                 ) {
                     this.feedback = "Fill in all required fields to register";
                     setTimeout(() => {
                         this.feedback = "";
                     }, 3000);
                 } else {
-                    console.log({ signupUser: this.user });
                     axios
                         .post(`${URL_Heroku}/api/signup`, signupUser)
                         .then((myApp) => {
