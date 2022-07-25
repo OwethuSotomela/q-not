@@ -179,10 +179,10 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET confirmed = true WHERE id = $1;`, [id])
+            await db.none(`UPDATE appointments SET confirmed = true WHERE id = $1`, [id])
 
             res.status(200).json({
-                message: 'Your appointment has been confirmed',
+                message: 'Successful',
             })
 
         } catch (error) {
