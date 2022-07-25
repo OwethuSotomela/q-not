@@ -161,7 +161,7 @@ module.exports = function (app, db) {
     app.get('/api/booking', async function (req, res) {
         try {
 
-            const bookingBy = await db.manyOrNone(`SELECT * FROM appointments join users on appointments.users_id = users.id`);
+            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, confirmed, description, fullname, username FROM appointments join users on appointments.users_id = users.id`);
 
             res.json({
                 data: bookingBy,
