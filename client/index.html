@@ -191,6 +191,9 @@
 
         <!-- Ace  -->
         <div x-show="appState == 'ADMINISTRATOR'" class="manage">
+
+          <h6 x-text="user.fullname"></h6>
+
           <div class="card text-center">
             <div class="card-header">
               <label>Confirm Appointments</label>
@@ -199,12 +202,13 @@
             <div class="card-body">
 
               <table>
-                
+
                 <tr>
-                  <th>Names</th>
+                  <th>Fullnames</th>
                   <th>Description</th>
-                  <th>Cancel</th>
                   <th>Date & Time</th>
+                  <th>Appointment Status</th>
+                  <th>Confirmed Appointment</th>
                 </tr>
 
                 <template x-for="slot in myBooking">
@@ -233,6 +237,48 @@
 
             <div class="card-footer text-muted">
               <a href="#" @click="goToLogin()">Go back to Login</a>
+            </div>
+
+          </div>
+          <hr>
+          <div class="card text-center">
+            <div class="card-header">
+              <label>Confirmed Appointments / Clinic Schedule</label>
+            </div>
+
+            <div class="card-body">
+
+              <table>
+
+                <tr>
+                  <th>Fullnames</th>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Confirmed</th>
+                </tr>
+
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.fullname"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.confirmed"></h6>
+                    </td>
+                  </tr>
+                </template>
+
+              </table>
+
+            </div>
+
+            <div class="card-footer text-muted">
             </div>
 
           </div>

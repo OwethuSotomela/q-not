@@ -87,6 +87,7 @@ export default function EQueue() {
             club: "Clinic for chronic diseases",
             kids: "Child Immunization",
         },
+        loggedIn: "",
         user: {
             fullname: "",
             username: "",
@@ -216,7 +217,6 @@ export default function EQueue() {
             }
         },
         gettingUserBooking() {
-            console.log('----------------------');
             const { username } =
                 this.user && this.user.username
                     ? this.user
@@ -273,7 +273,6 @@ export default function EQueue() {
         },
 
         cancelAppo(myAppointment) {
-            alert('Do you work')
             try {
                 axios
                     .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
@@ -291,8 +290,6 @@ export default function EQueue() {
         // Ace 
 
         confirmAnAppo(appointments) {
-            console.log(appointments)
-            alert(appointments.id)
             try {
                 axios
                     .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
@@ -305,6 +302,25 @@ export default function EQueue() {
             } catch (err) {
                 console.log(err);
             }
+        },
+
+        confirmedList() {
+            try {
+                axios
+                    .get(`${URL_Heroku}/api/list`)
+                    .then((r) => r.data)
+                    .then((clinicDate) => {
+                        this.myBooking = clinicDate.data;
+                        console.log(this.myBooking);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
+
         },
         // end
 
