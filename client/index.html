@@ -157,6 +157,7 @@
                 <tr>
                   <th>Description</th>
                   <th>Date & Time</th>
+                  <th>Cancel Appointment</th>
                 </tr>
                 <template x-for="slot in myBooking">
                   <tr>
@@ -192,10 +193,9 @@
             </div>
 
             <div class="card-body">
-              <caption>Data</caption>
               <table>
-
                 <tr>
+                  <th>Names</th>
                   <th>Description</th>
                   <th>Date & Time</th>
                 </tr>
@@ -203,18 +203,16 @@
                 <template x-for="slot in myBooking">
                   <tr>
                     <td>
+                      <h6 x-text="slot.users_id"></h6>
+                    </td>
+                    <td>
                       <h6 x-text="slot.description"></h6>
                     </td>
                     <td>
                       <h6 x-text="slot.slot"></h6>
                     </td>
                     <td>
-                      <button @ class="btn btn-outline-secondary">Confirm to Child
-                        Services</button>
-                    </td>
-                    <td>
-                      <button class="btn btn-outline-secondary">Confirm
-                        to Adult Services</button>
+                      <button @click="confirmAnAppo(slot)" class="btn btn-outline-secondary">Confirm Booking</button>
                     </td>
                   </tr>
                 </template>

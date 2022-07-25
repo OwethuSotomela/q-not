@@ -16,6 +16,7 @@ const appState = {
 export default function EQueue() {
     return {
         booking: [],
+        schedule: [],
         appState: "LOGIN",
         init() {
             this.callFlatPicker();
@@ -126,7 +127,7 @@ export default function EQueue() {
                 } else {
                     console.log({ signupUser: this.user });
                     axios
-                        .post(`${URL_BASE}/api/signup`, signupUser)
+                        .post(`${URL_Heroku}/api/signup`, signupUser)
                         .then((myApp) => {
                             console.log(myApp.data);
                             this.feedback = myApp.data.message;
@@ -160,6 +161,7 @@ export default function EQueue() {
 
                         if (user.role == "Admin") {
                             this.changeScreen(appState.AdminHome);
+                            this.getBookings()
                         } else {
                             this.changeScreen(appState.Home);
                         }
@@ -277,6 +279,24 @@ export default function EQueue() {
                     .then(() => this.gettingUserBooking());
 
                 this.feedback = "Your appointment has been cancelled";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000).catch((err) => {
+                    console.log(err.message);
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // Ace 
+
+        confirmAnAppo(appointments) {
+            try {
+                axios
+                    .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
+                    .then(() => this.gettingUserBooking());
+
+                this.feedback = "Your appointment has been confirmed";
                 setTimeout(() => {
                     this.feedback = "";
                 }, 3000).catch((err) => {
