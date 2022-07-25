@@ -216,6 +216,7 @@ export default function EQueue() {
             }
         },
         gettingUserBooking() {
+            console.log('----------------------');
             const { username } =
                 this.user && this.user.username
                     ? this.user
@@ -295,7 +296,7 @@ export default function EQueue() {
             try {
                 axios
                     .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
-                    .then(() => this.gettingUserBooking());
+                    .then(() => this.getBookings());
 
                 this.feedback = "Your appointment has been confirmed";
                 setTimeout(() => {
