@@ -150,7 +150,7 @@ export default function EQueue() {
                 axios
                     .post(`${URL_Heroku}/api/login`, loginUser)
                     .then((myApp) => {
-                        console.log(myApp.data);
+                        // console.log(myApp.data);
                         var { access_token, user } = myApp.data;
 
                         if (!access_token) {
@@ -286,6 +286,7 @@ export default function EQueue() {
                 console.log(err);
             }
         },
+
         // Ace 
 
         confirmAnAppo(appointments) {
