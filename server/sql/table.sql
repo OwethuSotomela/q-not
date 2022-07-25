@@ -14,15 +14,7 @@ CREATE TABLE appointments(
     id SERIAL NOT NULL PRIMARY KEY,
     slot VARCHAR NOT NULL,
     users_id int,
-    description varchar(255) NOT NULL,
-    FOREIGN KEY (users_id) REFERENCES users(id)
-);
-
-DROP TABLE IF EXISTS schedule CASCADE;
-CREATE TABLE schedule(
-    id SERIAL NOT NULL PRIMARY KEY,
-    slot VARCHAR NOT NULL,
-    users_id int,
+    confirmed boolean default false,
     description varchar(255) NOT NULL,
     FOREIGN KEY (users_id) REFERENCES users(id)
 );

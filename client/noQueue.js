@@ -289,6 +289,8 @@ export default function EQueue() {
         // Ace 
 
         confirmAnAppo(appointments) {
+            console.log(appointments)
+            alert(appointments.id)
             try {
                 axios
                     .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
@@ -297,9 +299,7 @@ export default function EQueue() {
                 this.feedback = "Your appointment has been confirmed";
                 setTimeout(() => {
                     this.feedback = "";
-                }, 3000).catch((err) => {
-                    console.log(err.message);
-                });
+                }, 3000)
             } catch (err) {
                 console.log(err);
             }

@@ -141,7 +141,7 @@ module.exports = function (app, db) {
     app.get('/api/booking', async function (req, res) {
         try {
 
-            const bookingBy = await db.manyOrNone(`SELECT * FROM appointments`);
+            const bookingBy = await db.manyOrNone(`SELECT * FROM appointments join users on appointments.users_id = users.id`);
 
             res.json({
                 data: bookingBy,
@@ -171,22 +171,23 @@ module.exports = function (app, db) {
             })
         }
     })
+
     // Anele 
 
     app.post('/api/confirm/:id', async function (req, res) {
         try {
-            const { username } = req.body
+            // const { username } = req.body
 
             const { id } = req.params;
 
-            const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
+            // const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
 
             // if (!user) {
             //     throw Error('No user')
             // } else {
 
                 // await db.none(`INSERT INTO schedule (users_id, movie_list) VALUES ($1, $2)`, [user.id, id])
-                await db.none(`INSERT INTO schedule (slot, users_id, description) VALUES ($1, $2, $3)`, [id, user.id, description.appoReason])
+                await db.none(`update appointments set confirmed = true where id = $1;`, [id])
 
                 res.status(200).json({
                     message: 'Your appointment has been confirmed',
