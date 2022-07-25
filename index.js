@@ -30,5 +30,5 @@ API(app, db);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, function () {
-    console.log(`App started on port ${PORT}`);
+    console.log(`App started on port ${'*'}`);
 });;
