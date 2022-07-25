@@ -158,7 +158,7 @@ module.exports = function (app, db) {
 
         try {
             const { id } = req.params;
-            await db.none(`INSERT INTO schedule WHERE id = $1`, [id])
+            await db.none(`DELETE FROM appointments WHERE id = $1`, [id])
 
             res.json({
                 status: 'Appointment Cancelled',
@@ -185,13 +185,13 @@ module.exports = function (app, db) {
             //     throw Error('No user')
             // } else {
 
-            // await db.none(`INSERT INTO schedule (users_id, movie_list) VALUES ($1, $2)`, [user.id, id])
-            await db.none(`INSERT INTO schedule (slot, users_id, description) VALUES ($1, $2, $3)`, [id, user.id, description.appoReason])
+                // await db.none(`INSERT INTO schedule (users_id, movie_list) VALUES ($1, $2)`, [user.id, id])
+                await db.none(`INSERT INTO schedule (slot, users_id, description) VALUES ($1, $2, $3)`, [id, user.id, description.appoReason])
 
-            res.status(200).json({
-                message: 'Your appointment has been confirmed',
-                user
-            })
+                res.status(200).json({
+                    message: 'Your appointment has been confirmed',
+                    user
+                })
             // }
 
         } catch (error) {

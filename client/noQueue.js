@@ -272,6 +272,7 @@ export default function EQueue() {
         },
 
         cancelAppo(myAppointment) {
+            alert('Do you work')
             try {
                 axios
                     .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
@@ -280,9 +281,7 @@ export default function EQueue() {
                 this.feedback = "Your appointment has been cancelled";
                 setTimeout(() => {
                     this.feedback = "";
-                }, 3000).catch((err) => {
-                    console.log(err.message);
-                });
+                }, 3000)
             } catch (err) {
                 console.log(err);
             }
