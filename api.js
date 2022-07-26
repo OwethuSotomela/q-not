@@ -208,5 +208,23 @@ module.exports = function (app, db) {
             })
         }
     })
+
+    app.delete('/api/remove/:id', async function (req, res) {
+
+        try {
+            const { id } = req.params;
+            await db.none(`DELETE FROM appointments WHERE id = $1`, [id])
+
+            res.json({
+                status: 'Appointment Cancelled',
+            })
+        } catch (err) {
+            console.log(err)
+            res.json({
+                status: 'Failed to cancel appointment',
+                error: err.stack
+            })
+        }
+    })
 }
 
