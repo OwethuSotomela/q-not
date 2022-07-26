@@ -172,6 +172,9 @@ export default function EQueue() {
                         this.token = access_token;
                         localStorage.setItem("access_token", this.token);
                         this.loginFeed = myApp.data.message;
+                        setTimeout(()=>{
+                            this.loginFeed = ""
+                        }, 3000)
 
                         setTimeout(() => {
                             this.loading = false;
@@ -325,8 +328,6 @@ export default function EQueue() {
         },
 
         removeDone(AllAppointment) {
-            console.log(AllAppointment)
-            alert(AllAppointment.id)
             try {
                 axios
                     .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
