@@ -87,7 +87,8 @@ export default function EQueue() {
             club: "Clinic for chronic diseases",
             kids: "Child Immunization",
         },
-        loggedIn: "",
+        loggedIn: "Logged in as Admin:",
+        loginFeed: "",
         user: {
             fullname: "",
             username: "",
@@ -170,7 +171,7 @@ export default function EQueue() {
                         localStorage.setItem("user", JSON.stringify(user));
                         this.token = access_token;
                         localStorage.setItem("access_token", this.token);
-                        this.feedback = myApp.data.message;
+                        this.loginFeed = myApp.data.message;
 
                         setTimeout(() => {
                             this.loading = false;
@@ -185,9 +186,9 @@ export default function EQueue() {
                     .catch((err) => {
                         console.log(err);
                         console.log(err.response.data.message);
-                        this.feedback = err.response.data.message;
+                        this.loginFeed = err.response.data.message;
                         setTimeout(() => {
-                            this.feedback = "";
+                            this.loginFeed = "";
                         }, 3000);
                     });
             } catch (err) { }
@@ -200,9 +201,6 @@ export default function EQueue() {
                     ? this.Booking
                     : localStorage.getItem("Booking");
 
-                alert("You have selected" + " " + bookedDay);
-                alert("For" + " " + appoReason + " " + "appointment");
-
                 const { username } = this.user.username
                     ? this.user
                     : JSON.parse(localStorage.getItem("user"));
@@ -212,10 +210,16 @@ export default function EQueue() {
                     .then((data) => {
                         console.log(data);
                     });
+
+                this.feedback = "Your appointment has been created";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
             } catch (err) {
                 alert(err.message);
             }
         },
+
         gettingUserBooking() {
             const { username } =
                 this.user && this.user.username
@@ -235,6 +239,22 @@ export default function EQueue() {
                     // alert('Error')
                 });
         },
+
+        cancelAppo(myAppointment) {
+            try {
+                axios
+                    .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
+                    .then(() => this.gettingUserBooking());
+
+                this.feedback = "You have cancelled your appointment";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
         goToConfirmation() {
             this.changeScreen(appState.Confirmation);
             setTimeout(() => {
@@ -267,24 +287,6 @@ export default function EQueue() {
                     console.log(e);
                     // alert('Error')
                 });
-        },
-        confirmAdultBookings() {
-            alert("Hi, All. Bye-All See you Monday");
-        },
-
-        cancelAppo(myAppointment) {
-            try {
-                axios
-                    .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
-                    .then(() => this.gettingUserBooking());
-
-                this.feedback = "Your appointment has been cancelled";
-                setTimeout(() => {
-                    this.feedback = "";
-                }, 3000)
-            } catch (err) {
-                console.log(err);
-            }
         },
 
         // Ace 

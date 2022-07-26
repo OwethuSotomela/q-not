@@ -75,6 +75,7 @@
           <center>
             <h4>Login</h4>
           </center>
+          <p x-text="loginFeed"></p>
 
           <label>Username</label>
           <input type="text" x-model="logUser.username" placeholder="Enter your username">
@@ -88,7 +89,7 @@
         </div>
 
         <div x-show="appState == 'HOME'" class="homePage">
-
+          <p x-text="feedback"></p>
           <div class="card text-center">
             <div class="card-header">
               <label>Book Appointment</label>
@@ -118,8 +119,8 @@
 
                 <br>
                 <br>
-                <label>Select date and time</label>
-                <input type="">
+                <!-- <label>Select date and time</label> -->
+                <!-- <input type="" id="lender"> -->
                 <a class="input-button" title="toggle" data-toggle>
                   <i class="icon-calendar"></i>
                 </a>
@@ -145,6 +146,7 @@
         </div>
 
         <div x-show="appState == 'CONFIRMATION'" class="confirmation">
+          <p x-text="feedback"></p>
 
           <div class="card text-center">
 
@@ -191,12 +193,17 @@
 
         <!-- Ace  -->
         <div x-show="appState == 'ADMINISTRATOR'" class="manage">
+          <center>
+            <div class="admin">
+              <h5 x-text="loggedIn" class="min"></h5>
 
-          <h6 x-text="user.fullname"></h6>
+              <h5 x-text="user.fullname"></h5>
+            </div>
+          </center>
 
           <div class="card text-center">
             <div class="card-header">
-              <label>Confirm Appointments</label>
+              <label><strong>Appointments</strong></label>
             </div>
 
             <div class="card-body">
@@ -236,14 +243,13 @@
             </div>
 
             <div class="card-footer text-muted">
-              <a href="#" @click="goToLogin()">Go back to Login</a>
             </div>
 
           </div>
           <hr>
           <div class="card text-center">
             <div class="card-header">
-              <label>Confirmed Appointments / Clinic Schedule</label>
+              <label><strong>Confirmed Appointments / Clinic Schedule</strong></label>
             </div>
 
             <div class="card-body">
@@ -279,6 +285,7 @@
             </div>
 
             <div class="card-footer text-muted">
+              <a href="#" @click="goToLogin()">Go back to Login</a>
             </div>
 
           </div>

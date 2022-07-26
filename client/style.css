@@ -12,8 +12,6 @@
 }
 
 .flatpickr i {
-  /* justify-content: center;
-  text-align: center; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,4 +71,20 @@ table th {
   text-align: left;
   background-color: #0D6EFD;
   color: white;
+}
+#reason{
+  height: 2em;
+  width: 25em;
+}
+#lender{
+  align-items: center;
+  text-align: center;
+}
+.admin{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+.min{
+  margin-right: 0.3em;
 }
