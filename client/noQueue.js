@@ -214,7 +214,7 @@ export default function EQueue() {
                         console.log(data);
                     });
 
-                this.feedback = "Your appointment has been created";
+                this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
                 setTimeout(() => {
                     this.feedback = "";
                 }, 3000)
@@ -273,9 +273,6 @@ export default function EQueue() {
         goToLogin() {
             this.changeScreen(appState.Login);
         },
-        confirmBookings() {
-            alert("Hi, All. Bye-All See you Monday");
-        },
 
         getBookings() {
             axios
@@ -299,7 +296,7 @@ export default function EQueue() {
                     .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
                     .then(() => this.getBookings());
 
-                this.feedback = "Your appointment has been confirmed";
+                this.feedback = "You have confirmed this appointment";
                 setTimeout(() => {
                     this.feedback = "";
                 }, 3000)
