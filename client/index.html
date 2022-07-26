@@ -100,34 +100,31 @@
           <div class="card text-center">
             <div class="card-header">
               <label>Book Appointment</label>
+              <br>
+
+              <div class="dropdown" x-data="{open: false}">
+                <select id="reason" x-on:click="open = !open" x-model="description">
+
+                  <div x-show="open">
+                    <br>
+                    <option>Mental health care</option>
+                    <option>Dental Health</option>
+                    <option>Family planning</option>
+                    <option>NBAC</option>
+                    <option>ART</option>
+                    <option>Clinic for chronic diseases</option>
+                    <option>Child Immunization</option>
+                  </div>
+
+                </select>
+              </div>
             </div>
             <h6 x-show="loading" align="center">Loading...</h6>
             <div x-show="!loading" class="card-body">
               <div class="flatpickr" align="center">
 
-                <div class="dropdown" x-data="{open: false}">
-                  <select id="reason" x-on:click="open = !open" x-model="description">
-
-                    <div x-show="open">
-                      <br>
-                      <option>Mental health care</option>
-                      <option>Dental Health</option>
-                      <option>Family planning</option>
-                      <option>NBAC</option>
-                      <option>ART</option>
-                      <option>Clinic for chronic diseases</option>
-                      <option>Child Immunization</option>
-                    </div>
-
-                  </select>
-                </div>
-
-                <!-- end  -->
-
                 <br>
                 <br>
-                <!-- <label>Select date and time</label> -->
-                <!-- <input type="" id="lender"> -->
                 <a class="input-button" title="toggle" data-toggle>
                   <i class="icon-calendar"></i>
                 </a>
@@ -139,11 +136,11 @@
               </div>
               <br>
 
-              <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
-
             </div>
 
             <div class="card-footer text-muted">
+              <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
+              <br>
               <a href="#" @click="goToLogin()">Go back to Login</a>
               <br>
               <a href="#" @click="goToConfirmation()">Get your booking confirmation</a>
@@ -255,7 +252,7 @@
             </div>
 
           </div>
-          
+
         </div>
 
         <div x-show="appState == 'APPROVED'" class="approved">
@@ -307,6 +304,8 @@
 
             <div class="card-footer text-muted">
               <a href="#" @click="goToLogin()">Go back to Login</a>
+              <br>
+              <a href="#" @click="goToConfirm()">Go back to confirming Appointments</a>
             </div>
 
           </div>

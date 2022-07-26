@@ -10,15 +10,34 @@
   text-align: center;
   margin-bottom: 2em;
 }
-
-.flatpickr i {
+div.flatpickr.form-control.input{
+  width: 1px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-position: center center;
-  background-repeat: no-repeat;
+  padding: 1px 1px;
 }
+div.card-body{
+  display: flex;
+  justify-content: center;
+}
+
+.parent {
+  background: #CCCCCC;
+  height: 200px;
+  width: 200px;
+  position: relative;
+  }
+  .child {
+  background: #FFFF00;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -35px 0 0 -35px;
+  }
+
+  /* end  */
 
 ::placeholder {
   text-align: center;

@@ -277,6 +277,9 @@ export default function EQueue() {
         goToApproved(){
             this.changeScreen(appState.Approved)
         },
+        goToConfirm(){
+            this.changeScreen(appState.AdminHome)
+        },
 
         getBookings() {
             axios
