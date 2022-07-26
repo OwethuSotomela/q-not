@@ -29,12 +29,13 @@ body{
 }
 .form{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  
 }
 .tag label{
     display: block;
-    width: 5em;
-    margin-top: 0.5em;
+    /* width: 5em; */
+    /* margin-top: 0.5em; */
 }
 .row {
   display: flex;
