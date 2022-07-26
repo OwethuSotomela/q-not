@@ -274,7 +274,6 @@ export default function EQueue() {
             alert("Hi, All. Bye-All See you Monday");
         },
 
-        // here
         getBookings() {
             axios
                 .get(`${URL_Heroku}/api/booking`)
@@ -323,6 +322,23 @@ export default function EQueue() {
                 console.log(error)
             }
 
+        },
+
+        removeDone(AllAppointment) {
+            console.log(AllAppointment)
+            alert(AllAppointment.id)
+            try {
+                axios
+                    .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
+                    .then(() => this.gettingUserBooking());
+
+                this.feedback = "You have deleted this appointment";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
+            } catch (err) {
+                console.log(err);
+            }
         },
         // end
 

@@ -262,6 +262,7 @@
                   <th>Description</th>
                   <th>Date & Time</th>
                   <th>Confirmed</th>
+                  <th>Completed</th>
                 </tr>
 
                 <template x-for="slot in myBooking">
@@ -280,6 +281,9 @@
                     </td>
                     <td>
                       <h6 x-text="slot.confirmed"></h6>
+                    </td>
+                    <td>
+                      <button @click="removeDone(slot)" class="btn btn-danger">Remove Done</button>
                     </td>
                   </tr>
                 </template>
