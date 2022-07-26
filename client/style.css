@@ -32,6 +32,9 @@ body{
   flex-direction: column;
   
 }
+.col-auto{
+  margin-top: 0.3em;
+}
 .tag label{
     display: block;
     /* width: 5em; */

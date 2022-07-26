@@ -29,21 +29,25 @@
             <h4>Signup</h4>
           </center>
 
-          <div class="form">
-            <div class="tag">
+          <div class="form-floating">
+            <div class="col-auto">
               <label>Fullname</label>
+              <br>
               <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
             </div>
-            <div class="tag">
+            <div class="col-auto">
               <label>Username</label>
+              <br>
               <input type="text" x-model="user.username" placeholder="Enter your lastname">
             </div>
-            <div class="tag">
+            <div class="col-auto">
               <label>Password</label>
+              <br>
               <input type="password" x-model="user.password" placeholder="Create a password">
             </div>
-            <div class="tag">
+            <div class="col-auto">
               <label>Role</label>
+              <br>
               <select id="reason" x-on:click="open = !open" x-model="user.role">
 
                 <div x-show="open">
@@ -54,17 +58,20 @@
 
               </select>
             </div>
-            <div class="tag">
+            <div class="col-auto">
               <label>ID #</label>
+              <br>
               <input type="password" x-model="user.id_number" placeholder="Enter your ID #" required minlength="10"
                 maxlength="13" size="15">
             </div>
-            <div class="tag">
+            <div class="col-auto">
               <label>Contact #</label>
+              <br>
               <input type="text" x-model="user.contact_number" placeholder="Enter your contact #" required minlength="9"
                 maxlength="10" size="15">
             </div>
           </div>
+          <br>
           <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
           <br>
           <a href="#" @click="gotToLogin()">Already have an account? Login</a>
