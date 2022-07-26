@@ -328,7 +328,7 @@ export default function EQueue() {
             try {
                 axios
                     .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
-                    .then(() => this.gettingUserBooking());
+                    .then(() => this.getBookings());
 
                 this.feedback = "You have deleted this appointment";
                 setTimeout(() => {
