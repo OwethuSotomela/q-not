@@ -11,6 +11,7 @@ const appState = {
     AdminHome: "ADMINISTRATOR",
     Confirmation: "CONFIRMATION",
     Manage: "MANAGE",
+    Approved: "APPROVED"
 };
 
 export default function EQueue() {
@@ -272,6 +273,9 @@ export default function EQueue() {
         },
         goToLogin() {
             this.changeScreen(appState.Login);
+        },
+        goToApproved(){
+            this.changeScreen(appState.Approved)
         },
 
         getBookings() {

@@ -251,10 +251,15 @@
             </div>
 
             <div class="card-footer text-muted">
+              <a href="#" @click="goToApproved()">View a list of confirmed Appointment</a>
             </div>
 
           </div>
-          <hr>
+          
+        </div>
+
+        <div x-show="appState == 'APPROVED'" class="approved">
+
           <div class="card text-center">
             <div class="card-header">
               <label><strong>Confirmed Appointments / Clinic Schedule</strong></label>
