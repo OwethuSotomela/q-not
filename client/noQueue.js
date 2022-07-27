@@ -329,8 +329,8 @@ export default function EQueue() {
                     .get(`${URL_Heroku}/api/list`)
                     .then((r) => r.data)
                     .then((clinicDate) => {
-                        this.myBooking = clinicDate.data;
-                        console.log(this.myBooking);
+                        this.confirmedTable = clinicDate.data;
+                        console.log(this.confirmedTable);
                     })
                     .catch((e) => {
                         console.log(e);
