@@ -32,7 +32,7 @@ export default function EQueue() {
                     this.user = localStorage.getItem("user");
                 }
             };
-            this.confirmAnAppo()
+            this.confirmedList()
         },
         changeScreen(name) {
             this.appState = name;
