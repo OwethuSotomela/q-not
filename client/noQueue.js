@@ -46,13 +46,9 @@ export default function EQueue() {
         callFlatPicker() {
             flatpickr(".flatpickr", {
                 enableTime: true,
-                // dateFormat: "Y-m-d H:i",
-                dateFormat: "dd-MM-yyyy H:i:s",
-
+                dateFormat: "Y-m-d H:i",
                 altInput: true,
-                // altFormat: "F j, Y",
-                altFormat: "F j, Y - h:i", 
-                
+                altFormat: "F j, Y",
                 minTime: "09:00",
                 maxTime: "16:00",
 
