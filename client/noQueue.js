@@ -117,6 +117,7 @@ export default function EQueue() {
         loading: true,
         description: null,
         myBooking: [],
+        confirmedTable: [],
         gotToSignUp() {
             this.changeScreen(appState.Signup);
         },
