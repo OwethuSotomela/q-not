@@ -106,7 +106,7 @@ module.exports = function (app, db) {
     }
     // end 
 
-    app.post('/api/book/:bookByDay', async function (req, res) {
+    app.post('/api/book/:bookByDay', verifyToken, async function (req, res) {
         try {
             const { username } = req.body;
             console.log({ username })
