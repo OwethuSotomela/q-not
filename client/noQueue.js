@@ -31,7 +31,8 @@ export default function EQueue() {
                 if (localStorage["user"]) {
                     this.user = localStorage.getItem("user");
                 }
-            }
+            };
+            this.confirmAnAppo()
         },
         changeScreen(name) {
             this.appState = name;
