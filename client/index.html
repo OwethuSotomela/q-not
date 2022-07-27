@@ -275,25 +275,25 @@
                   <th>Completed</th>
                 </tr>
 
-                <template x-for="slot in confirmedTable">
+                <template x-for="confirmed in confirmedTable">
                   <tr>
                     <td>
-                      <h6 x-text="slot.fullname"></h6>
+                      <h6 x-text="confirmed.fullname"></h6>
                     </td>
                     <td>
-                      <h6 x-text="slot.id_number"></h6>
+                      <h6 x-text="confirmed.id_number"></h6>
                     </td>
                     <td>
-                      <h6 x-text="slot.description"></h6>
+                      <h6 x-text="confirmed.description"></h6>
                     </td>
                     <td>
-                      <h6 x-text="slot.slot"></h6>
+                      <h6 x-text="confirmed.slot"></h6>
                     </td>
                     <td>
-                      <h6 x-text="slot.confirmed"></h6>
+                      <h6 x-text="confirmed.confirmed"></h6>
                     </td>
                     <td>
-                      <button @click="removeDone(slot)" class="btn btn-danger">Remove Done</button>
+                      <button @click="removeDone(confirmed)" class="btn btn-danger">Remove Done</button>
                     </td>
                   </tr>
                 </template>
