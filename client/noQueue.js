@@ -41,14 +41,18 @@ export default function EQueue() {
             }
             if (this.appState == appState.Home) {
                 this.callFlatPicker();
-            }
+            };
         },
         callFlatPicker() {
             flatpickr(".flatpickr", {
                 enableTime: true,
-                dateFormat: "Y-m-d H:i",
+                // dateFormat: "Y-m-d H:i",
+                dateFormat: "dd-MM-yyyy H:i:s",
+
                 altInput: true,
-                altFormat: "F j, Y",
+                // altFormat: "F j, Y",
+                altFormat: "F j, Y - h:i", 
+                
                 minTime: "09:00",
                 maxTime: "16:00",
 
@@ -65,14 +69,14 @@ export default function EQueue() {
                 // ],
                 "disable": [
                     // Disable weekends
-                    function(date) {
+                    function (date) {
                         return (date.getDay() === 0 || date.getDay() === 6);
-            
+
                     },
                     // Disable specific dates
                     "2022-03-25",
                     "2022-03-10",
-                    "2022-03-04" 
+                    "2022-03-04"
                 ],
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
@@ -185,7 +189,7 @@ export default function EQueue() {
                         this.token = access_token;
                         localStorage.setItem("access_token", this.token);
                         this.loginFeed = myApp.data.message;
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             this.loginFeed = ""
                         }, 3000)
 
@@ -286,10 +290,10 @@ export default function EQueue() {
         goToLogin() {
             this.changeScreen(appState.Login);
         },
-        goToApproved(){
+        goToApproved() {
             this.changeScreen(appState.Approved)
         },
-        goToConfirm(){
+        goToConfirm() {
             this.changeScreen(appState.AdminHome)
         },
 
@@ -357,6 +361,7 @@ export default function EQueue() {
                 console.log(err);
             }
         },
+
         // end
 
         logout() {
