@@ -32,7 +32,6 @@ export default function EQueue() {
                     this.user = localStorage.getItem("user");
                 }
             };
-            this.confirmedList()
         },
         changeScreen(name) {
             this.appState = name;
@@ -299,7 +298,7 @@ export default function EQueue() {
                 .then((r) => r.data)
                 .then((clinicDate) => {
                     this.myBooking = clinicDate.data;
-                    console.log(this.myBooking);
+                    // console.log(this.myBooking);
                 })
                 .catch((e) => {
                     console.log(e);
