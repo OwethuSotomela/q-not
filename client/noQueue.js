@@ -73,7 +73,20 @@ export default function EQueue() {
                     },
                     "2022-03-25",
                     "2022-03-10",
-                    "2022-03-04"
+                    "2022-03-04",
+
+                    "2022-01-01",
+                    "2022-03-21",
+                    "2022-04-15",
+                    "2022-04-18",
+                    "2022-04-27",
+                    "2022-05-02",
+                    "2022-06-16",
+                    "2022-12-16",
+                    "2022-12-26",
+                    "2022-08-09",
+                    "2022-09-24"
+
                 ],
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
