@@ -53,6 +53,7 @@ export default function EQueue() {
                 // here 
                 mode: "range",
                 minDate: "today",
+                maxDate: "2022-11-30",
                 // end 
 
                 altInput: true,
@@ -295,7 +296,7 @@ export default function EQueue() {
         },
 
         getBookings() {
-            alert('called')
+            // alert('called')
             axios
                 .get(`${URL_Heroku}/api/booking`)
                 .then((r) => r.data)
