@@ -34,6 +34,7 @@ export default function EQueue() {
             };
             this.confirmedList()
             this.getBookings()
+            this.removeDone()
         },
         changeScreen(name) {
             this.appState = name;
@@ -235,17 +236,21 @@ export default function EQueue() {
                 const { username } = this.user.username
                     ? this.user
                     : JSON.parse(localStorage.getItem("user"));
-                axios
-                    .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
-                    .then((result) => result.data)
-                    .then((data) => {
-                        console.log(data);
-                    });
+                if (this.appoReason == null || this.bookedDay == null) {
+                    this.feedback = 'Unable to book, incomplete or missing fields'
+                } else {
+                    axios
+                        .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
+                        .then((result) => result.data)
+                        .then((data) => {
+                            console.log(data);
+                        });
 
-                this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
-                setTimeout(() => {
-                    this.feedback = "";
-                }, 3000)
+                    this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
+                    setTimeout(() => {
+                        this.feedback = "";
+                    }, 3000)
+                }
             } catch (err) {
                 alert(err.message);
             }
