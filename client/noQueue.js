@@ -48,6 +48,12 @@ export default function EQueue() {
             flatpickr(".flatpickr", {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
+
+                // here 
+                mode: "range",
+                minDate: "today",
+                // end 
+
                 altInput: true,
                 altFormat: "F j, Y",
                 minTime: "09:00",
@@ -58,19 +64,11 @@ export default function EQueue() {
                 allowInput: true,
                 time_24hr: true,
 
-                // disable: [
-                //     "2022-07-30",
-                //     "2022-07-21",
-                //     "2022-08-08",
-                //     new Date(2025, 4, 9),
-                // ],
                 "disable": [
-                    // Disable weekends
                     function (date) {
                         return (date.getDay() === 0 || date.getDay() === 6);
 
                     },
-                    // Disable specific dates
                     "2022-03-25",
                     "2022-03-10",
                     "2022-03-04"
