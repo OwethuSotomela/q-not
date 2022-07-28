@@ -33,6 +33,7 @@ export default function EQueue() {
                 }
             };
             this.confirmedList()
+            this.getBookings()
         },
         changeScreen(name) {
             this.appState = name;
@@ -126,6 +127,7 @@ export default function EQueue() {
         signup() {
             try {
                 const signupUser = this.user;
+                console.log(this.user)
                 if (
                     this.user.fullname == undefined ||
                     this.user.username == undefined ||
@@ -293,6 +295,7 @@ export default function EQueue() {
         },
 
         getBookings() {
+            alert('called')
             axios
                 .get(`${URL_Heroku}/api/booking`)
                 .then((r) => r.data)
