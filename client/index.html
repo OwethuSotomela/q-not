@@ -32,74 +32,73 @@
           <span x-text="feedback" class="feedback">Feedback</span>
           <br>
           <center>
-            <h4>Signup</h4>
+            <p>SIGNUP HERE</p>
           </center>
 
-          <div class="signMeUp">
+          <div class="form-floating">
             <div class="col-auto">
-              <label>Fullname</label>
-              <br>
-              <input type="text" x-model="user.fullname" placeholder="Enter your firstname">
+              <label>Fullname</label><br>
+              <input type="text" class="input" x-model="user.fullname" placeholder="Enter your firstname">
             </div>
             <div class="col-auto">
-              <label>Username</label>
-              <br>
-              <input type="text" x-model="user.username" placeholder="Enter your lastname">
+              <label>Username</label><br>
+              <input type="text" class="input" x-model="user.username" placeholder="Enter your username">
             </div>
             <div class="col-auto">
               <label>Password</label>
               <br>
-              <input type="password" x-model="user.password" placeholder="Create a password">
+              <input type="password" class="input" x-model="user.password" placeholder="Create a password">
             </div>
             <div class="col-auto">
-              <label>Role</label>
-              <br>
-              <select id="reason" x-on:click="open = !open" x-model="user.role">
-
+              <label>Role</label><br>
+              <select class="input" id="specificSizeSelect" x-on:click="open = !open" x-model="user.role">
                 <div x-show="open">
-                  <br>
                   <option>-- Select Your Role --</option>
                   <option>Admin</option>
                   <option>Patient</option>
                 </div>
-
               </select>
             </div>
             <div class="col-auto">
-              <label>ID #</label>
-              <br>
-              <input type="password" x-model="user.id_number" placeholder="Enter your ID #" required minlength="10"
-                maxlength="13" size="15">
+              <label>ID #</label><br>
+              <input type="password" class="input" x-model="user.id_number" placeholder="Enter your ID #" required
+                minlength="10" maxlength="13" size="15">
             </div>
             <div class="col-auto">
-              <label>Contact #</label>
-              <br>
-              <input type="text" x-model="user.contact_number" placeholder="Enter your contact #" required minlength="9"
-                maxlength="10" size="15">
+              <label>Contact #</label><br>
+              <input type="text" class="input" x-model="user.contact_number" placeholder="Enter your contact #" required
+                minlength="9" maxlength="10" size="15"><br>
             </div>
+            <div class="checkbox">
+              <label><input type="checkbox"> Remember me</label><br><br>
+            </div>
+            <div class="signUp">
+              <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
+            </div>
+            <a href="#" @click="gotToLogin()">Already have an account? Login</a>
           </div>
-          <br>
-          <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
-          <br>
-          <a href="#" @click="gotToLogin()">Already have an account? Login</a>
-          <hr>
         </div>
 
         <div x-show="appState == 'LOGIN'" class="login">
           <center>
-            <h4>Login</h4>
+            <p>LOGIN</p>
           </center>
-          <p x-text="loginFeed"></p>
-
-          <label>Username</label>
-          <input type="text" x-model="logUser.username" placeholder="Enter your username">
-          <label>Password</label>
-          <input type="password" x-model="logUser.password" placeholder="Enter your password">
+          <div class="form-floating">
+            <div class="col-auto">
+              <label>Username</label><br>
+              <input type="text" class="input" x-model="logUser.username" placeholder="Enter your username">
+            </div>
+            <div class="col-auto">
+              <label>Password</label><br>
+              <input type="password" class="input" x-model="logUser.password" placeholder="Enter your password">
+              <i class="bi bi-eye-slash" id="togglePassword"></i>
+              <br><br>
+            </div>
+          </div>
 
           <button @click="login()" class="btn btn-outline-success">Login</button>
           <br>
           <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
-          <hr>
         </div>
 
         <div x-show="appState == 'HOME'" class="homePage">
