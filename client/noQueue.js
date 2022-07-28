@@ -52,7 +52,7 @@ export default function EQueue() {
                 dateFormat: "Y-m-d H:i",
 
                 // here 
-                mode: "range",
+                // mode: "multiple",
                 minDate: "today",
                 maxDate: "2022-11-30",
                 // end 
@@ -236,21 +236,19 @@ export default function EQueue() {
                 const { username } = this.user.username
                     ? this.user
                     : JSON.parse(localStorage.getItem("user"));
-                if (this.appoReason == null || this.bookedDay == null) {
-                    this.feedback = 'Unable to book, incomplete or missing fields'
-                } else {
-                    axios
-                        .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
-                        .then((result) => result.data)
-                        .then((data) => {
-                            console.log(data);
-                        });
 
-                    this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
-                    setTimeout(() => {
-                        this.feedback = "";
-                    }, 3000)
-                }
+                axios
+                    .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
+                    .then((result) => result.data)
+                    .then((data) => {
+                        console.log(data);
+                    });
+
+                this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
+
             } catch (err) {
                 alert(err.message);
             }

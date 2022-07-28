@@ -58,6 +58,7 @@
 
                 <div x-show="open">
                   <br>
+                  <option>-- Select Your Role --</option>
                   <option>Admin</option>
                   <option>Patient</option>
                 </div>
@@ -113,6 +114,7 @@
 
                   <div x-show="open">
                     <br>
+                    <option>--Select reason for appointment--</option>
                     <option>Mental health care</option>
                     <option>Dental Health</option>
                     <option>Family planning</option>
@@ -317,6 +319,10 @@
             </div>
 
           </div>
+        </div>
+
+        <div x-show="appState == 'TEMP'">
+
         </div>
 
       </div>
