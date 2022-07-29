@@ -148,4 +148,9 @@ table th {
     background-color: #0D6EFD;
     color: white;
   }
+
+#reason{
+  height: 2em;
+  width: 10em;
+}
 }
