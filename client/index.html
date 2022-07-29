@@ -323,51 +323,35 @@
 
         <div x-show="appState == 'SCHEDULE'">
 
-          <div class="card text-center">
-            <div class="card-header">
-              <label><strong>Clear Schedule</strong></label>
-            </div>
-
-            <div class="card-body">
-              <div class="parent">
-
-                <div class="child">
-                  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
-                    <div class="dhx_cal_navline">
-                      <div class="dhx_cal_prev_button">&nbsp;</div>
-                      <div class="dhx_cal_next_button">&nbsp;</div>
-                      <div class="dhx_cal_today_button"></div>
-                      <div class="dhx_cal_date"></div>
-                      <div class="dhx_cal_tab" name="day_tab"></div>
-                      <div class="dhx_cal_tab" name="week_tab"></div>
-                      <div class="dhx_cal_tab" name="month_tab"></div>
-                    </div>
-                    <div class="dhx_cal_header"></div>
-                    <div class="dhx_cal_data"></div>
-                  </div>
-                  <script>
-                    scheduler.config.load_date = "%Y-%m-%d %H:%i";
-                    scheduler.init("scheduler_here", new Date(2022, 0, 20), "week");
-                    scheduler.setLoadMode("day");
-
-                    // load data from backend
-                    scheduler.load("/events", "json");
-
-                    // connect backend to scheduler
-                    const dp = scheduler.createDataProcessor({
-                      url: "/events",
-                      mode: "REST"
-                    });
-                  </script>
-                </div>
-
+          <div class="parent">
+            <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+              <div class="dhx_cal_navline">
+                <div class="dhx_cal_prev_button">&nbsp;</div>
+                <div class="dhx_cal_next_button">&nbsp;</div>
+                <div class="dhx_cal_today_button"></div>
+                <div class="dhx_cal_date"></div>
+                <div class="dhx_cal_tab" name="day_tab"></div>
+                <div class="dhx_cal_tab" name="week_tab"></div>
+                <div class="dhx_cal_tab" name="month_tab"></div>
               </div>
-              
+              <div class="dhx_cal_header"></div>
+              <div class="dhx_cal_data"></div>
             </div>
 
-            <div class="card-footer text-muted">
-              <a href="#" @click="goToApproved()">Go back to confirming Appointments</a>
-            </div>
+            <script>
+              scheduler.config.load_date = "%Y-%m-%d %H:%i";
+              scheduler.init("scheduler_here", new Date(2022, 0, 20), "week");
+              scheduler.setLoadMode("day");
+
+              // load data from backend
+              scheduler.load("/events", "json");
+
+              // connect backend to scheduler
+              const dp = scheduler.createDataProcessor({
+                url: "/events",
+                mode: "REST"
+              });
+            </script>
           </div>
 
         </div>

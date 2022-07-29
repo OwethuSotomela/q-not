@@ -10,13 +10,15 @@
   text-align: center;
   margin-bottom: 2em;
 }
-div.flatpickr.form-control.input{
+
+div.flatpickr.form-control.input {
   width: 1px;
   display: flex;
   justify-content: center;
   padding: 1px 1px;
 }
-div.card-body{
+
+div.card-body {
   display: flex;
   justify-content: center;
 }
@@ -26,8 +28,9 @@ div.card-body{
   height: 200px;
   width: 200px;
   position: relative;
-  }
-  .child {
+}
+
+.child {
   background: #FFFF00;
   width: 70px;
   height: 70px;
@@ -35,32 +38,38 @@ div.card-body{
   top: 50%;
   left: 50%;
   margin: -35px 0 0 -35px;
-  }
+}
 
-  /* end  */
+/* end  */
 
 ::placeholder {
   text-align: center;
 }
-body{
+
+body {
   background-color: rgba(228, 128, 41, 0.125);
   background-color: #FFF1ED;
 }
-.form{
+
+.form {
   display: flex;
   flex-direction: column;
-  
+
 }
-.col-auto{
+
+.col-auto {
   margin-top: 0.3em;
 }
-.tag label{
-    display: block;
+
+.tag label {
+  display: block;
 }
+
 .row {
   display: flex;
 }
-.image{
+
+.image {
   width: 20em;
   height: 20em;
 }
@@ -72,14 +81,21 @@ table {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-table td, table th {
+
+table td,
+table th {
   border: 1px solid #ddd;
   padding: 4px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-table tr:hover {background-color: #888888;}
+table tr:hover {
+  background-color: #888888;
+}
+
 table th {
   padding-top: 4px;
   padding-bottom: 4px;
@@ -87,22 +103,27 @@ table th {
   background-color: #0D6EFD;
   color: white;
 }
-#reason{
+
+#reason {
   height: 2em;
   width: 25em;
 }
-#lender{
+
+#lender {
   align-items: center;
   text-align: center;
 }
-.admin{
+
+.admin {
   display: flex;
   flex-direction: row;
   align-content: center;
 }
-.min{
+
+.min {
   margin-right: 0.3em;
 }
+
 .input {
   text-align: center;
   width: 50%;
@@ -117,15 +138,14 @@ table th {
 
 /* new  */
 
-.parent .child{
-  margin:0px;
-  padding:0px;
-  height:20vh;
-  width: 20vh;
-  overflow:hidden;
+.parent{
+  margin: 0px;
+  width: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
-@media (max-width: 600px){
+@media (max-width: 600px) {
   table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -133,24 +153,31 @@ table th {
     margin-top: 1em;
     margin-bottom: 1em;
   }
-  table td, table th {
-    border: 1px solid #ddd;
-    padding: 4px;
-  }
-  
-  table tr:nth-child(even){background-color: #f2f2f2;}
-  
-  table tr:hover {background-color: #888888;}
+
+  table td,
   table th {
-    padding-top: 4px;
-    padding-bottom: 4px;
+    border: 1px solid #ddd;
+    padding: 1px;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  table tr:hover {
+    background-color: #888888;
+  }
+
+  table th {
+    padding-top: 2px;
+    padding-bottom: 2px;
     text-align: left;
     background-color: #0D6EFD;
     color: white;
   }
 
-#reason{
-  height: 2em;
-  width: 10em;
-}
+  #reason {
+    height: 2em;
+    width: 10em;
+  }
 }
