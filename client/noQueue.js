@@ -7,11 +7,14 @@ const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
 const appState = {
     Login: "LOGIN",
     Signup: "SIGNUP",
+
     Home: "HOME",
+
     AdminHome: "ADMINISTRATOR",
     Confirmation: "CONFIRMATION",
     Manage: "MANAGE",
-    Approved: "APPROVED"
+    Approved: "APPROVED",
+    Schedule: "SCHEDULE"
 };
 
 export default function EQueue() {
@@ -309,6 +312,9 @@ export default function EQueue() {
         },
         goToConfirm() {
             this.changeScreen(appState.AdminHome)
+        },
+        goToSchedule(){
+            this.changeScreen(appState.Schedule)
         },
 
         getBookings() {
