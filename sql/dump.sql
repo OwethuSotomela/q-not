@@ -8,4 +8,4 @@ CREATE TABLE events (
  end_date datetime NOT NULL,
  text varchar(255) DEFAULT NULL,
  PRIMARY KEY (id)
-) DEFAULT CHARSET=utf8;
+) DEFAULT
