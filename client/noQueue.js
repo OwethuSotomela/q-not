@@ -35,9 +35,7 @@ export default function EQueue() {
                     this.user = localStorage.getItem("user");
                 }
             };
-            this.confirmedList()
             this.getBookings()
-            this.removeDone()
         },
         changeScreen(name) {
             this.appState = name;
@@ -48,6 +46,9 @@ export default function EQueue() {
             if (this.appState == appState.Home) {
                 this.callFlatPicker();
             };
+            if (this.appState == appState.Approved) {
+                this.confirmedList() && this.getBookings()
+            }
         },
         callFlatPicker() {
             flatpickr(".flatpickr", {
@@ -308,7 +309,7 @@ export default function EQueue() {
         goToConfirm() {
             this.changeScreen(appState.AdminHome)
         },
-        goToSchedule(){
+        goToSchedule() {
             this.changeScreen(appState.Schedule)
         },
 

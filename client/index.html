@@ -103,7 +103,9 @@
         </div>
 
         <div x-show="appState == 'HOME'" class="homePage">
-          <p x-text="feedback"></p>
+          <div class="myBack">
+            <p x-text="feedback"></p>
+          </div>
           <div class="card text-center">
             <div class="card-header">
               <label>Book Appointment</label>
@@ -158,7 +160,9 @@
         </div>
 
         <div x-show="appState == 'CONFIRMATION'" class="confirmation">
-          <p x-text="feedback"></p>
+          <div class="myBack">
+            <p x-text="feedback"></p>
+          </div>
 
           <div class="card text-center">
 
@@ -212,7 +216,9 @@
               <h5 x-text="user.fullname"></h5>
             </div>
           </center>
-          <p x-text="feedback"></p>
+          <div class="myBack">
+            <p x-text="feedback"></p>
+          </div>
 
           <div class="card text-center">
             <div class="card-header">
@@ -323,7 +329,7 @@
         </div>
 
         <div x-show="appState == 'SCHEDULE'">
-<!-- 
+          <!-- 
           <div class="parent">
             <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
               <div class="dhx_cal_navline">
