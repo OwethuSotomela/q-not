@@ -47,7 +47,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.post('/api/login', async function (req, res) {
+    app.post('/api/login', verifyToken, async function (req, res) {
         try {
             const { username, password } = req.body;
 
@@ -81,16 +81,6 @@ module.exports = function (app, db) {
     // here 
 
     app.get('/api/posts', verifyToken, (req, res) => {
-        jwt.verify(req.key, "secretkey", (err, authData) => {
-            if (err) {
-                res.sendStatus(403);
-            } else {
-                res.json({
-                    post: "Post created...",
-                    authData,
-                });
-            }
-        });
     });
 
     function verifyToken(req, res, next) {
@@ -99,6 +89,16 @@ module.exports = function (app, db) {
             const bearer = bearerHeader.split(" ");
             const bearerToken = bearer[1];
             req.key = bearerToken;
+            jwt.verify(req.key, "secretkey", (err, authData) => {
+                if (err) {
+                    res.sendStatus(403);
+                } else {
+                    res.json({
+                        post: "Post created...",
+                        authData,
+                    });
+                }
+            });
             next();
         } else {
             res.sendStatus(403);
