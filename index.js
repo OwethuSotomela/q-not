@@ -12,10 +12,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
 // new here 
-const router = require("./router");
-const Storage = require("../client/storage");
-const storage = new Storage(connectionPool);
-router.setRoutes(app, "/events", storage);
+// const router = require("./router");
+// const Storage = require("../client/storage");
+// const storage = new Storage(connectionPool);
+// router.setRoutes(app, "/events", storage);
 // end here 
 
 app.use(cors());
