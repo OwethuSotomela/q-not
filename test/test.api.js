@@ -27,6 +27,23 @@ describe('Q-Not API', function () {
     // 	await db.none(commandText)
     // });
 
+    // before(async function () {
+    // 	this.timeout(5000);
+    // 	await db.none(`delete from users`);
+    // 	const commandText = fs.readFileSync(`./sql/appointments.sql`, 'utf-8');
+    // 	await db.none(commandText)
+    // });
+
+    it('should have a test method', async () => {
+
+		const response = await supertest(app)
+			.get('/api/test')
+			.expect(200);
+
+		assert.deepStrictEqual({ name: 'OwSoto' }, response.body);
+
+	});
+
     it('should be able to register a new user', async () => {
 
         await supertest(app).post('/api/signup')
@@ -35,8 +52,8 @@ describe('Q-Not API', function () {
             username: 'Soki',
             password: 'soki123',
             role: 'Patient',
-            id_number: '00006514232',
-            contact_number: '07287364'
+            id_number: '0000876567876',
+            contact_number: '0723454321'
         });
 
     	assert.deepStrictEqual({ fullname: fullname, username: username, password: password, role: role, id_number: id_number, contact_number: contact_number }, response.body);
