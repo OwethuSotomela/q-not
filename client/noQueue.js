@@ -53,7 +53,8 @@ export default function EQueue() {
         callFlatPicker() {
             flatpickr(".flatpickr", {
                 enableTime: true,
-                dateFormat: "Y-m-d H:i",
+                // dateFormat: "Y-m-d H:i",
+                dateFormat: "dd-MM-yyyy H:i:s",
 
                 minDate: "today",
                 maxDate: "2022-11-30",
