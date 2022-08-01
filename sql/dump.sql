@@ -1,11 +1,11 @@
-CREATE DATABASE  IF NOT EXISTS scheduler;
-USE scheduler;
- 
-DROP TABLE IF EXISTS events;
-CREATE TABLE events (
- id bigint(20) unsigned AUTO_INCREMENT,
- start_date datetime NOT NULL,
- end_date datetime NOT NULL,
- text varchar(255) DEFAULT NULL,
- PRIMARY KEY (id)
-) DEFAULT
+ DROP TABLE IF EXISTS events;
+ CREATE TABLE events (
+    id SERIAL NOT NULL PRIMARY KEY,
+    start_date timestamp NOT NULL,
+    end_date timestamp NOT NULL,
+    text varchar(255) DEFAULT NULL,
+    color VARCHAR(30)
+); 
+
+INSERT INTO events (start_date, end_date, text, color) VALUES ('2022-08-01', '2022-08-09', 'Immunization', 'Green');
+INSERT INTO events (start_date, end_date, text, color) VALUES ('2022-08-02', '2022-08-08', 'Family Planning', 'Blue');
