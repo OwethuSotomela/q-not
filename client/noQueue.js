@@ -54,11 +54,8 @@ export default function EQueue() {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
 
-                // here 
-                // mode: "multiple",
                 minDate: "today",
                 maxDate: "2022-11-30",
-                // end 
 
                 altInput: true,
                 altFormat: "F j, Y",
@@ -73,7 +70,6 @@ export default function EQueue() {
                 "disable": [
                     function (date) {
                         return (date.getDay() === 0 || date.getDay() === 6);
-
                     },
                     "2022-03-25",
                     "2022-03-10",
@@ -90,7 +86,6 @@ export default function EQueue() {
                     "2022-12-26",
                     "2022-08-09",
                     "2022-09-24"
-
                 ],
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
