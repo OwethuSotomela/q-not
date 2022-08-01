@@ -47,7 +47,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.post('/api/login', verifyToken, async function (req, res) {
+    app.post('/api/login', async function (req, res) {
         try {
             const { username, password } = req.body;
 
@@ -80,9 +80,6 @@ module.exports = function (app, db) {
     })
     // here 
 
-    app.get('/api/posts', verifyToken, (req, res) => {
-    });
-
     function verifyToken(req, res, next) {
         const bearerHeader = req.headers["authorization"];
         if (typeof bearerHeader !== "undefined") {
@@ -95,7 +92,7 @@ module.exports = function (app, db) {
                 } else {
                     res.json({
                         post: "Post created...",
-                        authData,
+                        authData
                     });
                 }
             });
