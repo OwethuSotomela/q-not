@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -340,7 +341,7 @@
 
             <script>
               scheduler.config.load_date = "%Y-%m-%d %H:%i";
-              scheduler.init("scheduler_here", new Date(2022, 0, 20), "week");
+              scheduler.init("scheduler_here", new Date(2022, 07, 01), "week");
               scheduler.setLoadMode("day");
 
               // load data from backend
@@ -351,6 +352,12 @@
                 url: "/events",
                 mode: "REST"
               });
+
+              // scheduler recurring tasks extension
+                scheduler.plugins({
+                  recurring: true
+                });
+
             </script>
           </div>
 

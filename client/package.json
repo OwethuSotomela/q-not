@@ -13,7 +13,11 @@
   "dependencies": {
     "alpinejs": "^3.10.2",
     "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
-    "flatpickr": "^4.6.13"
+    "date-format-lite": "^17.7.0",
+    "express": "^4.18.1",
+    "flatpickr": "^4.6.13",
+    "mysql": "^2.18.1"
   }
 }
