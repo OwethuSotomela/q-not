@@ -47,7 +47,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.post('/api/login', verifyToken, async function (req, res) {
+    app.post('/api/login', async function (req, res) {
         try {
             const { username, password } = req.body;
 
@@ -78,7 +78,7 @@ module.exports = function (app, db) {
             })
         }
     })
-    
+
     // here 
 
     function verifyToken(req, res, next) {
@@ -88,6 +88,7 @@ module.exports = function (app, db) {
             const bearerToken = bearer[1];
             req.key = bearerToken;
             jwt.verify(req.key, "secretkey", (err, token) => {
+                alert(token)
                 if (err) {
                     res.sendStatus(403);
                 } else {
