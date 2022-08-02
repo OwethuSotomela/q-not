@@ -47,7 +47,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.post('/api/login', async function (req, res) {
+    app.post('/api/login', verifyToken, async function (req, res) {
         try {
             const { username, password } = req.body;
 
