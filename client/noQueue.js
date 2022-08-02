@@ -39,6 +39,7 @@ export default function EQueue() {
             this.confirmedList()
             this.getBookings()
             this.removeDone()
+            this.gettingUserBooking()
             
         },
         changeScreen(name) {
@@ -374,7 +375,7 @@ export default function EQueue() {
                     .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
                     .then(() => this.getBookings());
 
-                this.feedback = "You have deleted this appointment";
+                this.feedback = "You have removed this appointment";
                 setTimeout(() => {
                     this.feedback = "";
                 }, 3000)
@@ -390,6 +391,12 @@ export default function EQueue() {
             this.changeScreen(appState.Login);
             localStorage.clear();
         },
+
+        // scheduler
+
+        schedule(){
+            alert('Do you work?')
+        }
     };
 }
 
