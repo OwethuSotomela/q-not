@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "alpinejs": "^3.10.2",
     "body-parser": "^1.20.0",
