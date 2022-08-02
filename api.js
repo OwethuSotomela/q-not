@@ -253,5 +253,24 @@ module.exports = function (app, db) {
             })
         }
     })
+
+    // schedule 
+
+
+    app.get('/api/l', async function (req, res) {
+        try {
+            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, confirmed, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE confirmed = true`);
+
+            res.json({
+                data: bookingBy,
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
 }
 
