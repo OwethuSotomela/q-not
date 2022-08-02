@@ -4,7 +4,7 @@
 
 A user should be:
 * Able to register for an account
-* Should be ablt to book an appointment
+* Book an appointment (Use date & time for booking)
 * Cancel an appointment
 * See the status of the appointment
 
