@@ -36,6 +36,7 @@ export default function EQueue() {
                 }
             };
             this.getBookings()
+            
         },
         changeScreen(name) {
             this.appState = name;
@@ -45,9 +46,9 @@ export default function EQueue() {
             }
             if (this.appState == appState.Home) {
                 this.callFlatPicker();
-            };
+            }
             if (this.appState == appState.Approved) {
-                this.confirmedList() && this.getBookings()
+                this.confirmedList() 
             }
         },
         callFlatPicker() {
@@ -90,11 +91,11 @@ export default function EQueue() {
                 ],
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
-                    console.log(dateAndTimeStr);
+                    console.log(selectedDates);
+                    
                     instance.config.disable.push(selectedDates[0]);
 
                     this.booking = instance.selectedDates;
-                    console.log(this.booking);
 
                     localStorage.setItem("Booking", this.booking);
 
