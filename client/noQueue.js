@@ -35,7 +35,10 @@ export default function EQueue() {
                     this.user = localStorage.getItem("user");
                 }
             };
+            
+            this.confirmedList()
             this.getBookings()
+            this.removeDone()
             
         },
         changeScreen(name) {
