@@ -81,6 +81,50 @@ describe('Q-Not API', function () {
         assert.equal(1, users.length);
 
     })
+    it('should be able to find ART appointments', async() => {
+        const response = await supertest(app)
+            .get('/api/bookings?description=ART')
+            .expect(200);
+        const bookings = response.body.data;
+        assert.equal(1, bookings.length);
+    });
+    it('should be able to find NBAC appointments', async() => {
+        // add some code below
+        const response = await supertest(app)
+            .get('/api/bookings?description=NBAC')
+            .expect(200);
+        const bookings = response.body.data;
+        assert.equal(2, bookings.length);
+    });
+    it('you should be able to cancel appointments', async() => {
+        await supertest(app)
+            .delete(`/api/cancel/:id`)
+            .expect(200);
+        const deleteBook = await supertest(app).get(`/api/book/:bookByDay`);
+        const deleteData = eetBooke.body
+        assert.equal(0, deleteData.data.length);
+    });
+
+    it('It should be able add patient appointment', async() => {
+        const patientResult = await supertest(app).get(`/api/bookings?role=patient`);
+        assert.equal(13, patientResult.body.data.length)
+        await supertest(app)
+            .post('/api/booking')
+            .send({
+                user_id: 'Cindy',
+                description: 'ART',
+                slot: 09.00,
+            });
+        await supertest(app)
+            .post('/api/booking')
+            .send({
+                user_id: 'Cindy',
+                description: 'NBAC',
+                slot: 10.00,
+            });
+        const updatedpatientResult = await supertest(app).get(`/api/bookings?role=patient`);
+        assert.equal(2, updatedpatientResult.body.data.length);
+    });
 
 
     after(() => {
