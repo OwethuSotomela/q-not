@@ -103,9 +103,9 @@
         </div>
 
         <div x-show="appState == 'HOME'" class="homePage">
-          <div class="myBack">
+          <!-- <div class="myBack">
             <p x-text="feedback"></p>
-          </div>
+          </div> -->
           <div class="card text-center">
             <div class="card-header">
               <label>Book Appointment</label>
@@ -150,6 +150,12 @@
 
             <div class="card-footer text-muted">
               <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
+              <div class="popup" id="popup">
+                <img src="./images/ch3.jpeg" alt="">
+                <h2>Thank You!</h2>
+                <p>Your appointment has been created. Thanks!</p>
+                <button @click="closePopup()">OK</button>
+              </div>
               <br>
               <a href="#" @click="goToLogin()">Go back to Login</a>
               <br>

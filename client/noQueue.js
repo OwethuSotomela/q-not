@@ -1,4 +1,6 @@
 import axios from "axios";
+import moment from 'moment'; 
+
 
 const URL_BASE = import.meta.env.VITE_SERVER_URL;
 const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
@@ -39,7 +41,7 @@ export default function EQueue() {
             this.confirmedList()
             this.getBookings()
             this.removeDone()
-            this.gettingUserBooking()
+            // this.gettingUserBooking()
             
         },
         changeScreen(name) {
@@ -63,7 +65,7 @@ export default function EQueue() {
                 minDate: "today",
                 maxDate: "2022-11-30",
 
-                altInput: true,
+                // altInput: true,
                 altFormat: "F j, Y",
                 minTime: "09:00",
                 maxTime: "16:00",
@@ -246,11 +248,13 @@ export default function EQueue() {
                     .then((result) => result.data)
                     .then((data) => {
                         console.log(data);
-                    });
+                    })
+                    // .then(this.openPopup())
 
-                this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
+                // this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
                 setTimeout(() => {
-                    this.feedback = "";
+                    // this.feedback = "";
+                    this.openPopup()
                 }, 3000)
 
             } catch (err) {
@@ -396,6 +400,14 @@ export default function EQueue() {
 
         schedule(){
             alert('Do you work?')
+        },
+
+        // popup 
+        openPopup(){
+            popup.classList.add("open-popup")
+        },
+        closePopup(){
+            popup.classList.remove("open-popup")
         }
     };
 }
