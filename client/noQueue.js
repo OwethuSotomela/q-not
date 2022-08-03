@@ -1,5 +1,5 @@
 import axios from "axios";
-import moment from 'moment'; 
+import moment from 'moment';
 
 
 const URL_BASE = import.meta.env.VITE_SERVER_URL;
@@ -42,7 +42,7 @@ export default function EQueue() {
             this.getBookings()
             this.removeDone()
             // this.gettingUserBooking()
-            
+
         },
         changeScreen(name) {
             this.appState = name;
@@ -54,7 +54,7 @@ export default function EQueue() {
                 this.callFlatPicker();
             }
             if (this.appState == appState.Approved) {
-                this.confirmedList() 
+                this.confirmedList()
             }
         },
         callFlatPicker() {
@@ -98,7 +98,7 @@ export default function EQueue() {
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
                     console.log(selectedDates);
-                    
+
                     instance.config.disable.push(selectedDates[0]);
 
                     this.booking = instance.selectedDates;
@@ -249,13 +249,9 @@ export default function EQueue() {
                     .then((data) => {
                         console.log(data);
                     })
-                    // .then(this.openPopup())
-
-                // this.feedback = "Your appointment has been created... It will be confirmed when the status changes to 'True'";
                 setTimeout(() => {
-                    // this.feedback = "";
                     this.openPopup()
-                }, 3000)
+                }, 1000)
 
             } catch (err) {
                 alert(err.message);
@@ -288,10 +284,10 @@ export default function EQueue() {
                     .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
                     .then(() => this.gettingUserBooking());
 
-                this.feedback = "You have cancelled your appointment";
+                // this.feedback = "You have cancelled your appointment";
                 setTimeout(() => {
-                    this.feedback = "";
-                }, 3000)
+                    this.opencancelPopup()
+                }, 1000)
             } catch (err) {
                 console.log(err);
             }
@@ -398,16 +394,21 @@ export default function EQueue() {
 
         // scheduler
 
-        schedule(){
+        schedule() {
             alert('Do you work?')
         },
 
         // popup 
-        openPopup(){
+        openPopup() {
             popup.classList.add("open-popup")
-        },
-        closePopup(){
+        },closePopup() {
             popup.classList.remove("open-popup")
+        },
+        opencancelPopup() {
+            cancelPopup.classList.add("open-popup")
+        },
+        closecancelPopup() {
+            cancelPopup.classList.remove("open-popup")
         }
     };
 }

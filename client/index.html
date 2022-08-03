@@ -103,9 +103,6 @@
         </div>
 
         <div x-show="appState == 'HOME'" class="homePage">
-          <!-- <div class="myBack">
-            <p x-text="feedback"></p>
-          </div> -->
           <div class="card text-center">
             <div class="card-header">
               <label>Book Appointment</label>
@@ -205,6 +202,12 @@
 
             <div class="card-footer text-muted">
               <a href="#" @click="goToMakeAnAppointment()">Go back to booking an Appointment</a>
+              <div class="popup" id="cancelPopup">
+                <img src="./images/ch3.jpeg" alt="">
+                <h2>Thank You!</h2>
+                <p>Your appointment has been cancelled. Thanks!</p>
+                <button @click="closecancelPopup()">OK</button>
+              </div>
             </div>
 
             <button @click="logout()" class="btn btn-outline-danger">Logout</button>
@@ -335,8 +338,8 @@
         </div>
 
         <div x-show="appState == 'SCHEDULE'">
-          
-          <div class="parent">
+
+          <!-- <div class="parent">
             <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
               <div class="dhx_cal_navline">
                 <div class="dhx_cal_prev_button">&nbsp;</div>
@@ -373,7 +376,7 @@
                 });
             </script>
 
-          </div>
+          </div> -->
 
           <div class="card-footer text-muted">
             <a href="#" @click="goToLogin()">Go back to Login</a>
