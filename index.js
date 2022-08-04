@@ -1,7 +1,6 @@
 const PgPromise = require("pg-promise")
 const express = require('express');
 const cors = require('cors');
-// const moment = require('moment'); 
 
 require('dotenv').config()
 
@@ -11,13 +10,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
-
-// new here 
-// const router = require("./router");
-// const Storage = require("../client/storage");
-// const storage = new Storage(connectionPool);
-// router.setRoutes(app, "/events", storage);
-// end here 
 
 app.use(cors());
 
