@@ -339,44 +339,65 @@
 
         <div x-show="appState == 'SCHEDULE'">
 
-          <!-- <div class="parent">
+          <div class="parent" style='width:100%; height:100vh;'>
+
             <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+
               <div class="dhx_cal_navline">
                 <div class="dhx_cal_prev_button">&nbsp;</div>
                 <div class="dhx_cal_next_button">&nbsp;</div>
                 <div class="dhx_cal_today_button"></div>
-                <div class="dhx_cal_date"></div>
+                <div class="dhx_cal_date" id="call"></div>
                 <div class="dhx_cal_tab" name="day_tab"></div>
                 <div class="dhx_cal_tab" name="week_tab"></div>
                 <div class="dhx_cal_tab" name="month_tab"></div>
-                <button @click="schedule()">Test</button>
-
+                <button @click="all()">Test</button>
               </div>
               <div class="dhx_cal_header"></div>
               <div class="dhx_cal_data"></div>
             </div>
 
             <script>
-              scheduler.config.load_date = "%Y-%m-%d %H:%i";
-              scheduler.init("scheduler_here", new Date(2022, 07, 01), "week");
+              scheduler.config.xml_date = "%Y-%m-%d %H:%i";
+              scheduler.init("scheduler_here", new Date(2022, 6, 04), "week");
+              scheduler.parse([
+                { text: "Meeting", start_date: "2022-07-04 14:00", end_date: "2022-07-04 17:00" },
+                { text: "Conference", start_date: "2022-07-05 12:00", end_date: "2022-07-05 19:00" },
+                { text: "Interview", start_date: "2022-07-05 09:00", end_date: "2019-07-24 10:00" }
+              ], "json");
+
+              // const axios = require("axios")
+
+              // const result = axios.get(`http://localhost:5050/api/schedule`);
+              // scheduler.parse(result, "json");
+
               scheduler.setLoadMode("day");
 
               // load data from backend
-              scheduler.load("/events", "json");
+              scheduler.load("http://localhost:5050/api/schedule", "json");
 
               // connect backend to scheduler
-              const dp = scheduler.createDataProcessor({
-                url: "/events",
-                mode: "REST"
+              // const dp = scheduler.createDataProcessor({
+              //     url: "/events",
+              //     mode: "REST"
+              // });
+
+              scheduler.attachEvent("onClick", function (id, e) {
+                console.log(id, e)
+                //any custom logic here
+                var obj = scheduler.getEvent(id);
+                console.log(obj);
+
+                console.log(scheduler.getEvents());
+                return true;
               });
+              console.log(scheduler.getEvents());
 
-              // scheduler recurring tasks extension
-                scheduler.plugins({
-                  recurring: true
-                });
+              scheduler.plugins({
+                recurring: true
+              });
             </script>
-
-          </div> -->
+          </div>
 
           <div class="card-footer text-muted">
             <a href="#" @click="goToLogin()">Go back to Login</a>

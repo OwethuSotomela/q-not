@@ -1,5 +1,8 @@
 import axios from "axios";
+
 import moment from 'moment';
+// import moment from 'moment-timezone';
+// moment.tz.setDefault('UTC');
 
 
 const URL_BASE = import.meta.env.VITE_SERVER_URL;
@@ -40,8 +43,9 @@ export default function EQueue() {
 
             this.confirmedList()
             this.getBookings()
-            this.removeDone()
+            // this.removeDone()
             // this.gettingUserBooking()
+            // this.getActiveStart()
 
         },
         changeScreen(name) {
@@ -60,13 +64,15 @@ export default function EQueue() {
         callFlatPicker() {
             flatpickr(".flatpickr", {
                 enableTime: true,
-                dateFormat: "Y-m-d H:i",
+                dateFormat: "Y-m-d h:i K",
 
                 minDate: "today",
                 maxDate: "2022-11-30",
 
+                // dateStrFormat: "m/d/Y",
+
                 // altInput: true,
-                altFormat: "F j, Y",
+                // altFormat: "F j, Y",
                 minTime: "09:00",
                 maxTime: "16:00",
 
@@ -93,15 +99,24 @@ export default function EQueue() {
                     "2022-12-16",
                     "2022-12-26",
                     "2022-08-09",
-                    "2022-09-24"
+                    "2022-09-24",
+
+                    // function getActiveStart(state) {
+                    //     alert(state)
+                    //     return state.activeStart ? moment(state.activeStart) : null;
+                    // },
                 ],
-                onChange(selectedDates, dateAndTimeStr, instance) {
+
+                onChange(selectedDates = new Date(selectedDates), dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
-                    console.log(selectedDates);
+                    // console.log(moment(selectedDates.toDate()).format);
+
+                    console.log(selectedDates)
 
                     instance.config.disable.push(selectedDates[0]);
 
                     this.booking = instance.selectedDates;
+                    console.log(this.booking)
 
                     localStorage.setItem("Booking", this.booking);
 
@@ -131,8 +146,8 @@ export default function EQueue() {
             contact_number: "",
         },
         logUser: {
-            username: "",
-            password: ""
+            username: "Cindy",
+            password: "ci123"
         },
         token: "",
         loading: true,
@@ -284,7 +299,6 @@ export default function EQueue() {
                     .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
                     .then(() => this.gettingUserBooking());
 
-                // this.feedback = "You have cancelled your appointment";
                 setTimeout(() => {
                     this.opencancelPopup()
                 }, 1000)
@@ -392,16 +406,10 @@ export default function EQueue() {
             localStorage.clear();
         },
 
-        // scheduler
-
-        schedule() {
-            alert('Do you work?')
-        },
-
         // popup 
         openPopup() {
             popup.classList.add("open-popup")
-        },closePopup() {
+        }, closePopup() {
             popup.classList.remove("open-popup")
         },
         opencancelPopup() {
@@ -409,9 +417,34 @@ export default function EQueue() {
         },
         closecancelPopup() {
             cancelPopup.classList.remove("open-popup")
+        },
+
+        // scheduler
+
+        schedule() {
+            alert('Do you work?')
+        },
+        all() {
+            alert('All good here')
+            try {
+                axios
+                    .get(`http://localhost:5050/api/schedule`)
+                    .then((r) => r.data)
+                    .then((all) => {
+                        this.myTimeTable = all.data;
+                        console.log(this.myTimeTable);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        newSch(){
+            
         }
     };
 }
-
-
 

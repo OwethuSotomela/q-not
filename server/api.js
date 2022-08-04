@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const axios = require('axios');
 
 module.exports = function (app, db) {
 
@@ -254,15 +253,15 @@ module.exports = function (app, db) {
         }
     })
 
-    // schedule 
+    // scheduler 
 
+    app.get('/api/schedule', async function (req, res) {
 
-    app.get('/api/l', async function (req, res) {
         try {
-            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, confirmed, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE confirmed = true`);
-
+            const schedule = await db.manyOrNone(`SELECT * FROM events`);
+            console.log({ schedule })
             res.json({
-                data: bookingBy,
+                data: schedule
             })
 
         } catch (error) {

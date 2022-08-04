@@ -144,6 +144,12 @@ table th {
   height: 100vh;
   overflow: hidden;
 }
+/* #call{
+  background-color: #0D6EFD;
+}
+#scheduler_here{
+  background-color: #6fd649;
+} */
 
 @media (max-width: 600px) {
   table {
