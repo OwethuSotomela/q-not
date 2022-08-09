@@ -182,6 +182,28 @@ module.exports = function (app, db) {
         }
     })
 
+    // sun 
+
+    app.post('/api/reschedule/:id', async function (req, res) {
+        try {
+            alert('Working?')
+            const { id } = req.params;
+
+            await db.none(`UPDATE appointments SET slot = slot WHERE id = $1`, [id])
+
+            res.status(200).json({
+                message: 'Successful',
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+    // sun end 
+
     // Anele 
 
     app.get('/api/booking', async function (req, res) {
@@ -259,7 +281,7 @@ module.exports = function (app, db) {
 
         try {
             const schedule = await db.manyOrNone(`SELECT * FROM events`);
-            console.log({ schedule })
+            // console.log({ schedule })
             res.json({
                 data: schedule
             })
@@ -271,5 +293,25 @@ module.exports = function (app, db) {
             })
         }
     })
+
+    app.post('/api/event/:id', async function (req, res) {
+        try {
+            const { id } = req.params;
+
+            await db.none(`INSERT INTO events (event_id) VALUES ($1)`, [id])
+
+            res.status(200).json({
+                message: 'An event has been created!',
+                user
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
 }
 

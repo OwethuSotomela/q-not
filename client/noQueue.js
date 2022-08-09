@@ -60,6 +60,9 @@ export default function EQueue() {
             if (this.appState == appState.Approved) {
                 this.confirmedList()
             }
+            if (this.appState == appState.Confirmation) {
+                this.callFlatPicker()
+            }
         },
         callFlatPicker() {
             flatpickr(".flatpickr", {
@@ -69,10 +72,6 @@ export default function EQueue() {
                 minDate: "today",
                 maxDate: "2022-11-30",
 
-                // dateStrFormat: "m/d/Y",
-
-                // altInput: true,
-                // altFormat: "F j, Y",
                 minTime: "09:00",
                 maxTime: "16:00",
 
@@ -101,15 +100,10 @@ export default function EQueue() {
                     "2022-08-09",
                     "2022-09-24",
 
-                    // function getActiveStart(state) {
-                    //     alert(state)
-                    //     return state.activeStart ? moment(state.activeStart) : null;
-                    // },
                 ],
 
                 onChange(selectedDates = new Date(selectedDates), dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
-                    // console.log(moment(selectedDates.toDate()).format);
 
                     console.log(selectedDates)
 
@@ -306,6 +300,29 @@ export default function EQueue() {
                 console.log(err);
             }
         },
+        // seun 
+        rescheduleAnAppo(appointments) {
+            console.log(appointments)
+            try {
+                const bookedDay = this.Booking
+                    ? this.Booking
+                    : localStorage.getItem("Booking");
+                console.log(bookedDay)
+                setTimeout(() => {
+                    this.callFlatPicker();
+
+                    this.token = "";
+                }, 1000);
+
+                axios
+                    .post(`${URL_Heroku}/api/reschedule/${appointments.id}`, { bookedDay })
+                    .then(() => this.getBookings());
+
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // eun 
 
         goToConfirmation() {
             this.changeScreen(appState.Confirmation);
@@ -333,7 +350,6 @@ export default function EQueue() {
         },
 
         getBookings() {
-            // alert('called')
             axios
                 .get(`${URL_Heroku}/api/booking`)
                 .then((r) => r.data)
@@ -409,7 +425,8 @@ export default function EQueue() {
         // popup 
         openPopup() {
             popup.classList.add("open-popup")
-        }, closePopup() {
+        },
+        closePopup() {
             popup.classList.remove("open-popup")
         },
         opencancelPopup() {
@@ -417,6 +434,12 @@ export default function EQueue() {
         },
         closecancelPopup() {
             cancelPopup.classList.remove("open-popup")
+        },
+        openCalenderPopup() {
+            reschedulePopup.classList.add("open-popup")
+        },
+        closeCalenderPopup() {
+            reschedulePopup.classList.remove("open-popup")
         },
 
         // scheduler
@@ -442,9 +465,23 @@ export default function EQueue() {
                 console.log(error)
             }
         },
-        newSch(){
-            
-        }
-    };
+
+        createEvent(event) {
+            console.log(event)
+            alert(event.id)
+            try {
+                axios
+                    .post(`http://localhost:5050/api/event/${event.id}`)
+                    .then(result => result.data)
+                    .then((data) => {
+                        this.all()
+                        console.log(data.data)
+                    })
+            } catch (err) {
+                // alert(err.message);
+            }
+        },
+    }
+
 }
 
