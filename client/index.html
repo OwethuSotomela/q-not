@@ -198,7 +198,7 @@
                       <h6 x-text="slot.slot"></h6>
                     </td>
                     <td>
-                      <h6 x-text="slot.confirmed"></h6>
+                      <h6 x-text="slot.status"></h6>
                     </td>
                     <td>
                       <button @click="reschedule(slot)" class="btn btn-outline-primary">Reschedule</button>
@@ -209,9 +209,9 @@
                   </tr>
                 </template>
               </table>
-<!-- 
+
               <div class="popup" id="reschedulePopup">
-                <div class="flatpickr" align="center">
+                <!-- <div class="flatpickr" align="center">
 
                   <a class="input-button" title="toggle" data-toggle>
                     <i class="icon-calendar"></i>
@@ -220,11 +220,13 @@
                   <a class="input-button" title="clear" data-clear>
                     <i class="icon-close"></i>
                   </a>
-                </div>
-
                 <button @click="rescheduleAnAppo()">OK</button>
 
-              </div> -->
+                </div> -->
+
+                <!-- <button @click="rescheduleAnAppo()">OK</button> -->
+
+              </div>
 
             </div>
 

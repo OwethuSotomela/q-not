@@ -392,6 +392,21 @@ export default function EQueue() {
             }
         },
 
+        cancelsAnAppo(appointments) {
+            try {
+                axios
+                    .post(`${URL_Heroku}/api/cancels/${appointments.id}`)
+                    .then(() => this.getBookings());
+
+                this.feedback = "You have confirmed this appointment";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
         confirmedList() {
             try {
                 axios
