@@ -17,13 +17,13 @@ module.exports = function (app, db) {
 
             console.log({ username });
 
-            if (username == null) {
-                throw new Error("Username should be entered")
-            }
+            // if (username == null) {
+            //     throw new Error("Username should be entered")
+            // }
 
-            if (password == null) {
-                throw new Error("Password should be entered")
-            }
+            // if (password == null) {
+            //     throw new Error("Password should be entered")
+            // }
 
             var newUser = await db.oneOrNone("SELECT * FROM users WHERE username = $1", [username])
 
