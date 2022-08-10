@@ -188,7 +188,7 @@ module.exports = function (app, db) {
         try {
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET slot = ${$slot} WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET slot = slot + 1 WHERE id = $1`, [id])
 
             res.status(200).json({
                 message: 'Successful',
@@ -226,7 +226,7 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET confirmed = true WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET confirmed = confirmed WHERE id = $1`, [id])
 
             res.status(200).json({
                 message: 'Successful',
