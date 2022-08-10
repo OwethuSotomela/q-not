@@ -226,7 +226,26 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET status = 'confirmed' WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET status = 'med' WHERE id = $1`, [id])
+
+            res.status(200).json({
+                message: 'Successful',
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
+    app.post('/api/cancels/:id', async function (req, res) {
+        try {
+
+            const { id } = req.params;
+
+            await db.none(`UPDATE appointments SET status = 'Cancelled' WHERE id = $1`, [id])
 
             res.status(200).json({
                 message: 'Successful',
