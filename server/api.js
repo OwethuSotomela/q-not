@@ -122,7 +122,7 @@ module.exports = function (app, db) {
                 throw Error('No user')
             } else {
 
-                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
+                await db.none(`INSERT INTO appointments (PARSE(slot) AS DATE, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
 
                 res.status(200).json({
                     message: 'A booking has been made',
@@ -186,10 +186,9 @@ module.exports = function (app, db) {
 
     app.post('/api/reschedule/:id', async function (req, res) {
         try {
-            alert('Working?')
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET slot = slot WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET slot = ${$slot} WHERE id = $1`, [id])
 
             res.status(200).json({
                 message: 'Successful',

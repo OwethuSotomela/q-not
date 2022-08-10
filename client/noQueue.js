@@ -1,11 +1,14 @@
 import axios from "axios";
-
 import moment from 'moment';
-// import moment from 'moment-timezone';
-// moment.tz.setDefault('UTC');
 
+var m = moment()
+console.log(m)
+m = moment("2022-08-11T16:00:000")
+console.log(m)
+console.log(`toString() => ${m.toString()}`)
+console.log(`toISOString() => ${m.toISOString()}`)
 
-const URL_BASE = import.meta.env.VITE_SERVER_URL;
+// const URL_BASE = import.meta.env.VITE_SERVER_URL;
 const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
 // const URL_Heroku = import.meta.env.VITE_SERVER_URL;
 
@@ -99,10 +102,9 @@ export default function EQueue() {
                     "2022-12-26",
                     "2022-08-09",
                     "2022-09-24",
-
                 ],
 
-                onChange(selectedDates = new Date(selectedDates), dateAndTimeStr, instance) {
+                onChange(selectedDates = moment(selectedDates), dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
 
                     console.log(selectedDates)
@@ -300,7 +302,15 @@ export default function EQueue() {
                 console.log(err);
             }
         },
+
         // seun 
+
+        reschedule() {
+            setTimeout(() => {
+                this.callFlatPicker();
+
+            }, 1000);
+        },
         rescheduleAnAppo(appointments) {
             console.log(appointments)
             try {
@@ -308,20 +318,17 @@ export default function EQueue() {
                     ? this.Booking
                     : localStorage.getItem("Booking");
                 console.log(bookedDay)
-                setTimeout(() => {
-                    this.callFlatPicker();
-
-                    this.token = "";
-                }, 1000);
 
                 axios
                     .post(`${URL_Heroku}/api/reschedule/${appointments.id}`, { bookedDay })
                     .then(() => this.getBookings());
+                    this.closeCalenderPopup()
 
             } catch (err) {
                 console.log(err);
             }
         },
+
         // eun 
 
         goToConfirmation() {
@@ -387,7 +394,7 @@ export default function EQueue() {
                     .then((r) => r.data)
                     .then((clinicDate) => {
                         this.confirmedTable = clinicDate.data;
-                        console.log(this.confirmedTable);
+                        // console.log(this.confirmedTable);
                     })
                     .catch((e) => {
                         console.log(e);
@@ -441,12 +448,10 @@ export default function EQueue() {
         closeCalenderPopup() {
             reschedulePopup.classList.remove("open-popup")
         },
+        // end popup 
 
         // scheduler
 
-        schedule() {
-            alert('Do you work?')
-        },
         all() {
             alert('All good here')
             try {

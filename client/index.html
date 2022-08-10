@@ -195,7 +195,7 @@
                       <h6 x-text="slot.confirmed"></h6>
                     </td>
                     <td>
-                      <button @click="rescheduleAnAppo(slot)" class="btn btn-outline-danger">Reschedule</button>
+                      <button @click="reschedule(slot)" class="btn btn-outline-primary">Reschedule</button>
                     </td>
                     <td>
                       <button @click="cancelAppo(slot)" class="btn btn-outline-danger">Cancel</button>
@@ -207,8 +207,6 @@
               <div class="popup" id="reschedulePopup">
                 <div class="flatpickr" align="center">
 
-                  <br>
-                  <br>
                   <a class="input-button" title="toggle" data-toggle>
                     <i class="icon-calendar"></i>
                   </a>
@@ -217,7 +215,8 @@
                     <i class="icon-close"></i>
                   </a>
                 </div>
-                <button @click="closeCalenderPopup()">OK</button>
+
+                <button @click="rescheduleAnAppo()">OK</button>
 
               </div>
 
@@ -362,7 +361,7 @@
 
         <div x-show="appState == 'SCHEDULE'">
 
-          <div class="parent" style='width:100%; height:100vh;'>
+          <!-- <div class="parent" style='width:100%; height:100vh;'>
 
             <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
 
@@ -438,7 +437,7 @@
                 recurring: true
               });
             </script>
-          </div>
+          </div> -->
 
           <div class="card-footer text-muted">
             <a href="#" @click="goToLogin()">Go back to Login</a>
