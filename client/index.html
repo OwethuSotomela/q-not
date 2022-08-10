@@ -185,7 +185,7 @@
                 <tr>
                   <th>Description</th>
                   <th>Date & Time</th>
-                  <th>Status</th>
+                  <th>Appointment Status</th>
                   <th>Reschedule</th>
                   <th>Cancel</th>
                 </tr>
@@ -328,25 +328,25 @@
                   <th>Completed</th>
                 </tr>
 
-                <template x-for="confirmed in confirmedTable">
+                <template x-for="approved in confirmedTable">
                   <tr>
                     <td>
-                      <h6 x-text="confirmed.fullname"></h6>
+                      <h6 x-text="approved.fullname"></h6>
                     </td>
                     <td>
-                      <h6 x-text="confirmed.id_number"></h6>
+                      <h6 x-text="approved.id_number"></h6>
                     </td>
                     <td>
-                      <h6 x-text="confirmed.description"></h6>
+                      <h6 x-text="approved.description"></h6>
                     </td>
                     <td>
-                      <h6 x-text="confirmed.slot"></h6>
+                      <h6 x-text="approved.slot"></h6>
                     </td>
                     <td>
-                      <h6 x-text="confirmed.status"></h6>
+                      <h6 x-text="approved.status"></h6>
                     </td>
                     <td>
-                      <button @click="removeDone(confirmed)" class="btn btn-danger">Remove Done</button>
+                      <button @click="removeDone(approved)" class="btn btn-danger">Remove Done</button>
                     </td>
                   </tr>
                 </template>
