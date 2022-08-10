@@ -14,7 +14,8 @@ CREATE TABLE appointments(
     id SERIAL NOT NULL PRIMARY KEY,
     slot VARCHAR NOT NULL,
     users_id int,
-    confirmed boolean default False,
+    -- confirmed boolean default False,
+    status varchar(255),
     description varchar(255) NOT NULL,
     FOREIGN KEY (users_id) REFERENCES users(id)
 );
