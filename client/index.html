@@ -101,6 +101,12 @@
           <button @click="login()" class="btn btn-outline-success">Login</button>
           <br>
           <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
+          <div class="popup" id="loginPopup">
+            <img src="./images/nu2.jpeg" alt="">
+            <h2>User Doesn't Exist</h2>
+            <p x-text="loginFeed"></p>
+            <button @click="closeLoginPopup()">OK</button>
+          </div>
         </div>
 
         <div x-show="appState == 'HOME'" class="homePage">

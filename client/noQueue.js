@@ -235,7 +235,12 @@ export default function EQueue() {
                     .catch((err) => {
                         console.log(err);
                         console.log(err.response.data.message);
-                        this.loginFeed = err.response.data.message;
+
+                        setTimeout(() => {
+                            this.openLoginPopup()
+                            this.loginFeed = err.response.data.message;
+                            // this.loginFeed = 
+                        }, 5000)
                         setTimeout(() => {
                             this.loginFeed = "";
                         }, 3000);
@@ -322,7 +327,7 @@ export default function EQueue() {
                 axios
                     .post(`${URL_Heroku}/api/reschedule/${appointments.id}`, { bookedDay })
                     .then(() => this.getBookings());
-                    this.closeCalenderPopup()
+                this.closeCalenderPopup()
 
             } catch (err) {
                 console.log(err);
@@ -447,6 +452,12 @@ export default function EQueue() {
         },
         closeCalenderPopup() {
             reschedulePopup.classList.remove("open-popup")
+        },
+        openLoginPopup() {
+            loginPopup.classList.add("open-popup")
+        },
+        closeLoginPopup() {
+            loginPopup.classList.remove("open-popup")
         },
         // end popup 
 
