@@ -240,7 +240,7 @@ export default function EQueue() {
                             this.openLoginPopup()
                             this.loginFeed = err.response.data.message;
                             // this.loginFeed = 
-                        }, 5000)
+                        }, 1000)
                         setTimeout(() => {
                             this.loginFeed = "";
                         }, 3000);
