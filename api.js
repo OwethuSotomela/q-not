@@ -9,7 +9,7 @@ module.exports = function (app, db) {
         })
     })
 
-    app.post('/api/signup', async function (req, res) {
+    app.post('/api/register', async function (req, res) {
         try {
             const { fullname, username, password, role, id_number, contact_number } = req.body
 
@@ -245,7 +245,7 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET status = 'Pending...' WHERE id = $1 AND status = 'Approved'`, [id])
+            await db.none(`UPDATE appointments SET status = 'Cancelled' WHERE id = $1 AND status = 'Approved'`, [id])
 
             res.status(200).json({
                 message: 'Successful',
