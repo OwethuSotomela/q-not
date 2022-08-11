@@ -260,9 +260,9 @@
               <h5 x-text="user.fullname"></h5>
             </div>
           </center>
-          <div class="myBack">
+          <!-- <div class="myBack">
             <p x-text="feedback"></p>
-          </div>
+          </div> -->
 
           <div class="card text-center">
             <div class="card-header">
@@ -302,6 +302,12 @@
                 </template>
 
               </table>
+              <div class="popup" id="confirmPopup">
+                <img src="./images/cm2.jpeg" alt="">
+                <h2>Approved!</h2>
+                <p>You have approved this appointment. Thanks!</p>
+                <button @click="closeConfirmPopup()">OK</button>
+              </div>
 
             </div>
 

@@ -382,11 +382,8 @@ export default function EQueue() {
                 axios
                     .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
                     .then(() => this.getBookings());
+                    this.openConfirmPopup()
 
-                this.feedback = "You have confirmed this appointment";
-                setTimeout(() => {
-                    this.feedback = "";
-                }, 3000)
             } catch (err) {
                 console.log(err);
             }
@@ -473,6 +470,12 @@ export default function EQueue() {
         },
         closeLoginPopup() {
             loginPopup.classList.remove("open-popup")
+        },
+        openConfirmPopup() {
+            confirmPopup.classList.add("open-popup")
+        },
+        closeConfirmPopup() {
+            confirmPopup.classList.remove("open-popup")
         },
         // end popup 
 
