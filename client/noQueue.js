@@ -142,8 +142,8 @@ export default function EQueue() {
             contact_number: "",
         },
         logUser: {
-            username: "Cindy",
-            password: "ci123"
+            username: "",
+            password: ""
         },
         token: "",
         loading: true,
