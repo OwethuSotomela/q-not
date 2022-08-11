@@ -174,7 +174,7 @@ export default function EQueue() {
                     }, 3000);
                 } else {
                     axios
-                        .post(`${URL_Heroku}/api/signup`, signupUser)
+                        .post(`${URL_Heroku}/api/register`, signupUser)
                         .then((myApp) => {
                             console.log(myApp.data);
                             this.feedback = myApp.data.message;
