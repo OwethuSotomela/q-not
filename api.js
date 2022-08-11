@@ -11,19 +11,19 @@ module.exports = function (app, db) {
 
     app.post('/api/register', async function (req, res) {
         try {
-            const { fullname, username, password, role, id_number, contact_number } = req.body
+            const { fullname, username, password, role, id_number, contact_number } = await req.body
 
             console.log({ fullname, username, password, role, id_number, contact_number })
 
             console.log({ username });
 
-            // if (username == null) {
-            //     throw new Error("Username should be entered")
-            // }
+            if (username == null) {
+                throw new Error("Username should be entered")
+            }
 
-            // if (password == null) {
-            //     throw new Error("Password should be entered")
-            // }
+            if (password == null) {
+                throw new Error("Password should be entered")
+            }
 
             var newUser = await db.oneOrNone("SELECT * FROM users WHERE username = $1", [username])
 
