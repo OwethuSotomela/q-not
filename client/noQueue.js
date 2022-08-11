@@ -398,7 +398,7 @@ export default function EQueue() {
                     .post(`${URL_Heroku}/api/cancels/${appointments.id}`)
                     .then(() => this.getBookings());
 
-                this.feedback = "You have confirmed this appointment";
+                this.feedback = "Appointment cancelled!!";
                 setTimeout(() => {
                     this.feedback = "";
                 }, 3000)
