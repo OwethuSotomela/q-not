@@ -156,7 +156,7 @@ export default function EQueue() {
         gotToLogin() {
             this.changeScreen(appState.Login);
         },
-        signup() {
+        regUser() {
             try {
                 const signupUser = this.user;
                 console.log(this.user)
