@@ -47,7 +47,7 @@ export default function EQueue() {
             this.confirmedList()
             this.getBookings()
             this.removeDone()
-            this.cancelsAnAppo() 
+            this.cancelsAnAppo()
             // this.gettingUserBooking()
             // this.getActiveStart()
         },
@@ -160,34 +160,21 @@ export default function EQueue() {
             try {
                 const signupUser = this.user;
                 console.log(this.user)
-                if (
-                    this.user.fullname == undefined ||
-                    this.user.username == undefined ||
-                    this.user.password == undefined ||
-                    this.user.role == undefined ||
-                    this.user.id_number == undefined ||
-                    this.user.contact_number == undefined
-                ) {
-                    this.feedback = "Fill in all required fields to register";
-                    setTimeout(() => {
-                        this.feedback = "";
-                    }, 3000);
-                } else {
-                    axios
-                        .post(`${URL_Heroku}/api/register`, signupUser)
-                        .then((myApp) => {
-                            console.log(myApp.data);
-                            this.feedback = myApp.data.message;
-                            this.users = myApp.data;
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            this.feedback = err.response.data.message;
-                            setTimeout(() => {
-                                this.feedback = "";
-                            }, 3000);
-                        });
-                }
+
+                axios
+                    .post(`${URL_Heroku}/api/register`, signupUser)
+                    .then((myApp) => {
+                        console.log(myApp.data);
+                        this.feedback = myApp.data.message;
+                        this.users = myApp.data;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        this.feedback = err.response.data.message;
+                        setTimeout(() => {
+                            this.feedback = "";
+                        }, 3000);
+                    });
             } catch (err) { }
         },
 
@@ -382,7 +369,7 @@ export default function EQueue() {
                 axios
                     .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
                     .then(() => this.getBookings());
-                    this.openConfirmPopup()
+                this.openConfirmPopup()
 
             } catch (err) {
                 console.log(err);
@@ -483,19 +470,19 @@ export default function EQueue() {
         showPassword() {
             var x = document.getElementById("myPassword");
             if (x.type === "password") {
-              x.type = "text";
+                x.type = "text";
             } else {
-              x.type = "password";
+                x.type = "password";
             }
-          },
-          showPassword() {
+        },
+        showPassword() {
             var x = document.getElementById("myPword");
             if (x.type === "password") {
-              x.type = "text";
+                x.type = "text";
             } else {
-              x.type = "password";
+                x.type = "password";
             }
-          },
+        },
         //   end show & hide 
         // scheduler
 
