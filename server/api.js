@@ -245,7 +245,7 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET status = 'Cancelled' WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET status = 'Pending...' WHERE id = $1 AND status = 'Approved'`, [id])
 
             res.status(200).json({
                 message: 'Successful',
