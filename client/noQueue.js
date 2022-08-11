@@ -46,10 +46,10 @@ export default function EQueue() {
 
             this.confirmedList()
             this.getBookings()
-            // this.removeDone()
+            this.removeDone()
+            this.cancelsAnAppo() 
             // this.gettingUserBooking()
             // this.getActiveStart()
-
         },
         changeScreen(name) {
             this.appState = name;

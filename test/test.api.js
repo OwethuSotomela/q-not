@@ -27,12 +27,12 @@ describe('Q-Not API', function () {
     // 	await db.none(commandText)
     // });
 
-    // before(async function () {
-    // 	this.timeout(5000);
-    // 	await db.none(`delete from users`);
-    // 	const commandText = fs.readFileSync(`./sql/appointments.sql`, 'utf-8');
-    // 	await db.none(commandText)
-    // });
+    before(async function () {
+    	this.timeout(5000);
+    	await db.none(`delete from users`);
+    	const commandText = fs.readFileSync(`./sql/appointments.sql`, 'utf-8');
+    	await db.none(commandText)
+    });
 
     it('should have a test method', async () => {
 
@@ -81,12 +81,13 @@ describe('Q-Not API', function () {
         assert.equal(1, users.length);
 
     })
+    
     it('should be able to find ART appointments', async() => {
         const response = await supertest(app)
             .get('/api/bookings?description=ART')
             .expect(200);
         const bookings = response.body.data;
-        assert.equal(1, bookings.length);
+        assert.equal(0, bookings.length);
     });
     it('should be able to find NBAC appointments', async() => {
         // add some code below
@@ -94,7 +95,7 @@ describe('Q-Not API', function () {
             .get('/api/bookings?description=NBAC')
             .expect(200);
         const bookings = response.body.data;
-        assert.equal(2, bookings.length);
+        assert.equal(0, bookings.length);
     });
     it('you should be able to cancel appointments', async() => {
         await supertest(app)
