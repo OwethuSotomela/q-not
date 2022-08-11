@@ -396,7 +396,7 @@ export default function EQueue() {
             try {
                 axios
                     .post(`${URL_Heroku}/api/cancels/${appointments.id}`)
-                    .then(() => this.getBookings());
+                    .then(() => this.confirmedList());
 
                 this.feedback = "Appointment cancelled!!";
                 setTimeout(() => {
@@ -430,7 +430,7 @@ export default function EQueue() {
             try {
                 axios
                     .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
-                    .then(() => this.getBookings());
+                    .then(() => this.confirmedList());
 
                 this.feedback = "You have removed this appointment";
                 setTimeout(() => {
