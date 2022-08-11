@@ -48,7 +48,8 @@
             <div class="col-auto">
               <label>Password</label>
               <br>
-              <input type="password" class="input" x-model="user.password" placeholder="Create a password" id="myPassword">
+              <input type="password" class="input" x-model="user.password" placeholder="Create a password"
+                id="myPassword">
             </div>
             <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
 
@@ -94,11 +95,16 @@
             </div>
             <div class="col-auto">
               <label>Password</label><br>
-              <input type="password" class="input" x-model="logUser.password" placeholder="Enter your password">
+              <input type="password" class="input" x-model="logUser.password" placeholder="Enter your password"
+                id="myPword">
               <i class="bi bi-eye-slash" id="togglePassword"></i>
-              <br><br>
             </div>
+            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+            <br><br>
+
+
           </div>
+
 
           <button @click="login()" class="btn btn-outline-success">Login</button>
           <br>

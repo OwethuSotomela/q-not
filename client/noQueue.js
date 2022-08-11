@@ -485,6 +485,14 @@ export default function EQueue() {
               x.type = "password";
             }
           },
+          showPassword() {
+            var x = document.getElementById("myPword");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          },
         //   end show & hide 
         // scheduler
 
