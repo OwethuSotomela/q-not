@@ -17,11 +17,11 @@ module.exports = function (app, db) {
 
             console.log({ username });
 
-            if (username == null) {
+            if (await username == null) {
                 throw new Error("Username should be entered")
             }
 
-            if (password == null) {
+            if (await password == null) {
                 throw new Error("Password should be entered")
             }
 
