@@ -30,7 +30,7 @@ describe('Q-Not API', function () {
     before(async function () {
     	this.timeout(5000);
     	await db.none(`delete from users`);
-    	const commandText = fs.readFileSync(`./sql/appointments.sql`, 'utf-8');
+    	const commandText = fs.readFileSync(`./server/sql/appointments.sql`, 'utf-8');
     	await db.none(commandText)
     });
 
