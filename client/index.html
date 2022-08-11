@@ -48,8 +48,10 @@
             <div class="col-auto">
               <label>Password</label>
               <br>
-              <input type="password" class="input" x-model="user.password" placeholder="Create a password">
+              <input type="password" class="input" x-model="user.password" placeholder="Create a password" id="myPassword">
             </div>
+            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+
             <div class="col-auto">
               <label>Role</label><br>
               <select class="input" id="specificSizeSelect" x-on:click="open = !open" x-model="user.role">
@@ -62,7 +64,7 @@
             </div>
             <div class="col-auto">
               <label>ID #</label><br>
-              <input type="password" class="input" x-model="user.id_number" placeholder="Enter your ID #" required
+              <input type="text" class="input" x-model="user.id_number" placeholder="Enter your ID #" required
                 minlength="10" maxlength="13" size="15">
             </div>
             <div class="col-auto">
