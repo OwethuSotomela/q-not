@@ -127,7 +127,6 @@ describe('Q-Not API', function () {
         assert.equal(2, updatedpatientResult.body.data.length);
     });
 
-
     after(() => {
         db.$pool.end();
     });
