@@ -18,7 +18,3 @@ CREATE TABLE appointments(
     description varchar(255) NOT NULL,
     FOREIGN KEY (users_id) REFERENCES users(id)
 );
-<<<<<<< HEAD
-
-=======
->>>>>>> ac0eb309036e00c90ef9eaa79d92cc541431a22f

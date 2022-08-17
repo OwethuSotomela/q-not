@@ -103,6 +103,13 @@ module.exports = function (app, db) {
             res.sendStatus(403);
         }
     }
+
+    function convert(str) {
+        var date = new Date(str),
+          mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+          day = ("0" + date.getDate()).slice(-2);
+        return [date.getFullYear(), mnth, day].join("-");
+      }
     // end 
 
     app.post('/api/book/:bookByDay', async function (req, res) {
@@ -122,8 +129,14 @@ module.exports = function (app, db) {
                 throw Error('No user')
             } else {
 
-                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
+                await db.none(`INSERT INTO appointments (slot.map(date => {
+                    return {
+                        ...date,
+                        slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                    }
+                });, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
 
+                console.log(slot)
                 res.status(200).json({
                     message: 'A booking has been made',
                     user
@@ -295,14 +308,26 @@ module.exports = function (app, db) {
 
     // scheduler 
 
-    app.get('/api/day', async function (req, res) {
-
+    app.get('/api/to/:to/from/:from', async function (req, res) {
         try {
-            const schedule = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE select * from tbl_name where date = cast(getdate() as Date)`);
-            console.log({schedule})
-            res.json({
-                data: schedule
-            })
+            var newData = [];
+            const { from, to} = req.params;
+            if(to == null && from == null){
+                throw Error('To or From Date not provided')
+            }else{
+                const schedule = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id`);
+                console.log(schedule)
+                for(var i = 0; i <= schedule.length; i++){
+                    var mySchedule = schedule[i];
+                    if(new Date(convert(2)))
+                    console.log(mySchedule)
+                }
+                res.json({
+                    data: schedule
+                })
+    
+            }
+
 
         } catch (error) {
             console.error(error.message);

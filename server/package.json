@@ -15,13 +15,8 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "pg-promise": "^10.11.1"
-<<<<<<< HEAD
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
   }
 }
-=======
-  }
-}
->>>>>>> ac0eb309036e00c90ef9eaa79d92cc541431a22f
