@@ -19,20 +19,3 @@ CREATE TABLE appointments(
     FOREIGN KEY (users_id) REFERENCES users(id)
 );
 
- DROP TABLE IF EXISTS events CASCADE;
- CREATE TABLE events (
-    id SERIAL NOT NULL PRIMARY KEY,
-    text varchar(255) DEFAULT NULL,
-    start_date timestamp NOT NULL,
-    end_date timestamp NOT NULL
-); 
-
-INSERT INTO events (text, start_date, end_date) VALUES ('Immunization', '2022-07-01 14:00', '2022-08-09 14:15');
-INSERT INTO events (text, start_date, end_date) VALUES ('Family Planning', '2022-07-02 13:00', '2022-08-08 13:15');
-
---  DROP TABLE IF EXISTS events CASCADE;
---  CREATE TABLE events (
---     id SERIAL NOT NULL PRIMARY KEY,
---     event_id varchar(255) DEFAULT NULL
--- ); 
--- INSERT INTO events (event_id) VALUES ('1659696175839');

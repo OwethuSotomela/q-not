@@ -298,8 +298,8 @@ module.exports = function (app, db) {
     app.get('/api/schedule', async function (req, res) {
 
         try {
-            const schedule = await db.manyOrNone(`SELECT * FROM events`);
-            // console.log({ schedule })
+            const schedule = await db.manyOrNone(`SELECT * FROM appointments`);
+            
             res.json({
                 data: schedule
             })

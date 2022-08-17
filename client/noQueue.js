@@ -1,12 +1,9 @@
 import axios from "axios";
 import moment from 'moment';
 
-var m = moment()
-console.log(m)
-m = moment("2022-08-11T16:00:000")
-console.log(m)
-console.log(`toString() => ${m.toString()}`)
-console.log(`toISOString() => ${m.toISOString()}`)
+const date = new Date()
+const time = moment(date).format('MMMM Do YYYY h:mm:ss a');
+console.log({time})
 
 // const URL_BASE = import.meta.env.VITE_SERVER_URL;
 const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
@@ -28,13 +25,13 @@ const appState = {
 export default function EQueue() {
     return {
         booking: [],
-        schedule: [],
         appState: "LOGIN",
         init() {
             this.callFlatPicker();
             if (localStorage["user"] !== "undefined") {
                 this.isOpen = true;
                 if (localStorage["screen"]) {
+                    console.log(localStorage.getItem("screen"))
                     this.appState = localStorage.getItem("screen");
                 } else {
                     this.changeScreen(appState.Home);
@@ -43,13 +40,15 @@ export default function EQueue() {
                     this.user = localStorage.getItem("user");
                 }
             };
-
+            
+            // localStorage.setItem('screen', 'CLEARVIEW')
             this.confirmedList()
             this.getBookings()
-            this.removeDone()
-            this.cancelsAnAppo()
+            // this.removeDone()
+            // this.cancelsAnAppo()
             // this.gettingUserBooking()
             // this.getActiveStart()
+            console.log(this.appState)
         },
         changeScreen(name) {
             this.appState = name;
@@ -65,6 +64,9 @@ export default function EQueue() {
             }
             if (this.appState == appState.Confirmation) {
                 this.callFlatPicker()
+            }
+            if (this.appState == appState.Schedule){
+                
             }
         },
         callFlatPicker() {
@@ -109,14 +111,16 @@ export default function EQueue() {
 
                     console.log(selectedDates)
 
-                    instance.config.disable.push(selectedDates[0]);
+                    const convertedDate = moment(selectedDates[0]).format('MMMM Do YYYY h:mm:ss a')
+
+                    instance.config.disable.push(convertedDate);
 
                     this.booking = instance.selectedDates;
-                    console.log(this.booking)
+                    console.log(instance.selectedDates)
 
                     localStorage.setItem("Booking", this.booking);
 
-                    console.log(instance.config.disable);
+                    console.log(convertedDate);
                 },
             });
         },
@@ -270,9 +274,14 @@ export default function EQueue() {
                 .get(`${URL_Heroku}/api/booking/${username}`)
                 .then((r) => r.data)
                 .then((clinicDate) => {
-                    this.myBooking = clinicDate.data;
+                    this.myBooking = clinicDate.data.map(date=> {
+                        return {
+                            ...date,
+                            slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss a')
+                        }
+                    })
                     this.user = clinicDate.user;
-
+                    console.log(this.myBooking);
                     localStorage.setItem("user", JSON.stringify(this.user));
                 })
                 .catch((e) => {
