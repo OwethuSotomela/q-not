@@ -74,7 +74,7 @@ export default function EQueue() {
                 maxDate: "2022-11-30",
 
                 minTime: "09:00",
-                maxTime: "16:00",
+                maxTime: "15:00",
 
                 inline: true,
                 weekNumbers: true,
