@@ -160,7 +160,6 @@
                 <p>Your appointment has been created. Thanks!</p>
                 <button @click="closePopup()">OK</button>
               </div>
-              fghjkljhgfhjkl
               <br>
               <a href="#" @click="goToLogin()">Go back to Login</a>
               <br>
@@ -376,19 +375,19 @@
         </div>
 
         <div x-show="appState == 'SCHEDULE'" class="schedulec">
-          
+
           <div class="card text-center">
             <div class="card-header">
               <label><strong>Day/ Week/ Month</strong></label>
             </div>
-              <div class="card-footer text-muted">
-                <a href="#" @click="goToLogin()">Go back to Login</a>
-                <br>
-                <a href="#" @click="goToApproved()">View confirmed Appointment</a>
-              </div>
+            <div class="card-footer text-muted">
+              <a href="#" @click="goToLogin()">Go back to Login</a>
+              <br>
+              <a href="#" @click="goToApproved()">View confirmed Appointment</a>
             </div>
+          </div>
 
-            </div>
+        </div>
       </div>
 
     </div>

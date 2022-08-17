@@ -295,32 +295,13 @@ module.exports = function (app, db) {
 
     // scheduler 
 
-    app.get('/api/schedule', async function (req, res) {
+    app.get('/api/day', async function (req, res) {
 
         try {
-            const schedule = await db.manyOrNone(`SELECT * FROM appointments`);
-            
+            const schedule = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE select * from tbl_name where date = cast(getdate() as Date)`);
+            console.log({schedule})
             res.json({
                 data: schedule
-            })
-
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).json({
-                error: error.message
-            })
-        }
-    })
-
-    app.post('/api/event/:id', async function (req, res) {
-        try {
-            const { id } = req.params;
-
-            await db.none(`INSERT INTO events (event_id) VALUES ($1)`, [id])
-
-            res.status(200).json({
-                message: 'An event has been created!',
-                user
             })
 
         } catch (error) {

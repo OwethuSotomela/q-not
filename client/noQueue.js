@@ -1,10 +1,6 @@
 import axios from "axios";
 import moment from 'moment';
 
-const date = new Date()
-const time = moment(date).format('MMMM Do YYYY h:mm:ss a');
-console.log({time})
-
 // const URL_BASE = import.meta.env.VITE_SERVER_URL;
 const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
 // const URL_Heroku = import.meta.env.VITE_SERVER_URL;
@@ -40,7 +36,7 @@ export default function EQueue() {
                     this.user = localStorage.getItem("user");
                 }
             };
-            
+
             // localStorage.setItem('screen', 'CLEARVIEW')
             this.confirmedList()
             this.getBookings()
@@ -65,8 +61,8 @@ export default function EQueue() {
             if (this.appState == appState.Confirmation) {
                 this.callFlatPicker()
             }
-            if (this.appState == appState.Schedule){
-                
+            if (this.appState == appState.Schedule) {
+
             }
         },
         callFlatPicker() {
@@ -106,12 +102,12 @@ export default function EQueue() {
                     "2022-09-24",
                 ],
 
-                onChange(selectedDates = moment(selectedDates), dateAndTimeStr, instance) {
+                onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
 
                     console.log(selectedDates)
 
-                    const convertedDate = moment(selectedDates[0]).format('MMMM Do YYYY h:mm:ss a')
+                    const convertedDate = moment(selectedDates[0]).format('MMMM Do YYYY h:mm:ss A')
 
                     instance.config.disable.push(convertedDate);
 
@@ -274,10 +270,10 @@ export default function EQueue() {
                 .get(`${URL_Heroku}/api/booking/${username}`)
                 .then((r) => r.data)
                 .then((clinicDate) => {
-                    this.myBooking = clinicDate.data.map(date=> {
+                    this.myBooking = clinicDate.data.map(date => {
                         return {
                             ...date,
-                            slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss a')
+                            slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
                         }
                     })
                     this.user = clinicDate.user;
@@ -362,8 +358,12 @@ export default function EQueue() {
                 .get(`${URL_Heroku}/api/booking`)
                 .then((r) => r.data)
                 .then((clinicDate) => {
-                    this.myBooking = clinicDate.data;
-                    // console.log(this.myBooking);
+                    this.myBooking = clinicDate.data.map(date => {
+                        return {
+                            ...date,
+                            slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                        }
+                    });
                 })
                 .catch((e) => {
                     console.log(e);
@@ -406,8 +406,12 @@ export default function EQueue() {
                     .get(`${URL_Heroku}/api/list`)
                     .then((r) => r.data)
                     .then((clinicDate) => {
-                        this.confirmedTable = clinicDate.data;
-                        // console.log(this.confirmedTable);
+                        this.confirmedTable = clinicDate.data.map(date=> {
+                            return {
+                                ...date,
+                                slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                            }
+                        });
                     })
                     .catch((e) => {
                         console.log(e);
@@ -495,11 +499,11 @@ export default function EQueue() {
         //   end show & hide 
         // scheduler
 
-        all() {
+        today() {
             alert('All good here')
             try {
                 axios
-                    .get(`http://localhost:5050/api/schedule`)
+                    .get(`http://localhost:5050/api/day`)
                     .then((r) => r.data)
                     .then((all) => {
                         this.myTimeTable = all.data;
@@ -514,21 +518,6 @@ export default function EQueue() {
             }
         },
 
-        createEvent(event) {
-            console.log(event)
-            alert(event.id)
-            try {
-                axios
-                    .post(`http://localhost:5050/api/event/${event.id}`)
-                    .then(result => result.data)
-                    .then((data) => {
-                        this.all()
-                        console.log(data.data)
-                    })
-            } catch (err) {
-                // alert(err.message);
-            }
-        },
     }
 
 }
