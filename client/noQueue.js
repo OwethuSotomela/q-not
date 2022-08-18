@@ -183,7 +183,7 @@ export default function EQueue() {
                 const loginUser = this.logUser;
 
                 axios
-                    .post(`${URL_Heroku}/api/login`, loginUser)
+                    .post(`https://cors-anywhere.herokuapp.com/${URL_Heroku}/api/login`, loginUser)
                     .then((myApp) => {
                         // console.log(myApp.data);
                         var { access_token, user } = myApp.data;
