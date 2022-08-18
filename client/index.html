@@ -186,7 +186,7 @@
                   <th>Description</th>
                   <th>Date & Time</th>
                   <th>Appointment Status</th>
-                  <th>Reschedule</th>
+                  <!-- <th>Reschedule</th> -->
                   <th>Cancel</th>
                 </tr>
                 <template x-for="slot in myBooking">
@@ -200,9 +200,9 @@
                     <td>
                       <h6 x-text="slot.status"></h6>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button @click="reschedule(slot)" class="btn btn-outline-primary">Reschedule</button>
-                    </td>
+                    </td> -->
                     <td>
                       <button @click="cancelAppo(slot)" class="btn btn-outline-danger">Cancel</button>
                     </td>

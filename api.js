@@ -122,7 +122,7 @@ module.exports = function (app, db) {
                 throw Error('No user')
             } else {
 
-                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
+                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay.map(date =>{return{...date, slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')}}), user.id, description.appoReason])
 
                 res.status(200).json({
                     message: 'A booking has been made',

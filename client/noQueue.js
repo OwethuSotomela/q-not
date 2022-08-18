@@ -41,7 +41,7 @@ export default function EQueue() {
             this.confirmedList()
             this.getBookings()
             // this.removeDone()
-            // this.cancelsAnAppo()
+            this.cancelsAnAppo()
             // this.gettingUserBooking()
             // this.getActiveStart()
             console.log(this.appState)
