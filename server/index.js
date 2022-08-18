@@ -13,7 +13,7 @@ app.use(express.static("public"))
 
 app.use(cors());
 
-const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
+const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://zena:zena123@localhost:5432/qnot';
 const pgp = PgPromise({});
 
 const config = {
@@ -30,5 +30,5 @@ API(app, db);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, function () {
-    console.log(`App started on port ${PORT}`);
-});;
+    console.log(`App started on port ${'*'}`);
+});

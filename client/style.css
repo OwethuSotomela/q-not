@@ -11,37 +11,65 @@
   margin-bottom: 2em;
 }
 
-.flatpickr i {
-  /* justify-content: center;
-  text-align: center; */
+div.flatpickr.form-control.input {
+  width: 1px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-position: center center;
-  background-repeat: no-repeat;
+  padding: 1px 1px;
 }
+
+div.card-body {
+  display: flex;
+  justify-content: center;
+}
+
+.parent {
+  background: #CCCCCC;
+  height: 200px;
+  width: 200px;
+  position: relative;
+}
+
+.child {
+  background: #FFFF00;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -35px 0 0 -35px;
+}
+
+/* end  */
 
 ::placeholder {
   text-align: center;
 }
-body{
+
+body {
   background-color: rgba(228, 128, 41, 0.125);
   background-color: #FFF1ED;
 }
-.form{
+
+.form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
 }
-.tag label{
-    display: block;
-    width: 5em;
-    margin-top: 0.5em;
+
+.col-auto {
+  margin-top: 0.3em;
 }
+
+.tag label {
+  display: block;
+}
+
 .row {
   display: flex;
 }
-.image{
+
+.image {
   width: 20em;
   height: 20em;
 }
@@ -53,20 +81,21 @@ table {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-.form{
-  display: flex;
-  /* flex-direction: column; */
-  /* flex-wrap: row wrap; */
-  justify-content: center;
-}
-table td, table th {
+
+table td,
+table th {
   border: 1px solid #ddd;
   padding: 4px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-table tr:hover {background-color: #888888;}
+table tr:hover {
+  background-color: #888888;
+}
+
 table th {
   padding-top: 4px;
   padding-bottom: 4px;
@@ -74,6 +103,27 @@ table th {
   background-color: #0D6EFD;
   color: white;
 }
+
+#reason {
+  height: 2em;
+  width: 25em;
+}
+
+#lender {
+  align-items: center;
+  text-align: center;
+}
+
+.admin {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.min {
+  margin-right: 0.3em;
+}
+
 .input {
   text-align: center;
   width: 50%;
@@ -85,43 +135,107 @@ table th {
   transition: 0.5s;
   outline: none;
 }
-/* input[type=password] {
-  text-align: center;
-  width: 50%;
-  padding: 4px 5px;
-  margin: 2px 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  outline: none;
+
+/* new  */
+
+.parent{
+  margin: 0px;
+  width: 70em;
+  height: 100vh;
+  overflow: hidden;
+}
+/* #call{
+  background-color: #0D6EFD;
+}
+#scheduler_here{
+  background-color: #6fd649;
 } */
-p{
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-size: 50px;
-  color: rgb(2, 2, 61);
+
+@media (max-width: 600px) {
+  table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  table td,
+  table th {
+    border: 1px solid #ddd;
+    padding: 1px;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  table tr:hover {
+    background-color: #888888;
+  }
+
+  table th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: left;
+    background-color: #0D6EFD;
+    color: white;
+  }
+
+  #reason {
+    height: 2em;
+    width: 10em;
+  }
 }
-.pass{
+.myBack{
+  background-color:#CCCCCC;
+}
+
+.popup{
+  width: 400px;
+  background: #CCCCCC;
+  border-radius: 6px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  width: 50%;
-  padding: 4px 5px;
-  margin: 2px 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  outline: none;
+  padding: 0 30px 30px;
+  color: #333;
+  visibility: hidden;
+  transition: transform 0.4s, top 0.4s;
+
 }
-.icon-calender{
-  font-family: 'IBM Plex Sans', sans-serif;
-    position: relative;
-    max-width: 400px; /*change as per your design need */
-    min-width: 320px;
-    background: var(--calendar-bg-color);
-    color: var(--calendar-font-color);
-    margin: 20px auto;
-    box-sizing: border-box;
-    overflow: hidden;
-    font-weight: normal;
-    border-radius: var(--calendar-border-radius);
+.open-popup{
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%, -50) scale(1);
+}
+.popup img{
+  width: 100px;
+  margin-top: -50px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.popup h2{
+  font-size: 38px;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+.popup button{
+  width: 100%;
+  margin-top: 50px;
+  padding: 10px 0;
+  background: #6fd649;
+  color: #fff;
+  border: 0;
+  outline: none;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+
+}
+#loginPopup{
+  background-color: #fff;
 }

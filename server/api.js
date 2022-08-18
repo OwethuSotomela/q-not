@@ -1,20 +1,19 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const axios = require('axios');
 
 module.exports = function (app, db) {
 
     app.get('/api/test', function (req, res) {
         res.json({
-            name: "OwSoto"
+            name: "zena"
         })
     })
 
-    app.post('/api/signup', async function (req, res) {
+    app.post('/api/register', async function (req, res) {
         try {
-            const { fullname, username, password, role, id_number, contact_number } = req.body;
+            const { fullname, username, password, role, id_number, contact_number } = req.body
 
-            console.log({ fullname, username, password, role, id_number, contact_number });
+            console.log({ fullname, username, password, role, id_number, contact_number })
 
             console.log({ username });
 
@@ -47,7 +46,6 @@ module.exports = function (app, db) {
         }
     })
 
-
     app.post('/api/login', async function (req, res) {
         try {
             const { username, password } = req.body;
@@ -55,10 +53,6 @@ module.exports = function (app, db) {
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username]);
             console.log(user)
 
-            // start 
-            // const patient = await db.oneOrNone(`SELECT * FROM users WHERE role = $1`, [user.patient])
-            // console.log({patient})
-            // end 
             if (!user) {
                 throw Error('User does not exist! Register new account')
             } else {
@@ -83,6 +77,33 @@ module.exports = function (app, db) {
             })
         }
     })
+
+    // here 
+
+    function verifyToken(req, res, next) {
+        const bearerHeader = req.headers["authorization"];
+        if (typeof bearerHeader !== "undefined") {
+            const bearer = bearerHeader.split(" ");
+            const bearerToken = bearer[1];
+            req.key = bearerToken;
+            jwt.verify(req.key, "secretkey", (err, token) => {
+                alert(token)
+                if (err) {
+                    res.sendStatus(403);
+                } else {
+                    res.json({
+                        post: "Post created...",
+                        authData,
+                        token
+                    });
+                }
+            });
+            next();
+        } else {
+            res.sendStatus(403);
+        }
+    }
+    // end 
 
     app.post('/api/book/:bookByDay', async function (req, res) {
         try {
@@ -143,19 +164,17 @@ module.exports = function (app, db) {
         }
     })
 
-    app.delete('/api/booking/:id', async function (req, res) {
+    app.delete('/api/cancel/:id', async function (req, res) {
 
         try {
             const { id } = req.params;
-            const bookings = await db.one(`DELETE FROM appointments WHERE id = $1`, [id])
-
-            console.log({ id })
+            await db.none(`DELETE FROM appointments WHERE id = $1`, [id])
 
             res.json({
                 status: 'Appointment Cancelled',
-                data: bookings
             })
         } catch (err) {
+            console.log(err)
             res.json({
                 status: 'Failed to cancel appointment',
                 error: err.stack
@@ -163,11 +182,34 @@ module.exports = function (app, db) {
         }
     })
 
+    // sun 
+
+    app.post('/api/reschedule/:id', async function (req, res) {
+        try {
+            alert('Working?')
+            const { id } = req.params;
+
+            await db.none(`UPDATE appointments SET slot = slot WHERE id = $1`, [id])
+
+            res.status(200).json({
+                message: 'Successful',
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+    // sun end 
+
+    // Anele 
+
     app.get('/api/booking', async function (req, res) {
         try {
 
-            const bookingBy = await db.manyOrNone(`SELECT * FROM appointments`);
-            console.log(bookingBy)
+            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, id_number, confirmed, description, fullname, username FROM appointments join users on appointments.users_id = users.id`);
 
             res.json({
                 data: bookingBy,
@@ -176,6 +218,97 @@ module.exports = function (app, db) {
             console.log(e)
             res.status(500).json({
                 error: e.message
+            })
+        }
+    })
+
+    app.post('/api/confirm/:id', async function (req, res) {
+        try {
+
+            const { id } = req.params;
+
+            await db.none(`UPDATE appointments SET confirmed = true WHERE id = $1`, [id])
+
+            res.status(200).json({
+                message: 'Successful',
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
+    app.get('/api/list', async function (req, res) {
+        try {
+            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, confirmed, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE confirmed = true`);
+
+            res.json({
+                data: bookingBy,
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
+    app.delete('/api/remove/:id', async function (req, res) {
+
+        try {
+            const { id } = req.params;
+            await db.none(`DELETE FROM appointments WHERE id = $1`, [id])
+
+            res.json({
+                status: 'Appointment Cancelled',
+            })
+        } catch (err) {
+            console.log(err)
+            res.json({
+                status: 'Failed to cancel appointment',
+                error: err.stack
+            })
+        }
+    })
+
+    // scheduler 
+
+    app.get('/api/schedule', async function (req, res) {
+
+        try {
+            const schedule = await db.manyOrNone(`SELECT * FROM events`);
+            // console.log({ schedule })
+            res.json({
+                data: schedule
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
+    app.post('/api/event/:id', async function (req, res) {
+        try {
+            const { id } = req.params;
+
+            await db.none(`INSERT INTO events (event_id) VALUES ($1)`, [id])
+
+            res.status(200).json({
+                message: 'An event has been created!',
+                user
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
             })
         }
     })

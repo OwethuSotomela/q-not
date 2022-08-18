@@ -1,52 +1,80 @@
-import axios from 'axios';
+import axios from "axios";
+import moment from 'moment';
 
-const URL_BASE = import.meta.env.VITE_SERVER_URL;
-const URL_Heroku = 'https://q-not-360-degrees.herokuapp.com';
+var m = moment()
+console.log(m)
+m = moment("2022-08-11T16:00:000")
+console.log(m)
+console.log(`toString() => ${m.toString()}`)
+console.log(`toISOString() => ${m.toISOString()}`)
+
+// const URL_BASE = import.meta.env.VITE_SERVER_URL;
+const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
 // const URL_Heroku = import.meta.env.VITE_SERVER_URL;
 
 const appState = {
-    Login: 'LOGIN',
-    Signup: 'SIGNUP',
-    Home: 'HOME',
-    AdminHome: 'ADMINISTRATOR',
-    Confirmation: 'CONFIRMATION',
-    Manage: 'MANAGE'
-}
+    Login: "LOGIN",
+    Signup: "SIGNUP",
+
+    Home: "HOME",
+
+    AdminHome: "ADMINISTRATOR",
+    Confirmation: "CONFIRMATION",
+    Manage: "MANAGE",
+    Approved: "APPROVED",
+    Schedule: "SCHEDULE"
+};
 
 export default function EQueue() {
     return {
         booking: [],
-        appState: 'LOGIN',
+        schedule: [],
+        appState: "LOGIN",
         init() {
-            this.callFlatPicker()
-            if (localStorage['user'] !== 'undefined') {
+            this.callFlatPicker();
+            if (localStorage["user"] !== "undefined") {
                 this.isOpen = true;
-                if (localStorage['screen']) {
-                    this.appState = localStorage.getItem('screen')
+                if (localStorage["screen"]) {
+                    this.appState = localStorage.getItem("screen");
                 } else {
-                    this.changeScreen(appState.Home)
+                    this.changeScreen(appState.Home);
                 }
-                if (localStorage['user']) {
-                    this.user = localStorage.getItem('user')
+                if (localStorage["user"]) {
+                    this.user = localStorage.getItem("user");
                 }
-            }
+            };
+
+            this.confirmedList()
+            this.getBookings()
+            this.removeDone()
+            this.cancelsAnAppo()
+            // this.gettingUserBooking()
+            // this.getActiveStart()
         },
         changeScreen(name) {
             this.appState = name;
-            localStorage.setItem('screen', name);
+            localStorage.setItem("screen", name);
             if (this.appState == appState.Confirmation) {
-                this.gettingUserBooking()
+                this.gettingUserBooking();
             }
             if (this.appState == appState.Home) {
+                this.callFlatPicker();
+            }
+            if (this.appState == appState.Approved) {
+                this.confirmedList()
+            }
+            if (this.appState == appState.Confirmation) {
                 this.callFlatPicker()
             }
         },
         callFlatPicker() {
             flatpickr(".flatpickr", {
                 enableTime: true,
-                dateFormat: "Y-m-d H:i",
-                altInput: true,
-                altFormat: "F j, Y",
+                dateFormat: "Y-m-d h:i K",
+
+                minDate: "today",
+                maxDate: "2022-11-30",
+
                 minTime: "09:00",
                 maxTime: "16:00",
 
@@ -55,267 +83,443 @@ export default function EQueue() {
                 allowInput: true,
                 time_24hr: true,
 
-                disable: ["2022-07-30", "2022-07-21", "2022-08-08", new Date(2025, 4, 9)],
-                onChange(selectedDates, dateAndTimeStr, instance) {
+                "disable": [
+                    function (date) {
+                        return (date.getDay() === 0 || date.getDay() === 6);
+                    },
+                    "2022-03-25",
+                    "2022-03-10",
+                    "2022-03-04",
 
-                    console.log({ selectedDates, dateAndTimeStr, instance }, 'on change')
-                    console.log(dateAndTimeStr)
-                    instance.config.disable.push(selectedDates[0])
+                    "2022-01-01",
+                    "2022-03-21",
+                    "2022-04-15",
+                    "2022-04-18",
+                    "2022-04-27",
+                    "2022-05-02",
+                    "2022-06-16",
+                    "2022-12-16",
+                    "2022-12-26",
+                    "2022-08-09",
+                    "2022-09-24",
+                ],
 
-                    this.booking = instance.selectedDates
+                onChange(selectedDates = moment(selectedDates), dateAndTimeStr, instance) {
+                    console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
+
+                    console.log(selectedDates)
+
+                    instance.config.disable.push(selectedDates[0]);
+
+                    this.booking = instance.selectedDates;
                     console.log(this.booking)
 
-                    localStorage.setItem('Booking', this.booking);
+                    localStorage.setItem("Booking", this.booking);
 
                     console.log(instance.config.disable);
-
                 },
-            })
+            });
         },
         isOpen: false,
-        feedback: '',
+        feedback: "",
         description: {
-            mhc: 'Mental health care',
-            dh: 'Dental Health',
-            fp: 'Family Planning',
-            nbac: 'NBAC',
-            art: 'ART',
-            club: 'Clinic for chronic diseases',
-            kids: 'Child Immunization'
+            mhc: "Mental health care",
+            dh: "Dental Health",
+            fp: "Family Planning",
+            nbac: "NBAC",
+            art: "ART",
+            club: "Clinic for chronic diseases",
+            kids: "Child Immunization",
         },
+        loggedIn: "Logged in as Admin:",
+        loginFeed: "",
         user: {
-            fullname: '',
-            username: '',
-            password: '',
-            role: '',
-            id_number: '',
-            contact_number: ''
+            fullname: "",
+            username: "",
+            password: "",
+            role: "",
+            id_number: "",
+            contact_number: "",
         },
         logUser: {
-            username: 'OwSoto',
-            password: 'owe123'
+            username: "",
+            password: ""
         },
-        token: '',
+        token: "",
         loading: true,
         description: null,
         myBooking: [],
+        confirmedTable: [],
         gotToSignUp() {
             this.changeScreen(appState.Signup);
         },
         gotToLogin() {
             this.changeScreen(appState.Login);
         },
-        signup() {
+        regUser() {
             try {
-                const signupUser = this.user
-                if (this.user.fullname == "" ||
-                    this.user.username == "" ||
-                    this.user.id_number == "" ||
-                    this.user.password == "" ||
-                    this.user.role == "" ||
-                    this.user.contact_number == "") {
-                    this.feedback = 'Fill in all required fields to register'
-                    setTimeout(() => {
-                        this.feedback = ''
-                    }, 3000)
-                } else {
-                    console.log({ signupUser: this.user });
-                    axios
-                        .post(`${URL_Heroku}/api/signup`, signupUser)
-                        .then((myApp) => {
-                            console.log(myApp.data)
-                            this.feedback = myApp.data.message
-                            this.users = myApp.data;
-                        }).catch(err => {
-                            console.log(err)
-                            this.feedback = err.response.data.message
-                            setTimeout(() => {
-                                this.feedback = ''
-                            }, 3000)
-                        })
-                }
-            } catch (err) {
-            }
+                const signupUser = this.user;
+                console.log(this.user)
+
+                axios
+                    .post(`${URL_Heroku}/api/register`, signupUser)
+                    .then((myApp) => {
+                        console.log(myApp.data);
+                        this.feedback = myApp.data.message;
+                        this.users = myApp.data;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        this.feedback = err.response.data.message;
+                        setTimeout(() => {
+                            this.feedback = "";
+                        }, 3000);
+                    });
+            } catch (err) { }
         },
 
         login() {
             try {
                 const loginUser = this.logUser;
+
                 axios
                     .post(`${URL_Heroku}/api/login`, loginUser)
                     .then((myApp) => {
-                        console.log(myApp.data)
+                        // console.log(myApp.data);
                         var { access_token, user } = myApp.data;
 
                         if (!access_token) {
-                            return false
+                            return false;
                         }
+                        console.log(user)
 
-                        this.changeScreen(appState.Home)
-                        // this.appState = appState.Home
+                        if (user.role == "Admin") {
+                            this.changeScreen(appState.AdminHome);
+                            this.getBookings()
+                        } else {
+                            this.changeScreen(appState.Home);
+                        }
                         this.isOpen = true;
                         this.user = user;
-                        localStorage.setItem('user', JSON.stringify(user));
-                        this.token = access_token
-                        localStorage.setItem('access_token', this.token);
-                        this.feedback = myApp.data.message
+                        localStorage.setItem("user", JSON.stringify(user));
+                        this.token = access_token;
+                        localStorage.setItem("access_token", this.token);
+                        this.loginFeed = myApp.data.message;
+                        setTimeout(() => {
+                            this.loginFeed = ""
+                        }, 3000)
 
                         setTimeout(() => {
                             this.loading = false;
-
-                        }, 1990)
+                        }, 1990);
                         setTimeout(() => {
-                            this.callFlatPicker()
+                            this.callFlatPicker();
 
-                            this.token = ''
+                            this.token = "";
                         }, 2000);
                         return true;
                     })
                     .catch((err) => {
-                        console.log(err)
-                        console.log(err.response.data.message)
-                        this.feedback = err.response.data.message
+                        console.log(err);
+                        console.log(err.response.data.message);
+
                         setTimeout(() => {
-                            this.feedback = ''
-                        }, 3000)
-
+                            this.openLoginPopup()
+                            this.loginFeed = err.response.data.message;
+                            // this.loginFeed = 
+                        }, 1000)
+                        setTimeout(() => {
+                            this.loginFeed = "";
+                        }, 3000);
                     });
-            } catch (err) {
-
-            }
+            } catch (err) { }
         },
-        // Ace 
-        loginAdmin() {
-            const loginUser = this.logUser;
-            axios
-                .post(`${URL_Heroku}/api/login`, loginUser)
-                .then((myApp) => {
-                    console.log(myApp.data)
-                    var { access_token, user } = myApp.data;
-
-                    if (!access_token) {
-                        return false
-                    }
-
-                    this.appState = appState.AdminHome
-                    this.isOpen = true;
-                    this.user = user;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    this.token = access_token
-                    localStorage.setItem('access_token', this.token);
-
-                    setTimeout(() => {
-                        this.getBookings()
-                    }, 1000)
-
-                    return true;
-                })
-                .catch((err) => {
-                    console.log(err)
-                    console.log(err.response.data.message)
-                    this.feedback = err.response.data.message
-                    setTimeout(() => {
-                        this.feedback = ''
-                    }, 3000)
-
-                });
-        },
-        // end 
 
         makeAnAppo() {
             try {
-
                 const appoReason = this.description;
-                const bookedDay = this.Booking ? this.Booking : localStorage.getItem('Booking')
-                
-                alert('You have selected' + ' ' + bookedDay)
-                alert('For' + ' ' + appoReason + ' ' + 'appointment')
+                const bookedDay = this.Booking
+                    ? this.Booking
+                    : localStorage.getItem("Booking");
 
-                const { username } = this.user.username ? this.user : JSON.parse(localStorage.getItem('user'))
+                const { username } = this.user.username
+                    ? this.user
+                    : JSON.parse(localStorage.getItem("user"));
+
                 axios
                     .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
-                    .then(result => result.data)
+                    .then((result) => result.data)
                     .then((data) => {
-                        console.log(data)
+                        console.log(data);
                     })
+                setTimeout(() => {
+                    this.openPopup()
+                }, 1000)
+
             } catch (err) {
                 alert(err.message);
             }
         },
+
         gettingUserBooking() {
-            const { username } = (this.user && this.user.username) ? this.user : JSON.parse(localStorage.getItem('user'))
+            const { username } =
+                this.user && this.user.username
+                    ? this.user
+                    : JSON.parse(localStorage.getItem("user"));
             axios
                 .get(`${URL_Heroku}/api/booking/${username}`)
-                .then(r => r.data)
+                .then((r) => r.data)
                 .then((clinicDate) => {
-
-                    this.myBooking = clinicDate.data
+                    this.myBooking = clinicDate.data;
                     this.user = clinicDate.user;
 
-                    localStorage.setItem('user', JSON.stringify(this.user));
-                }).catch(e => {
+                    localStorage.setItem("user", JSON.stringify(this.user));
+                })
+                .catch((e) => {
                     console.log(e);
                     // alert('Error')
-                })
-        },
-        goToConfirmation() {
-            this.changeScreen(appState.Confirmation)
-            setTimeout(() => {
-                this.gettingUserBooking()
-            }, 1000)
-        },
-        goToMakeAnAppointment() {
-            this.changeScreen(appState.Home)
-            setTimeout(() => {
-                this.callFlatPicker()
-            }, 1000)
-        },
-        goToLogin() {
-            this.changeScreen(appState.Login)
-        },
-        confirmBookings() {
-            alert('Hi, All. Bye-All See you Monday')
-        },
-
-        // here 
-        getBookings() {
-            axios
-                .get(`${URL_Heroku}/api/booking`)
-                .then(r => r.data)
-                .then((clinicDate) => {
-
-                    this.myBooking = clinicDate.data
-                    console.log(this.myBooking)
-
-                }).catch(e => {
-                    console.log(e);
-                    // alert('Error')
-                })
-        }, confirmAdultBookings() {
-            alert('Hi, All. Bye-All See you Monday')
+                });
         },
 
         cancelAppo(myAppointment) {
-            alert(myAppointment)
-            console.log(myAppointment.id)
             try {
                 axios
-                    .delete(`/api/booking/${myAppointment.id}`)
-                    .then(() => this.gettingUserBooking())
-                    .catch((err)=>{
-                        console.log(err)
-                    })
-                
-            } catch {
+                    .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
+                    .then(() => this.gettingUserBooking());
 
+                setTimeout(() => {
+                    this.opencancelPopup()
+                }, 1000)
+            } catch (err) {
+                console.log(err);
             }
         },
+
+        // seun 
+
+        reschedule() {
+            setTimeout(() => {
+                this.callFlatPicker();
+
+            }, 1000);
+        },
+        rescheduleAnAppo(appointments) {
+            console.log(appointments)
+            try {
+                const bookedDay = this.Booking
+                    ? this.Booking
+                    : localStorage.getItem("Booking");
+                console.log(bookedDay)
+
+                axios
+                    .post(`${URL_Heroku}/api/reschedule/${appointments.id}`, { bookedDay })
+                    .then(() => this.getBookings());
+                this.closeCalenderPopup()
+
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
+        // eun 
+
+        goToConfirmation() {
+            this.changeScreen(appState.Confirmation);
+            setTimeout(() => {
+                this.gettingUserBooking();
+            }, 1000);
+        },
+        goToMakeAnAppointment() {
+            this.changeScreen(appState.Home);
+            setTimeout(() => {
+                this.callFlatPicker();
+            }, 1000);
+        },
+        goToLogin() {
+            this.changeScreen(appState.Login);
+        },
+        goToApproved() {
+            this.changeScreen(appState.Approved)
+        },
+        goToConfirm() {
+            this.changeScreen(appState.AdminHome)
+        },
+        goToSchedule() {
+            this.changeScreen(appState.Schedule)
+        },
+
+        getBookings() {
+            axios
+                .get(`${URL_Heroku}/api/booking`)
+                .then((r) => r.data)
+                .then((clinicDate) => {
+                    this.myBooking = clinicDate.data;
+                    // console.log(this.myBooking);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    // alert('Error')
+                });
+        },
+
+        // Ace 
+
+        confirmAnAppo(appointments) {
+            try {
+                axios
+                    .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
+                    .then(() => this.getBookings());
+                this.openConfirmPopup()
+
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
+        cancelsAnAppo(appointments) {
+            try {
+                axios
+                    .post(`${URL_Heroku}/api/cancels/${appointments.id}`)
+                    .then(() => this.confirmedList());
+
+                this.feedback = "Appointment cancelled!!";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
+        confirmedList() {
+            try {
+                axios
+                    .get(`${URL_Heroku}/api/list`)
+                    .then((r) => r.data)
+                    .then((clinicDate) => {
+                        this.confirmedTable = clinicDate.data;
+                        // console.log(this.confirmedTable);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
+
+        },
+
+        removeDone(AllAppointment) {
+            try {
+                axios
+                    .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
+                    .then(() => this.confirmedList());
+
+                this.feedback = "You have removed this appointment";
+                setTimeout(() => {
+                    this.feedback = "";
+                }, 3000)
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
         // end
 
         logout() {
-            this.isOpen = !this.isOpen
-            this.changeScreen(appState.Login)
-            localStorage.clear()
-        }
+            this.isOpen = !this.isOpen;
+            this.changeScreen(appState.Login);
+            localStorage.clear();
+        },
+
+        // popup 
+        openPopup() {
+            popup.classList.add("open-popup")
+        },
+        closePopup() {
+            popup.classList.remove("open-popup")
+        },
+        opencancelPopup() {
+            cancelPopup.classList.add("open-popup")
+        },
+        closecancelPopup() {
+            cancelPopup.classList.remove("open-popup")
+        },
+        openCalenderPopup() {
+            reschedulePopup.classList.add("open-popup")
+        },
+        closeCalenderPopup() {
+            reschedulePopup.classList.remove("open-popup")
+        },
+        openLoginPopup() {
+            loginPopup.classList.add("open-popup")
+        },
+        closeLoginPopup() {
+            loginPopup.classList.remove("open-popup")
+        },
+        openConfirmPopup() {
+            confirmPopup.classList.add("open-popup")
+        },
+        closeConfirmPopup() {
+            confirmPopup.classList.remove("open-popup")
+        },
+        // end popup 
+
+        // show and hide password 
+        showPassword() {
+            var x = document.getElementById("myPassword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        },
+        showPassword() {
+            var x = document.getElementById("myPword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        },
+        //   end show & hide 
+        // scheduler
+
+        all() {
+            alert('All good here')
+            try {
+                axios
+                    .get(`http://localhost:5050/api/schedule`)
+                    .then((r) => r.data)
+                    .then((all) => {
+                        this.myTimeTable = all.data;
+                        console.log(this.myTimeTable);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        createEvent(event) {
+            console.log(event)
+            alert(event.id)
+            try {
+                axios
+                    .post(`http://localhost:5050/api/event/${event.id}`)
+                    .then(result => result.data)
+                    .then((data) => {
+                        this.all()
+                        console.log(data.data)
+                    })
+            } catch (err) {
+                // alert(err.message);
+            }
+        },
     }
+
 }

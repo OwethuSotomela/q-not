@@ -1,206 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-      <title>Q-Not</title>
-   </head>
-   <body>
-    <div x-data="isOpen" class="container">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Q-Not</title>
+  <!-- New  -->
+  <script src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js" charset="utf-8"></script>
+  <link href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler_material.css" rel="stylesheet" type="text/css"
+    charset="utf-8">
+  <!-- end  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+  <div x-data="isOpen" class="container">
+    <div class="row">
       <div class="col-12">
+        <div class="col-12">
+        </div>
+        <div x-show="appState == 'SIGNUP'" class="signup">
+          <span x-text="feedback" class="feedback">Feedback</span>
+          <br>
+          <center>
+            <p>SIGNUP HERE</p>
+          </center>
+          <div class="form-floating">
+            <div class="col-auto">
+              <label>Fullname</label><br>
+              <input type="text" class="input" x-model="user.fullname" placeholder="Enter your firstname">
+            </div>
+            <div class="col-auto">
+              <label>Username</label><br>
+              <input type="text" class="input" x-model="user.username" placeholder="Enter your username">
+            </div>
+            <div class="col-auto">
+              <label>Password</label>
+              <br>
+              <input type="password" class="input" x-model="user.password" placeholder="Create a password"
+                id="myPassword">
+            </div>
+            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+            <div class="col-auto">
+              <label>Role</label><br>
+              <select class="input" id="specificSizeSelect" x-on:click="open = !open" x-model="user.role">
+                <div x-show="open">
+                  <option>-- Select Your Role --</option>
+                  <option>Admin</option>
+                  <option>Patient</option>
+                </div>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label>ID #</label><br>
+              <input type="text" class="input" x-model="user.id_number" placeholder="Enter your ID #" required
+                minlength="10" maxlength="13" size="15">
+            </div>
+            <div class="col-auto">
+              <label>Contact #</label><br>
+              <input type="text" class="input" x-model="user.contact_number" placeholder="Enter your contact #" required
+                minlength="9" maxlength="10" size="15"><br>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox"> Remember me</label><br><br>
+            </div>
+            <div class="signUp">
+              <button @click="regUser()" class="btn btn-outline-secondary">SignUp</button>
+            </div><br>
+            <a href="#" @click="gotToLogin()">Already have an account? Login</a>
+          </div>
+        </div>
+        <div x-show="appState == 'LOGIN'" class="login">
+          <center>
             <img src="./images/diff.jpg" class="image">
-            <div x-show="appState == 'SIGNUP'" class="signup">
-               <span x-text="feedback" class="feedback">Feedback</span>
-               <br>
-               <center>
-                  <p>Sign Up</p>
-               </center>
-               <div class="row g-2">
-                 <div class="col-md">
-                 <div class="form-floating">
-               <div class="col-auto">
-                  <label>Fullname</label><br>
-                  <input type="text"  class="input" x-model="user.fullname" placeholder="Enter your firstname">
-               </div>
-               <div class="col-auto">
-                  <label>Username</label><br>
-                  <input type="text"  class="input"  x-model="user.username" placeholder="Enter your lastname">
-               </div>
-               <div class="col-auto">
-                  <label>Password</label><br>
-                  <input type="password"  class="input" x-model="user.password" placeholder="Create a password">
-               </div>
-               <div class="col-auto">
-                  <label>Role</label><br>
-                  <input type="text"  class="input" x-model="user.role" placeholder="Enter as your Role">
-               </div>
-               <div class="col-auto">
-                  <label>ID #</label><br>
-                  <input type="password"   class="input" x-model="user.id_number" placeholder="Enter your ID #">
-               </div>
-               <div class="col-auto">
-                  <label>Contact #</label><br>
-                  <input type="text"  class="input" x-model="user.contact_number" placeholder="Enter your contact #">
-               </div><br>
-               <div class="checkbox">
-                 <label><input type="checkbox"> Remember me</label>
-               </div><br>
-               <div class="signUp">
-                 <button @click="signup()" class="btn btn-outline-secondary">SignUp</button>
-               </div><br>
-             </div>
-             </div>
-              </div>
-               <a href="#" @click="gotToLogin()">Already have an account? Login</a>
-               <hr>
+            <p>LOGIN</p>
+          </center>
+          <div class="form-floating">
+            <div class="col-auto">
+              <label>Username</label><br>
+              <input type="text" class="input" x-model="logUser.username" placeholder="Enter your username">
             </div>
-            <div x-show="appState == 'LOGIN'" class="login">
-               <center>
-                  <p>Login</p>
-               </center>
-               <!-- <div class="form"> -->
-                <div class="row g-2">
-               <div class="col-md">
-               <div class="form-floating">
-                <div class="col-auto">
-               <label>Username</label><br>
-               <input type="text"  class="input" x-model="logUser.username" placeholder="Enter your username">
-             </div>
-             <div class="col-auto">
-               <label>Password</label><br>
-               <input type="password"  class="input" x-model="logUser.password" placeholder="Enter your password">
-             </div><br>
-               <!-- </div> -->
-               <button @click="login()" class="btn btn-outline-success">Login as a Patient</button>
-               <button @click="loginAdmin()" class="btn btn-outline-primary">Login as Admin</button><br>
-               <br>
-               <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
-               <hr>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-          
-         <div x-show="appState == 'HOME'" class="homePage">
-            <div class="card text-center">
-               <div class="card-header">
-                  <label>Book Appointment</label>
-               </div>
-               <h6 x-show="loading" align="center">Loading...</h6>
-               <div x-show="!loading" class="card-body">
-                  <div class="flatpickr" align="center">
-                     <div class="dropdown" x-data="{open: false}">
-                        <select id="reason" x-on:click="open = !open" x-model="description">
-                           <div x-show="open">
-                              <br>
-                              <option>Mental health care</option>
-                              <option>Dental Health</option>
-                              <option>Family planning</option>
-                              <option>NBAC</option>
-                              <option>ART</option>
-                              <option>Clinic for chronic diseases</option>
-                              <option>Child Immunization</option>
-                           </div>
-                        </select>
-                     </div>
-                     <!-- end  -->
-                     <br>
-                     <br>
-                     <label>Select date and time</label>
-                     <a class="input-button" title="toggle" data-toggle>
-                     <i class="icon-calendar"></i>
-                     </a>
-                     <a class="input-button" title="clear" data-clear>
-                     <i class="icon-close"></i>
-                     </a>
+            <div class="col-auto">
+              <label>Password</label><br>
+              <input type="password" class="input" x-model="logUser.password" placeholder="Enter your password"
+                id="myPword">
+            </div><br>
+            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+            <br><br>
+          </div>
+          <button @click="login()" class="btn btn-outline-success">Login</button>
+          <br><br>
+          <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
+          <div class="popup" id="loginPopup">
+            <img src="./images/nu2.jpeg" alt="">
+            <h2>User Doesn't Exist</h2>
+            <p x-text="loginFeed"></p>
+            <button @click="closeLoginPopup()">OK</button>
+          </div>
+        </div>
+        <div x-show="appState == 'HOME'" class="homePage">
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+            `
+            <li>
+              <a class="nav-link" href="#" @click="goToConfirmation()"><i class="bi bi-calendar2-event"
+                  style="font: size 30px;"></i><br>Appointments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                  style="font: size 30px;"></i><br>
+                Log out
+              </a>
+            </li>
+          </nav>
+          <div class="card text-center">
+            <div class="card-header">
+              <label>Book Appointment</label>
+              <br>
+              <div class="dropdown" x-data="{open: false}">
+                <select id="reason" x-on:click="open = !open" x-model="description">
+                  <div x-show="open">
+                    <br>
+                    <option> --Select reason for appointment-- </option>
+                    <option>Mental health care</option>
+                    <option>Dental Health</option>
+                    <option>Family planning</option>
+                    <option>NBAC</option>
+                    <option>ART</option>
+                    <option>Clinic for chronic diseases</option>
+                    <option>Child Immunization</option>
                   </div>
-                  <br>
-                  <button @click="makeAnAppo()" class="btn btn-outline-primary">Book an Appointment</button>
-               </div>
-               <div class="card-footer text-muted">
-                  <a href="#" @click="goToLogin()">Go back to Login</a>
-                  <br>
-                  <a href="#" @click="goToConfirmation()">Get your booking confirmation</a>
-               </div>
+                </select>
+              </div>
             </div>
-         </div>
-         <div x-show="appState == 'CONFIRMATION'" class="confirmation">
-            <div class="card text-center">
-               <div class="card-header">
-                  <label>Your Appointments</label>
-               </div>
-               <div class="card-body">
-                  <table>
-                     <tr>
-                        <th>Description</th>
-                        <th>Date & Time</th>
-                     </tr>
-                     <template x-for="slot in myBooking">
-                        <tr>
-                           <td>
-                              <h6 x-text="slot.description"></h6>
-                           </td>
-                           <td>
-                              <h6 x-text="slot.slot"></h6>
-                           </td>
-                           <td>
-                              <button @click="cancelAppo(slot)" class="btn btn-outline-danger">Cancel Appointment</button>
-                           </td>
-                        </tr>
-                     </template>
-                  </table>
-               </div>
-               <div class="card-footer text-muted">
-                  <a href="#" @click="goToMakeAnAppointment()">Go back to booking an Appointment</a>
-               </div>
-               <button @click="logout()" class="btn btn-outline-danger">Logout</button>
+            <h6 x-show="loading" align="center">Loading...</h6>
+            <div x-show="!loading" class="card-body">
+              <div class="flatpickr" align="center">
+                <br>
+                <br>
+                <a class="input-button" title="toggle" data-toggle>
+                  <i class="icon-calendar"></i>
+                </a>
+                <a class="input-button" title="clear" data-clear>
+                  <i class="icon-close"></i>
+                </a>
+              </div>
+              <br>
             </div>
-         </div>
-         <!-- Ace  -->
-         <div x-show="appState == 'ADMINISTRATOR'" class="manage">
-            <div class="card text-center">
-               <div class="card-header">
-                  <label>Confirm Appointments</label>
-               </div>
-               <div class="card-body">
-                  <caption>Data</caption>
-                  <table>
-                     <tr>
-                        <th>Description</th>
-                        <th>Date & Time</th>
-                     </tr>
-                     <template x-for="slot in myBooking">
-                        <tr>
-                           <td>
-                              <h6 x-text="slot.description"></h6>
-                           </td>
-                           <td>
-                              <h6 x-text="slot.slot"></h6>
-                           </td>
-                           <td>
-                              <button @ class="btn btn-outline-secondary">Confirm to Child
-                              Services</button>
-                           </td>
-                           <td>
-                              <button class="btn btn-outline-secondary">Confirm
-                              to Adult Services</button>
-                           </td>
-                        </tr>
-                     </template>
-                  </table>
-               </div>
-               <div class="card-footer text-muted">
-                  <a href="#" @click="goToLogin()">Go back to Login</a>
-               </div>
+            <div class="card-footer text-muted">
+              <button @click="makeAnAppo()" class="btn btn-outline-info">Book an Appointment</button>
+              <div class="popup" id="popup">
+                <img src="./images/ch3.jpeg" alt="">
+                <h2>Thank You!</h2>
+                <p>Your appointment has been created. Thanks!</p>
+                <button @click="closePopup()">OK</button>
+              </div>
             </div>
-         </div>
+          </div>
+        </div>
+        <div x-show="appState == 'CONFIRMATION'" class="confirmation">
+          <div class="myBack">
+            <p x-text="feedback"></p>
+          </div>
+          <div class="card text-center">
+            <nav class="nav nav-tabs">
+              <li><a class="nav-link" href="#" @click="goToMakeAnAppointment()"><i class="bi bi-house-fill"
+                    style="font-size:30px;color:rgb(87, 138, 233)"><br>Home</i></a></li>
+            </nav>
+            <div class="card-header">
+              <label>Your Appointments</label>
+
+
+            </div>
+            <div class="card-body">
+              <table>
+                <tr>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Appointment Status</th>
+                  <th>Cancel</th>
+                </tr>
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.status"></h6>
+                    </td>
+                    <td>
+                      <button @click="cancelAppo(slot)" class="btn btn-outline-danger">Cancel</button>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+            </div>
+            <div class="card-footer text-muted">
+              <div class="popup" id="cancelPopup">
+                <img src="./images/cross1.png" alt="">
+                <h2>Cancelled!</h2>
+                <p>Your appointment has been cancelled. Thanks!</p>
+                <button @click="closecancelPopup()">OK</button>
+              </div>
+            </div>
+            <button @click="logout()" class="btn btn-outline-danger">Logout</button>
+          </div>
+        </div>
+        <!-- Ace  -->
+        <div x-show="appState == 'ADMINISTRATOR'" class="manage">
+    
+          <div class="admin">
+            <h5 x-text="loggedIn" class="min"></h5>
+            <h5 x-text="user.fullname"></h5>
+          </div>
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+          
+            <li>
+              <a class="nav-link" href="#" @click="goToApproved()"><i class="bi bi-calendar2-event"
+                  style="font: size 30px;"></i><br>Confirmed Appointment</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToSchedule()"><i class="bi bi-calendar2-week" style="font: size 30px;"></i><br>
+                Schedule </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                  style="font: size 30px;"></i><br>
+                Log out
+              </a>
+            </li><br>
+          
+          </nav>
+          <div class="card text-center">
+            <div class="card-header">
+              <label><strong>Appointments</strong></label>
+            </div>
+            <div class="card-body">
+              <table>
+                <tr>
+                  <th>Fullnames</th>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Appointment Status</th>
+                  <th>Confirm Appointments</th>
+                </tr>
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.fullname"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.status"></h6>
+                    </td>
+                    <td>
+                      <button @click="confirmAnAppo(slot)" class="btn btn-info">Confirm Booking</button>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+              <div class="popup" id="confirmPopup">
+                <img src="./images/cm2.jpeg" alt="">
+                <h2>Approved!</h2>
+                <p>You have approved this appointment. Thanks!</p>
+                <button @click="closeConfirmPopup()">OK</button>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <div x-show="appState == 'APPROVED'" class="approved">
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+           
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToConfirm()"><i class="bi bi-check-square-fill" style="font: size 30px;"></i><br>
+                Pending Appointments </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToSchedule()"><i class="bi bi-calendar2-week" style="font: size 30px;"></i><br>
+                Schedule </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right" style="font: size 30px;"></i><br>Log out</a>
+            </li>
+          </nav>
+          <div class="card text-center">
+            <div class="card-header">
+              <label><strong>Approved Appointments / Clinic Schedule</strong></label>
+            </div>
+            <div class="card-body">
+              <table>
+                <tr>
+                  <th>Fullnames</th>
+                  <th>ID Number</th>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Status</th>
+                  <th>Cancel Appointment</th>
+                  <th>Completed</th>
+                </tr>
+                <template x-for="approved in confirmedTable">
+                  <tr>
+                    <td>
+                      <h6 x-text="approved.fullname"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.id_number"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.status"></h6>
+                    </td>
+                    <td>
+                      <button @click="cancelsAnAppo(approved)" class="btn btn-info">Cancel</button>
+                    </td>
+                    <td>
+                      <button @click="removeDone(approved)" class="btn btn-danger">Remove Done</button>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+              <!-- start  -->
+            </div>
+            <div class="card-footer text-muted">
+             
+            </div>
+          </div>
+        </div>
+        <div x-show="appState == 'SCHEDULE'">
+          <h2>Display app</h2>
+            <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+              <li class="nav-item">
+                <a class="nav-link" href="#" @click="goToConfirm()"><i class="bi bi-check-square-fill" style="font: size 30px;"></i><br>
+                  Pending Appointments </a>
+              </li>
+              <li>
+                <a class="nav-link" href="#"  @click="goToApproved()"><i class="bi bi-calendar2-event"
+                    style="font: size 30px;"></i><br>Confirmed Appointments</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                    style="font: size 30px;"></i><br>
+                  Log out
+                </a>
+              </li>
+            </nav>     
+        </div>
       </div>
-      <script type="module" src="./main.js"></script>
-   </body>
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+
 </html>
