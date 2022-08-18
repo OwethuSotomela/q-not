@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "vite",
     "test": "mocha",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "vite build"
   },
   "dependencies": {
     "alpinejs": "^3.10.2",
