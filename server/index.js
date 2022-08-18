@@ -11,7 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
-app.use(cors());
+app.use(cors({
+    origin: 'q-not-360-degrees.herokuapp.com'
+}));
 // app.use((req,res,next)=>{
 //     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','http://localhost:4200');
 //     if(req.method === 'OPTIONS') {
@@ -24,7 +26,6 @@ app.use(cors());
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE')
 header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization')
-
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
 const pgp = PgPromise({});
