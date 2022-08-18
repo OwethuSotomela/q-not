@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
 app.use(cors({
-    origin: "https://owethusotomela.github.io"
+    header: ("Access-Control-Allow-Origin", " * ")
 }));
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
