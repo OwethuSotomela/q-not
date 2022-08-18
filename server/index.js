@@ -15,7 +15,7 @@ app.use(cors({
     origin: "https://owethusotomela.github.io"
 }));
 
-const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://zena:zena123@localhost:5432/qnot';
+const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
 const pgp = PgPromise({});
 
 const config = {
