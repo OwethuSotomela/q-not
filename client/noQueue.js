@@ -184,6 +184,14 @@ export default function EQueue() {
 
                 axios
                     .post(`${URL_Heroku}/api/login`, loginUser)
+                    // .post(`${URL_Heroku}/api/login`,
+                    //     {
+                    //         method: 'POST',
+                    //         body: JSON.stringify({ username: loginUser }),
+                    //         headers: {
+                    //             'Content-Type': 'application/json'
+                    //         }
+                    //     })
                     .then((myApp) => {
                         // console.log(myApp.data);
                         var { access_token, user } = myApp.data;
@@ -355,7 +363,12 @@ export default function EQueue() {
 
         getBookings() {
             axios
-                .get(`${URL_Heroku}/api/booking`)
+                .get(`${URL_Heroku}/api/booking`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
                 .then((r) => r.data)
                 .then((clinicDate) => {
                     this.myBooking = clinicDate.data.map(date => {
@@ -403,10 +416,15 @@ export default function EQueue() {
         confirmedList() {
             try {
                 axios
-                    .get(`${URL_Heroku}/api/list`)
+                    .get(`${URL_Heroku}/api/list`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
                     .then((r) => r.data)
                     .then((clinicDate) => {
-                        this.confirmedTable = clinicDate.data.map(date=> {
+                        this.confirmedTable = clinicDate.data.map(date => {
                             return {
                                 ...date,
                                 slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
