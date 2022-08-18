@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
 app.use(cors({
-    origin: " * "
+    origin: "https://owethusotomela.github.io"
 }));
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://zena:zena123@localhost:5432/qnot';
