@@ -11,7 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
-app.use(cors());
+app.use(cors({
+    origin: " * "
+}));
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://zena:zena123@localhost:5432/qnot';
 const pgp = PgPromise({});
