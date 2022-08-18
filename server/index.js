@@ -11,7 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000/q-not/"
+}));
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','http://localhost:4200');
     if(req.method === 'OPTIONS') {
