@@ -37,7 +37,7 @@ export default function EQueue() {
                 }
             };
 
-            // localStorage.setItem('screen', 'CLEARVIEW')
+            // localStorage.setItem('screen', 'HOME')
             this.confirmedList()
             this.getBookings()
             // this.removeDone()

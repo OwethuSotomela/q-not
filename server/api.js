@@ -5,7 +5,7 @@ module.exports = function (app, db) {
 
     app.get('/api/test', function (req, res) {
         res.json({
-            name: "zena"
+            name: "OwSoto"
         })
     })
 
@@ -336,6 +336,5 @@ module.exports = function (app, db) {
             })
         }
     })
-
 }
 
