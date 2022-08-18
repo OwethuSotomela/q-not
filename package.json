@@ -1,5 +1,8 @@
 {
   "name": "q-not",
+
+  "version": "1.0.0",
+  "description": "Q-not app",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
