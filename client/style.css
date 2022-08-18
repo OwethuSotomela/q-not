@@ -49,6 +49,7 @@ div.card-body {
 body {
   background-color: rgba(228, 128, 41, 0.125);
   background-color: #FFF1ED;
+  text-align: center;
 }
 
 .form {
