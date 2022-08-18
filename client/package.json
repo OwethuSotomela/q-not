@@ -1,4 +1,6 @@
 {
+  "name": "q-not",
+  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "test": "mocha",
