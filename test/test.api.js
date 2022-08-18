@@ -27,12 +27,12 @@ describe('Q-Not API', function () {
     // 	await db.none(commandText)
     // });
 
-    // before(async function () {
-    // 	this.timeout(5000);
-    // 	await db.none(`delete from users`);
-    // 	const commandText = fs.readFileSync(`./sql/appointments.sql`, 'utf-8');
-    // 	await db.none(commandText)
-    // });
+    before(async function () {
+    	this.timeout(5000);
+    	await db.none(`delete from users`);
+    	const commandText = fs.readFileSync(`./server/sql/appointments.sql`, 'utf-8');
+    	await db.none(commandText)
+    });
 
     it('should have a test method', async () => {
 
@@ -80,6 +80,7 @@ describe('Q-Not API', function () {
     //     const users = response.body.data;
     //     assert.equal(1, users.length);
 
+<<<<<<< HEAD
     // })
     // it('should be able to find ART appointments', async() => {
     //     const response = await supertest(app)
@@ -104,6 +105,33 @@ describe('Q-Not API', function () {
     //     const deleteData = eetBooke.body
     //     assert.equal(0, deleteData.data.length);
     // });
+=======
+    })
+    
+    it('should be able to find ART appointments', async() => {
+        const response = await supertest(app)
+            .get('/api/bookings?description=ART')
+            .expect(200);
+        const bookings = response.body.data;
+        assert.equal(0, bookings.length);
+    });
+    it('should be able to find NBAC appointments', async() => {
+        // add some code below
+        const response = await supertest(app)
+            .get('/api/bookings?description=NBAC')
+            .expect(200);
+        const bookings = response.body.data;
+        assert.equal(0, bookings.length);
+    });
+    it('you should be able to cancel appointments', async() => {
+        await supertest(app)
+            .delete(`/api/cancel/:id`)
+            .expect(200);
+        const deleteBook = await supertest(app).get(`/api/book/:bookByDay`);
+        const deleteData = eetBooke.body
+        assert.equal(0, deleteData.data.length);
+    });
+>>>>>>> 33da8afa6a47359e53c792cb52ef528ac9bfe04c
 
     // it('It should be able add patient appointment', async() => {
     //     const patientResult = await supertest(app).get(`/api/bookings?role=patient`);
@@ -125,7 +153,6 @@ describe('Q-Not API', function () {
     //     const updatedpatientResult = await supertest(app).get(`/api/bookings?role=patient`);
     //     assert.equal(2, updatedpatientResult.body.data.length);
     // });
-
 
     after(() => {
         db.$pool.end();

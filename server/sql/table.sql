@@ -18,3 +18,4 @@ CREATE TABLE appointments(
     description varchar(255) NOT NULL,
     FOREIGN KEY (users_id) REFERENCES users(id)
 );
+);

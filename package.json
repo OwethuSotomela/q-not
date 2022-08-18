@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node index.js"
   },
   "dependencies": {
     "alpinejs": "^3.10.2",

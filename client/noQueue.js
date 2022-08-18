@@ -28,13 +28,13 @@ const appState = {
 export default function EQueue() {
     return {
         booking: [],
-        schedule: [],
         appState: "LOGIN",
         init() {
             this.callFlatPicker();
             if (localStorage["user"] !== "undefined") {
                 this.isOpen = true;
                 if (localStorage["screen"]) {
+                    console.log(localStorage.getItem("screen"))
                     this.appState = localStorage.getItem("screen");
                 } else {
                     this.changeScreen(appState.Home);
@@ -44,12 +44,18 @@ export default function EQueue() {
                 }
             };
 
+            // localStorage.setItem('screen', 'CLEARVIEW')
             this.confirmedList()
             this.getBookings()
             this.removeDone()
             this.cancelsAnAppo()
             // this.gettingUserBooking()
             // this.getActiveStart()
+            // this.removeDone()
+            // this.cancelsAnAppo()
+            // this.gettingUserBooking()
+            // this.getActiveStart()
+            console.log(this.appState)
         },
         changeScreen(name) {
             this.appState = name;
@@ -66,6 +72,9 @@ export default function EQueue() {
             if (this.appState == appState.Confirmation) {
                 this.callFlatPicker()
             }
+            if (this.appState == appState.Schedule) {
+
+            }
         },
         callFlatPicker() {
             flatpickr(".flatpickr", {
@@ -76,7 +85,7 @@ export default function EQueue() {
                 maxDate: "2022-11-30",
 
                 minTime: "09:00",
-                maxTime: "16:00",
+                maxTime: "15:00",
 
                 inline: true,
                 weekNumbers: true,
@@ -105,18 +114,21 @@ export default function EQueue() {
                 ],
 
                 onChange(selectedDates = moment(selectedDates), dateAndTimeStr, instance) {
+                onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
 
                     console.log(selectedDates)
 
-                    instance.config.disable.push(selectedDates[0]);
+                    const convertedDate = moment(selectedDates[0]).format('MMMM Do YYYY h:mm:ss A')
+
+                    instance.config.disable.push(convertedDate);
 
                     this.booking = instance.selectedDates;
-                    console.log(this.booking)
+                    console.log(instance.selectedDates)
 
                     localStorage.setItem("Booking", this.booking);
 
-                    console.log(instance.config.disable);
+                    console.log(convertedDate);
                 },
             });
         },
@@ -270,9 +282,14 @@ export default function EQueue() {
                 .get(`${URL_Heroku}/api/booking/${username}`)
                 .then((r) => r.data)
                 .then((clinicDate) => {
-                    this.myBooking = clinicDate.data;
+                    this.myBooking = clinicDate.data.map(date => {
+                        return {
+                            ...date,
+                            slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                        }
+                    })
                     this.user = clinicDate.user;
-
+                    console.log(this.myBooking);
                     localStorage.setItem("user", JSON.stringify(this.user));
                 })
                 .catch((e) => {
@@ -353,8 +370,12 @@ export default function EQueue() {
                 .get(`${URL_Heroku}/api/booking`)
                 .then((r) => r.data)
                 .then((clinicDate) => {
-                    this.myBooking = clinicDate.data;
-                    // console.log(this.myBooking);
+                    this.myBooking = clinicDate.data.map(date => {
+                        return {
+                            ...date,
+                            slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                        }
+                    });
                 })
                 .catch((e) => {
                     console.log(e);
@@ -399,6 +420,12 @@ export default function EQueue() {
                     .then((clinicDate) => {
                         this.confirmedTable = clinicDate.data;
                         // console.log(this.confirmedTable);
+                        this.confirmedTable = clinicDate.data.map(date=> {
+                            return {
+                                ...date,
+                                slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                            }
+                        });
                     })
                     .catch((e) => {
                         console.log(e);
@@ -487,10 +514,11 @@ export default function EQueue() {
         // scheduler
 
         all() {
+        today() {
             alert('All good here')
             try {
                 axios
-                    .get(`http://localhost:5050/api/schedule`)
+                    .get(`http://localhost:5050/api/day`)
                     .then((r) => r.data)
                     .then((all) => {
                         this.myTimeTable = all.data;
@@ -505,21 +533,6 @@ export default function EQueue() {
             }
         },
 
-        createEvent(event) {
-            console.log(event)
-            alert(event.id)
-            try {
-                axios
-                    .post(`http://localhost:5050/api/event/${event.id}`)
-                    .then(result => result.data)
-                    .then((data) => {
-                        this.all()
-                        console.log(data.data)
-                    })
-            } catch (err) {
-                // alert(err.message);
-            }
-        },
     }
 
 }

@@ -11,17 +11,17 @@ module.exports = function (app, db) {
 
     app.post('/api/register', async function (req, res) {
         try {
-            const { fullname, username, password, role, id_number, contact_number } = req.body
+            const { fullname, username, password, role, id_number, contact_number } = await req.body
 
             console.log({ fullname, username, password, role, id_number, contact_number })
 
             console.log({ username });
 
-            if (username == null) {
+            if (await username == null) {
                 throw new Error("Username should be entered")
             }
 
-            if (password == null) {
+            if (await password == null) {
                 throw new Error("Password should be entered")
             }
 
@@ -103,6 +103,13 @@ module.exports = function (app, db) {
             res.sendStatus(403);
         }
     }
+
+    function convert(str) {
+        var date = new Date(str),
+          mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+          day = ("0" + date.getDate()).slice(-2);
+        return [date.getFullYear(), mnth, day].join("-");
+      }
     // end 
 
     app.post('/api/book/:bookByDay', async function (req, res) {
@@ -122,8 +129,14 @@ module.exports = function (app, db) {
                 throw Error('No user')
             } else {
 
-                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
+                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay.map(date => {
+                    return {
+                        ...date,
+                        slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                    }
+                }), user.id, description.appoReason])
 
+                console.log(slot)
                 res.status(200).json({
                     message: 'A booking has been made',
                     user
@@ -186,10 +199,9 @@ module.exports = function (app, db) {
 
     app.post('/api/reschedule/:id', async function (req, res) {
         try {
-            alert('Working?')
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET slot = slot WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET slot = slot + 1 WHERE id = $1`, [id])
 
             res.status(200).json({
                 message: 'Successful',
@@ -209,7 +221,7 @@ module.exports = function (app, db) {
     app.get('/api/booking', async function (req, res) {
         try {
 
-            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, id_number, confirmed, description, fullname, username FROM appointments join users on appointments.users_id = users.id`);
+            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, id_number, status, description, fullname, username FROM appointments join users on appointments.users_id = users.id`);
 
             res.json({
                 data: bookingBy,
@@ -227,7 +239,26 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            await db.none(`UPDATE appointments SET confirmed = true WHERE id = $1`, [id])
+            await db.none(`UPDATE appointments SET status = 'Approved' WHERE id = $1`, [id])
+
+            res.status(200).json({
+                message: 'Successful',
+            })
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
+            })
+        }
+    })
+
+    app.post('/api/cancels/:id', async function (req, res) {
+        try {
+
+            const { id } = req.params;
+
+            await db.none(`UPDATE appointments SET status = 'Cancelled' WHERE id = $1 AND status = 'Approved'`, [id])
 
             res.status(200).json({
                 message: 'Successful',
@@ -243,7 +274,7 @@ module.exports = function (app, db) {
 
     app.get('/api/list', async function (req, res) {
         try {
-            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, confirmed, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE confirmed = true`);
+            const bookingBy = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE status = 'Approved'`);
 
             res.json({
                 data: bookingBy,
@@ -277,33 +308,26 @@ module.exports = function (app, db) {
 
     // scheduler 
 
-    app.get('/api/schedule', async function (req, res) {
-
+    app.get('/api/to/:to/from/:from', async function (req, res) {
         try {
-            const schedule = await db.manyOrNone(`SELECT * FROM events`);
-            // console.log({ schedule })
-            res.json({
-                data: schedule
-            })
+            var newData = [];
+            const { from, to} = req.params;
+            if(to == null && from == null){
+                throw Error('To or From Date not provided')
+            }else{
+                const schedule = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id`);
+                console.log(schedule)
+                for(var i = 0; i <= schedule.length; i++){
+                    var mySchedule = schedule[i];
+                    if(new Date(convert(2)))
+                    console.log(mySchedule)
+                }
+                res.json({
+                    data: schedule
+                })
+    
+            }
 
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).json({
-                error: error.message
-            })
-        }
-    })
-
-    app.post('/api/event/:id', async function (req, res) {
-        try {
-            const { id } = req.params;
-
-            await db.none(`INSERT INTO events (event_id) VALUES ($1)`, [id])
-
-            res.status(200).json({
-                message: 'An event has been created!',
-                user
-            })
 
         } catch (error) {
             console.error(error.message);
