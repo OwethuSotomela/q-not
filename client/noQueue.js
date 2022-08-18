@@ -1,13 +1,6 @@
 import axios from "axios";
 import moment from 'moment';
 
-var m = moment()
-console.log(m)
-m = moment("2022-08-11T16:00:000")
-console.log(m)
-console.log(`toString() => ${m.toString()}`)
-console.log(`toISOString() => ${m.toISOString()}`)
-
 // const URL_BASE = import.meta.env.VITE_SERVER_URL;
 const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
 // const URL_Heroku = import.meta.env.VITE_SERVER_URL;
@@ -47,10 +40,6 @@ export default function EQueue() {
             // localStorage.setItem('screen', 'CLEARVIEW')
             this.confirmedList()
             this.getBookings()
-            this.removeDone()
-            this.cancelsAnAppo()
-            // this.gettingUserBooking()
-            // this.getActiveStart()
             // this.removeDone()
             // this.cancelsAnAppo()
             // this.gettingUserBooking()
@@ -113,7 +102,6 @@ export default function EQueue() {
                     "2022-09-24",
                 ],
 
-                onChange(selectedDates = moment(selectedDates), dateAndTimeStr, instance) {
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
 
@@ -418,8 +406,6 @@ export default function EQueue() {
                     .get(`${URL_Heroku}/api/list`)
                     .then((r) => r.data)
                     .then((clinicDate) => {
-                        this.confirmedTable = clinicDate.data;
-                        // console.log(this.confirmedTable);
                         this.confirmedTable = clinicDate.data.map(date=> {
                             return {
                                 ...date,
@@ -513,7 +499,6 @@ export default function EQueue() {
         //   end show & hide 
         // scheduler
 
-        all() {
         today() {
             alert('All good here')
             try {
