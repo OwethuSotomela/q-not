@@ -516,14 +516,16 @@ export default function EQueue() {
                 const to = this.to;
                 const from = this.from;
 
-                alert(to)
-                alert(from)
-
                 axios
                     .get(`${URL_BASE}/api/to/:${to}/from/:${from}`)
                     .then((r) => r.data)
                     .then((all) => {
-                        this.collectedData = all.data;
+                        this.collectedData = all.data.map(date => {
+                            return {
+                                ...date,
+                                slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                            }
+                        });
                         console.log(this.collectedData);
                     })
                     .catch((e) => {
