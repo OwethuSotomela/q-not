@@ -1,8 +1,8 @@
 import axios from "axios";
 import moment from 'moment';
 
-// const URL_BASE = import.meta.env.VITE_SERVER_URL;
-const URL_BASE = "https://q-not-360-degrees.herokuapp.com";
+const URL_BASE = import.meta.env.VITE_SERVER_URL;
+// const URL_BASE = "https://q-not-360-degrees.herokuapp.com";
 // const URL_BASE = import.meta.env.VITE_SERVER_URL;
 
 const appState = {

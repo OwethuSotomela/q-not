@@ -16,34 +16,12 @@ app.use(express.static("public"))
 //     credentials: true
 // }));
 
-const corsConfig = {
-    credentials: true,
-    origin: true,
-};
- app.use(cors(corsConfig)) // Use this after the variable declaration
+app.use(cors({origin: '*'}));// Use this after the variable declaration
 
 // header('Access-Control-Allow-Origin: *');
 // header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE')
 // header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization')
 
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://owethusotomela.github.io');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
 const pgp = PgPromise({});
