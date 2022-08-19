@@ -17,7 +17,7 @@ app.use(express.static("public"))
 // }));
 
 const corsOptions ={
-    origin:'*', 
+    origin:'https://owethusotomela.github.io/', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200,
  }
@@ -44,5 +44,5 @@ API(app, db);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, function () {
-    console.log(`App started on port ${'*'}`);
+    console.log(`App started on port ${PORT}`);
 });

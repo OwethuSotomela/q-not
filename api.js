@@ -11,17 +11,17 @@ module.exports = function (app, db) {
 
     app.post('/api/register', async function (req, res) {
         try {
-            const { fullname, username, password, role, id_number, contact_number } = await req.body
+            const { fullname, username, password, role, id_number, contact_number } = req.body
 
             console.log({ fullname, username, password, role, id_number, contact_number })
 
             console.log({ username });
 
-            if (await username == null) {
+            if (username == null) {
                 throw new Error("Username should be entered")
             }
 
-            if (await password == null) {
+            if (password == null) {
                 throw new Error("Password should be entered")
             }
 

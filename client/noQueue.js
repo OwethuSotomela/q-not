@@ -2,8 +2,8 @@ import axios from "axios";
 import moment from 'moment';
 
 // const URL_BASE = import.meta.env.VITE_SERVER_URL;
-const URL_Heroku = "https://q-not-360-degrees.herokuapp.com";
-// const URL_Heroku = import.meta.env.VITE_SERVER_URL;
+const URL_BASE = "https://q-not-360-degrees.herokuapp.com";
+// const URL_BASE = import.meta.env.VITE_SERVER_URL;
 
 const appState = {
     Login: "LOGIN",
@@ -162,7 +162,7 @@ export default function EQueue() {
                 console.log(this.user)
 
                 axios
-                    .post(`${URL_Heroku}/api/register`, signupUser)
+                    .post(`${URL_BASE}/api/register`, signupUser)
                     .then((myApp) => {
                         console.log(myApp.data);
                         this.feedback = myApp.data.message;
@@ -183,15 +183,7 @@ export default function EQueue() {
                 const loginUser = this.logUser;
 
                 axios
-                    .post(`${URL_Heroku}/api/login`, loginUser)
-                    // .post(`${URL_Heroku}/api/login`,
-                    //     {
-                    //         method: 'POST',
-                    //         body: JSON.stringify({ username: loginUser }),
-                    //         headers: {
-                    //             'Content-Type': 'application/json'
-                    //         }
-                    //     })
+                    .post(`${URL_BASE}/api/login`, loginUser)
                     .then((myApp) => {
                         // console.log(myApp.data);
                         var { access_token, user } = myApp.data;
@@ -255,7 +247,7 @@ export default function EQueue() {
                     : JSON.parse(localStorage.getItem("user"));
 
                 axios
-                    .post(`${URL_Heroku}/api/book/${bookedDay}`, { username, appoReason })
+                    .post(`${URL_BASE}/api/book/${bookedDay}`, { username, appoReason })
                     .then((result) => result.data)
                     .then((data) => {
                         console.log(data);
@@ -275,7 +267,7 @@ export default function EQueue() {
                     ? this.user
                     : JSON.parse(localStorage.getItem("user"));
             axios
-                .get(`${URL_Heroku}/api/booking/${username}`)
+                .get(`${URL_BASE}/api/booking/${username}`)
                 .then((r) => r.data)
                 .then((clinicDate) => {
                     this.myBooking = clinicDate.data.map(date => {
@@ -297,7 +289,7 @@ export default function EQueue() {
         cancelAppo(myAppointment) {
             try {
                 axios
-                    .delete(`${URL_Heroku}/api/cancel/${myAppointment.id}`)
+                    .delete(`${URL_BASE}/api/cancel/${myAppointment.id}`)
                     .then(() => this.gettingUserBooking());
 
                 setTimeout(() => {
@@ -325,7 +317,7 @@ export default function EQueue() {
                 console.log(bookedDay)
 
                 axios
-                    .post(`${URL_Heroku}/api/reschedule/${appointments.id}`, { bookedDay })
+                    .post(`${URL_BASE}/api/reschedule/${appointments.id}`, { bookedDay })
                     .then(() => this.getBookings());
                 this.closeCalenderPopup()
 
@@ -363,7 +355,7 @@ export default function EQueue() {
 
         getBookings() {
             axios
-                .get(`${URL_Heroku}/api/booking`,
+                .get(`${URL_BASE}/api/booking`,
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -389,7 +381,7 @@ export default function EQueue() {
         confirmAnAppo(appointments) {
             try {
                 axios
-                    .post(`${URL_Heroku}/api/confirm/${appointments.id}`)
+                    .post(`${URL_BASE}/api/confirm/${appointments.id}`)
                     .then(() => this.getBookings());
                 this.openConfirmPopup()
 
@@ -401,7 +393,7 @@ export default function EQueue() {
         cancelsAnAppo(appointments) {
             try {
                 axios
-                    .post(`${URL_Heroku}/api/cancels/${appointments.id}`)
+                    .post(`${URL_BASE}/api/cancels/${appointments.id}`)
                     .then(() => this.confirmedList());
 
                 this.feedback = "Appointment cancelled!!";
@@ -416,7 +408,7 @@ export default function EQueue() {
         confirmedList() {
             try {
                 axios
-                    .get(`${URL_Heroku}/api/list`,
+                    .get(`${URL_BASE}/api/list`,
                         {
                             headers: {
                                 'Content-Type': 'application/json'
@@ -444,7 +436,7 @@ export default function EQueue() {
         removeDone(AllAppointment) {
             try {
                 axios
-                    .delete(`${URL_Heroku}/api/remove/${AllAppointment.id}`)
+                    .delete(`${URL_BASE}/api/remove/${AllAppointment.id}`)
                     .then(() => this.confirmedList());
 
                 this.feedback = "You have removed this appointment";
