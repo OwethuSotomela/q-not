@@ -1,6 +1,6 @@
 {
   "name": "q-not",
-  "main": "index.js",
+  "main": "./server/index.js",
   "scripts": {
     "test": "mocha",
     "start": "node index.js"
