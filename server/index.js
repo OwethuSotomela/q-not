@@ -11,14 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
-app.use(cors());// Use this after the variable declaration
+app.use(cors());
 
-// header('Access-Control-Allow-Origin: *');
-// header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE')
-// header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization')
-
-
-const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
+const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://postgres:12345@localhost:5432/noQueue';
 const pgp = PgPromise({});
 
 const config = {
@@ -35,5 +30,5 @@ API(app, db);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, function () {
-    console.log(`App started on port ${PORT}`);
+    console.log(`App started on port ${"*"}`);
 });
