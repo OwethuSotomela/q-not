@@ -1,10 +1,10 @@
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users(
     id SERIAL NOT NULL PRIMARY KEY,
-    fullname VARCHAR NOT NULL,
-	username VARCHAR(255) NOT NULL UNIQUE,
-    password varchar(255) NOT NULL,
-    role VARCHAR(255) NOT NULL, 
+    fullname VARCHAR,
+	username VARCHAR(255),
+    password varchar(255),
+    role VARCHAR(255), 
     id_number VARCHAR(255),
     contact_number VARCHAR(255)
 );

@@ -150,6 +150,8 @@ export default function EQueue() {
         description: null,
         myBooking: [],
         confirmedTable: [],
+        to: "",
+        from: "",
         gotToSignUp() {
             this.changeScreen(appState.Signup);
         },
@@ -430,7 +432,6 @@ export default function EQueue() {
             } catch (error) {
                 console.log(error)
             }
-
         },
 
         removeDone(AllAppointment) {
@@ -509,11 +510,13 @@ export default function EQueue() {
         //   end show & hide 
         // scheduler
 
-        today() {
+        todayData() {
             alert('All good here')
             try {
+                const to = this.to;
+                const from = this.from;
                 axios
-                    .get(`http://localhost:5050/api/day`)
+                    .get(`http://localhost:5050/api/to/:`)
                     .then((r) => r.data)
                     .then((all) => {
                         this.myTimeTable = all.data;

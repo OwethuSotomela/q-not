@@ -11,7 +11,7 @@ module.exports = function (app, db) {
 
     app.post('/api/register', async function (req, res) {
         try {
-            const { fullname, username, password, role, id_number, contact_number } = await req.body
+            const { fullname, username, password, role, id_number, contact_number } = req.body
 
             console.log({ fullname, username, password, role, id_number, contact_number })
 
@@ -106,10 +106,10 @@ module.exports = function (app, db) {
 
     function convert(str) {
         var date = new Date(str),
-          mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-          day = ("0" + date.getDate()).slice(-2);
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+            day = ("0" + date.getDate()).slice(-2);
         return [date.getFullYear(), mnth, day].join("-");
-      }
+    }
     // end 
 
     app.post('/api/book/:bookByDay', async function (req, res) {
@@ -306,24 +306,22 @@ module.exports = function (app, db) {
     app.get('/api/to/:to/from/:from', async function (req, res) {
         try {
             var newData = [];
-            const { from, to} = req.params;
-            if(to == null && from == null){
+            const { from, to } = req.params;
+            if (to == null && from == null) {
                 throw Error('To or From Date not provided')
-            }else{
+            } else {
                 const schedule = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id`);
                 console.log(schedule)
-                for(var i = 0; i <= schedule.length; i++){
+                for (var i = 0; i <= schedule.length; i++) {
                     var mySchedule = schedule[i];
-                    if(new Date(convert(2)))
-                    console.log(mySchedule)
+                    if (new Date(convert(2)))
+                        console.log(mySchedule)
+                        console.log(newData)
                 }
                 res.json({
                     data: schedule
                 })
-    
             }
-
-
         } catch (error) {
             console.error(error.message);
             res.status(500).json({
