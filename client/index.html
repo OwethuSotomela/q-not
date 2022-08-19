@@ -376,6 +376,28 @@
             <input type="text" class="input" x-model="to" placeholder="Enter the date here">
             <button @click="todayData()">Submit</button>
           </div>
+          <table>
+            <tr>
+              <th>Fullnames</th>
+              <th>Description</th>
+              <th>Date & Time</th>
+            </tr>
+            <template x-for="found in myTimeTable">
+              <tr>
+                <td>
+                  <h6 x-text="found.fullname"></h6>
+                </td>
+                <td>
+                  <h6 x-text="found.description"></h6>
+                </td>
+                <td>
+                  <h6 x-text="found.slot"></h6>
+                </td>
+              </tr>
+            </template>
+          </table>
+
+
         </div>
 
       </div>
