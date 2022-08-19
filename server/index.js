@@ -11,14 +11,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"))
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
+// app.use(cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true
+// }));
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE')
-header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization')
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
+ app.use(cors(corsOptions)) // Use this after the variable declaration
+
+// header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE')
+// header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization')
 
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://owethusotomela:owethusotomela@localhost:5432/noQueue';
 const pgp = PgPromise({});
