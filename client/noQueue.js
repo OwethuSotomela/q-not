@@ -150,6 +150,7 @@ export default function EQueue() {
         description: null,
         myBooking: [],
         confirmedTable: [],
+        collectedData: [],
         to: "",
         from: "",
         gotToSignUp() {
@@ -511,19 +512,19 @@ export default function EQueue() {
         // scheduler
 
         todayData() {
-            alert('All good here')
             try {
                 const to = this.to;
                 const from = this.from;
 
                 alert(to)
                 alert(from)
+
                 axios
                     .get(`${URL_BASE}/api/to/:${to}/from/:${from}`)
                     .then((r) => r.data)
                     .then((all) => {
-                        this.myTimeTable = all.data;
-                        console.log(this.myTimeTable);
+                        this.collectedData = all.data;
+                        console.log(this.collectedData);
                     })
                     .catch((e) => {
                         console.log(e);
