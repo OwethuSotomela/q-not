@@ -11,7 +11,7 @@ module.exports = function (app, db) {
 
     app.post('/api/register', async function (req, res) {
         try {
-            const { fullname, username, password, role, id_number, contact_number } = req.body
+            const { fullname, username, password, role, id_number, contact_number } = req.body;
 
             console.log({ fullname, username, password, role, id_number, contact_number })
 
