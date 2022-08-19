@@ -350,6 +350,8 @@
 
         <div x-show="appState == 'SCHEDULE'">
           <h2>Display app</h2>
+          <br>
+          <p>Check Weekly & Monthly Appointments</p>
           <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
             <li class="nav-item">
               <a class="nav-link" href="#" @click="goToConfirm()"><i class="bi bi-check-square-fill"
@@ -368,18 +370,22 @@
             </li>
           </nav>
 
+          <br>
           <div class="sche">
             <label>From</label>
             <br>
             <input type="text" class="input" x-model="from" placeholder="Enter the date here">
+            <br>
 
             <label>To</label>
             <br>
             <input type="text" class="input" x-model="to" placeholder="Enter the date here">
             <br>
-            <button @click="todayData()" class="btn btn-danger">Submit</button>
-          </div>
+            <br>
 
+            <button @click="todayData()" class="btn btn-info">Submit</button>
+          </div>
+          <br>
           <table>
             <tr>
               <th>Fullnames</th>
