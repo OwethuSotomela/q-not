@@ -1,10 +1,10 @@
 {
   "version": "1.0.0",
   "description": "Q-not app",
-  "main": "index.js",
+  "main": "./server/index.js",
   "scripts": {
     "test": "mocha",
-    "start": "node index.js"
+    "start": "node .server/index.js"
   },
   "dependencies": {
     "alpinejs": "^3.10.2",
