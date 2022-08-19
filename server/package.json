@@ -1,9 +1,9 @@
 {
   "name": "q-not",
-  "main": "./server/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "node ./server/index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "axios": "^0.27.2",
