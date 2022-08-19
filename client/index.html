@@ -367,6 +367,15 @@
               </a>
             </li>
           </nav>
+
+          <div class="sche">
+            <label>From</label>
+            <input type="text" class="input" x-model="from" placeholder="Enter the date here">
+
+            <label>To</label>
+            <input type="text" class="input" x-model="to" placeholder="Enter the date here">
+            <button @click="todayData()">Submit</button>
+          </div>
         </div>
 
       </div>
@@ -374,7 +383,7 @@
   </div>
 
   <script type="module" src="./main.js"></script>
-  
+
 </body>
 
 </html>

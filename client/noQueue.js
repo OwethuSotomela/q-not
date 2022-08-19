@@ -515,8 +515,11 @@ export default function EQueue() {
             try {
                 const to = this.to;
                 const from = this.from;
+
+                alert(to)
+                alert(from)
                 axios
-                    .get(`http://localhost:5050/api/to/:`)
+                    .get(`${URL_BASE}/api/to/:${to}/from/:${from}`)
                     .then((r) => r.data)
                     .then((all) => {
                         this.myTimeTable = all.data;
