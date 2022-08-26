@@ -127,24 +127,42 @@ module.exports = function (app, db) {
             if (time == null) {
                 throw Error('Slot not provided!')
             }
-            // else {
             const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
             console.log(sameTime)
-            // }
-            // end 
 
-            if (!user) {
-                throw Error('No user')
-            } else {
-
-                await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
-
-                console.log(slot)
-                res.status(200).json({
-                    message: 'A booking has been made',
-                    user
+            if (time == bookByDay) {
+                res.json({
+                    message: 'Pick another time'
                 })
             }
+            else {
+                if (!user) {
+                    throw Error('No user')
+                } else {
+
+                    await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
+
+                    console.log(slot)
+                    res.status(200).json({
+                        message: 'A booking has been made',
+                        user
+                    })
+                }
+            }
+            // end 
+
+            // if (!user) {
+            //     throw Error('No user')
+            // } else {
+
+            //     await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
+
+            //     console.log(slot)
+            //     res.status(200).json({
+            //         message: 'A booking has been made',
+            //         user
+            //     })
+            // }
 
         } catch (error) {
             console.error(error.message);
