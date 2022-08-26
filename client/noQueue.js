@@ -109,18 +109,13 @@ export default function EQueue() {
                 onChange(selectedDates, dateAndTimeStr, instance) {
                     console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
 
-                    console.log(selectedDates)
-
                     const convertedDate = moment(selectedDates[0]).format('MMMM Do YYYY h:mm:ss A')
 
                     instance.config.disable.push(convertedDate);
 
                     this.booking = instance.selectedDates;
-                    console.log(instance.selectedDates)
 
                     localStorage.setItem("Booking", this.booking);
-
-                    console.log(convertedDate);
                 },
             });
         },
@@ -171,12 +166,12 @@ export default function EQueue() {
                 axios
                     .post(`${URL_BASE}/api/register`, signupUser)
                     .then((myApp) => {
-                        console.log(myApp.data);
+                        // console.log(myApp.data);
                         this.feedback = myApp.data.message;
                         this.users = myApp.data;
                     })
                     .catch((err) => {
-                        console.log(err);
+                        // console.log(err);
                         this.feedback = err.response.data.message;
                         setTimeout(() => {
                             this.feedback = "";
@@ -198,7 +193,7 @@ export default function EQueue() {
                         if (!access_token) {
                             return false;
                         }
-                        console.log(user)
+                        // console.log(user)
 
                         if (user.role == "Admin") {
                             this.changeScreen(appState.AdminHome);
@@ -227,8 +222,8 @@ export default function EQueue() {
                         return true;
                     })
                     .catch((err) => {
-                        console.log(err);
-                        console.log(err.response.data.message);
+                        // console.log(err);
+                        // console.log(err.response.data.message);
 
                         setTimeout(() => {
                             this.openLoginPopup()
@@ -256,9 +251,9 @@ export default function EQueue() {
                 axios
                     .post(`${URL_BASE}/api/book/${bookedDay}`, { username, appoReason })
                     .then((result) => result.data)
-                    .then((data) => {
-                        console.log(data);
-                    })
+                    // .then((data) => {
+                    //     // console.log(data);
+                    // })
                 setTimeout(() => {
                     this.openPopup()
                 }, 1000)
@@ -284,7 +279,7 @@ export default function EQueue() {
                         }
                     })
                     this.user = clinicDate.user;
-                    console.log(this.myBooking);
+                    // console.log(this.myBooking);
                     localStorage.setItem("user", JSON.stringify(this.user));
                 })
                 .catch((e) => {
@@ -316,12 +311,12 @@ export default function EQueue() {
             }, 1000);
         },
         rescheduleAnAppo(appointments) {
-            console.log(appointments)
+            // console.log(appointments)
             try {
                 const bookedDay = this.Booking
                     ? this.Booking
                     : localStorage.getItem("Booking");
-                console.log(bookedDay)
+                // console.log(bookedDay)
 
                 axios
                     .post(`${URL_BASE}/api/reschedule/${appointments.id}`, { bookedDay })

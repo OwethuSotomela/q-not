@@ -15,10 +15,6 @@ module.exports = function (app, db) {
         try {
             const { fullname, username, password, role, id_number, contact_number } = req.body
 
-            console.log({ fullname, username, password, role, id_number, contact_number })
-
-            console.log({ username });
-
             if (await username == null) {
                 throw new Error("Username should be entered")
             }
@@ -53,7 +49,6 @@ module.exports = function (app, db) {
             const { username, password } = req.body;
 
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username]);
-            console.log(user)
 
             if (!user) {
                 throw Error('User does not exist! Register new account')
@@ -119,16 +114,25 @@ module.exports = function (app, db) {
     app.post('/api/book/:bookByDay', async function (req, res) {
         try {
             const { username } = req.body;
-            console.log({ username })
 
             const { bookByDay } = req.params;
             console.log(bookByDay)
 
             const description = req.body;
-            console.log(description)
 
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
-            console.log({ user })
+
+            // here 
+            const { time } = req.body;
+            if (time == null) {
+                throw Error('Slot not provided!')
+            }
+            // else {
+            const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
+            console.log(sameTime)
+            // }
+            // end 
+
             if (!user) {
                 throw Error('No user')
             } else {
@@ -162,7 +166,6 @@ module.exports = function (app, db) {
             }
 
             const bookingByIds = await db.manyOrNone(`SELECT * FROM appointments WHERE users_id = $1`, [user.id]);
-            console.log(bookingByIds)
 
             res.json({
                 user: user,
@@ -316,21 +319,21 @@ module.exports = function (app, db) {
 
     // test here 
 
-    app.post('/api/slot/:time', async function (req, res) {
+    app.post('/api/slot', async function (req, res) {
         try {
-            var newTime = [];
-            const { time } = req.params;
+            // var newTime = [];
+            const { time } = req.body;
             if (time == null) {
                 throw Error('To or From Date not provided')
             } else {
                 const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
                 console.log(sameTime)
-                for (var i = 0; i <= sameTime.length; i++) {
-                    var mySchedule = sameTime[i];
-                    if (new Date(convert(2)))
-                        console.log(mySchedule)
-                    console.log(newTime)
-                }
+                // for (var i = 0; i <= sameTime.length; i++) {
+                //     var mySchedule = sameTime[i];
+                //     if (new Date(convert(2)))
+                //         console.log(mySchedule)
+                //     console.log(newTime)
+                // }
                 res.json({
                     data: sameTime,
                     message: "Time already taken, pick another time!"
