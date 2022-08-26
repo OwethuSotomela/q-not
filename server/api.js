@@ -316,7 +316,7 @@ module.exports = function (app, db) {
 
     // test here 
 
-    app.post('/api/time/:time', async function (req, res) {
+    app.post('/api/slot/:time', async function (req, res) {
         try {
             var newTime = [];
             const { time } = req.params;
