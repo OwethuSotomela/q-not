@@ -9,6 +9,8 @@ module.exports = function (app, db) {
         })
     })
 
+    // All (Patient & Admin) 
+
     app.post('/api/register', async function (req, res) {
         try {
             const { fullname, username, password, role, id_number, contact_number } = req.body
@@ -112,6 +114,8 @@ module.exports = function (app, db) {
     }
     // end 
 
+    // Cindy (Patient) 
+
     app.post('/api/book/:bookByDay', async function (req, res) {
         try {
             const { username } = req.body;
@@ -190,28 +194,7 @@ module.exports = function (app, db) {
         }
     })
 
-    // sun 
-
-    app.post('/api/reschedule/:id', async function (req, res) {
-        try {
-            const { id } = req.params;
-
-            await db.none(`UPDATE appointments SET slot = slot + 1 WHERE id = $1`, [id])
-
-            res.status(200).json({
-                message: 'Successful',
-            })
-
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).json({
-                error: error.message
-            })
-        }
-    })
-    // sun end 
-
-    // Anele 
+    // Anele (Admin)
 
     app.get('/api/booking', async function (req, res) {
         try {
@@ -329,4 +312,35 @@ module.exports = function (app, db) {
             })
         }
     })
+// }
+
+// test here 
+
+app.get('/api/time/:time', async function (req, res) {
+    try {
+        var newTime = [];
+        const { time} = req.params;
+        if (time == null) {
+            throw Error('To or From Date not provided')
+        } else {
+            const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
+            console.log(sameTime)
+            for (var i = 0; i <= sameTime.length; i++) {
+                var mySchedule = sameTime[i];
+                if (new Date(convert(2)))
+                    console.log(mySchedule)
+                    console.log(newTime)
+            }
+            res.json({
+                data: sameTime,
+                message: "Time already taken, pick another time!"
+            })
+        }
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            error: error.message
+        })
+    }
+})
 }
