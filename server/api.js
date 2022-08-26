@@ -299,7 +299,7 @@ module.exports = function (app, db) {
                     var mySchedule = schedule[i];
                     if (new Date(convert(2)))
                         console.log(mySchedule)
-                        console.log(newData)
+                    console.log(newData)
                 }
                 res.json({
                     data: schedule
@@ -312,35 +312,35 @@ module.exports = function (app, db) {
             })
         }
     })
-// }
+    // }
 
-// test here 
+    // test here 
 
-app.get('/api/time/:time', async function (req, res) {
-    try {
-        var newTime = [];
-        const { time} = req.params;
-        if (time == null) {
-            throw Error('To or From Date not provided')
-        } else {
-            const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
-            console.log(sameTime)
-            for (var i = 0; i <= sameTime.length; i++) {
-                var mySchedule = sameTime[i];
-                if (new Date(convert(2)))
-                    console.log(mySchedule)
+    app.post('/api/time/:time', async function (req, res) {
+        try {
+            var newTime = [];
+            const { time } = req.params;
+            if (time == null) {
+                throw Error('To or From Date not provided')
+            } else {
+                const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
+                console.log(sameTime)
+                for (var i = 0; i <= sameTime.length; i++) {
+                    var mySchedule = sameTime[i];
+                    if (new Date(convert(2)))
+                        console.log(mySchedule)
                     console.log(newTime)
+                }
+                res.json({
+                    data: sameTime,
+                    message: "Time already taken, pick another time!"
+                })
             }
-            res.json({
-                data: sameTime,
-                message: "Time already taken, pick another time!"
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({
+                error: error.message
             })
         }
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({
-            error: error.message
-        })
-    }
-})
+    })
 }
