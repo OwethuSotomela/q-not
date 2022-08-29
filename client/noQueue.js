@@ -107,7 +107,7 @@ export default function EQueue() {
                 // end 
 
                 onChange(selectedDates, dateAndTimeStr, instance) {
-                    console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
+                    // console.log({ selectedDates, dateAndTimeStr, instance }, "on change");
 
                     const convertedDate = moment(selectedDates[0]).format('MMMM Do YYYY h:mm:ss A')
 
@@ -251,9 +251,10 @@ export default function EQueue() {
                 axios
                     .post(`${URL_BASE}/api/book/${bookedDay}`, { username, appoReason })
                     .then((result) => result.data)
-                    // .then((data) => {
-                    //     // console.log(data);
-                    // })
+                    .then((data) => {
+                        console.log(data);
+                        alert(data.data)
+                    })
                 setTimeout(() => {
                     this.openPopup()
                 }, 1000)
