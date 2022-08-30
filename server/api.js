@@ -129,7 +129,7 @@ module.exports = function (app, db) {
             // if (time == null) {
             //     throw Error('Slot not provided!')
             // }
-            // const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
+            // const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [bookByDay]);
             // console.log(sameTime, "SameTime")
 
             // if (time === bookByDay) {
