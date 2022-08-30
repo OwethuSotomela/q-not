@@ -150,6 +150,7 @@ export default function EQueue() {
         myBooking: [],
         confirmedTable: [],
         collectedData: [],
+        getWeekData: [],
         to: "",
         from: "",
         gotToSignUp() {
@@ -536,6 +537,32 @@ export default function EQueue() {
                 console.log(error)
             }
         },
+        weekData(){
+            try {
+                axios
+                    .get(`${URL_BASE}/api/week`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                    .then((r) => r.data)
+                    .then((weekData) => {
+                        this.getWeekData = weekData.data.map(date => {
+                            return {
+                                ...date,
+                                slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                            }
+                        });
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
     }
 

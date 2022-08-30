@@ -21,6 +21,11 @@
     <div class="row">
       <div class="col-12">
 
+        <!-- here  -->
+
+
+            <!-- end  -->
+
         <div x-show="appState == 'SIGNUP'" class="signup">
           <span x-text="feedback" class="feedback">Feedback</span>
           <br>
@@ -372,7 +377,7 @@
 
           <br>
           <div class="sche">
-            <label>From</label>
+            <!-- <label>From</label>
             <br>
             <input type="text" class="input" x-model="from" placeholder="Enter the date here">
             <br>
@@ -383,10 +388,46 @@
             <br>
             <br>
 
-            <button @click="todayData()" class="btn btn-info">Submit</button>
+            <button @click="todayData()" class="btn btn-info">Submit</button> -->
+
+            <!-- here  -->
+
+            <ul>
+              <li><a href="default.asp">Day</a></li>
+              <!-- <li><button @click="dayData()">Day</button></li> -->
+              <li><a @click="weekData()">Day</a></li>
+              <li><a href="news.asp">Week</a></li>
+              <li><a href="contact.asp">Month</a></li>
+            </ul> 
+
+            <!-- end  -->
           </div>
           <br>
+
+          <!-- here  -->
           <table>
+            <tr>
+              <th>Fullnames</th>
+              <th>Description</th>
+              <th>Date & Time</th>
+            </tr>
+            <template x-for="week in getWeekData">
+              <tr>
+                <td>
+                  <h6 x-text="week.fullname"></h6>
+                </td>
+                <td>
+                  <h6 x-text="week.description"></h6>
+                </td>
+                <td>
+                  <h6 x-text="week.slot"></h6>
+                </td>
+              </tr>
+            </template>
+          </table>
+          <!-- end  -->
+
+          <!-- <table>
             <tr>
               <th>Fullnames</th>
               <th>Description</th>
@@ -405,8 +446,7 @@
                 </td>
               </tr>
             </template>
-          </table>
-
+          </table> -->
 
         </div>
 

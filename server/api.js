@@ -366,4 +366,20 @@ module.exports = function (app, db) {
             })
         }
     })
+
+    app.get('/api/week', async function (req, res) {
+        try {
+
+            const weekBookings = await db.manyOrNone(`SELECT min(slot) FROM appointments WHERE slot between 'Wed Aug 31 2022' AND 'Fri Sep 03 2022'`);
+
+            res.json({
+                data: weekBookings,
+            })
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({
+                error: e.message
+            })
+        }
+    })
 }
