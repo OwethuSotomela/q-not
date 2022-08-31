@@ -26,9 +26,11 @@ if (process.env.DATABASE_URL) {
 
 const db = pgp(config);
 
+console.log("URL DB:", DATABASE_URL)
+
 API(app, db);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, function () {
-    console.log(`App started on port ${"*"}`);
+    console.log(`App started on port ${PORT}`);
 });
