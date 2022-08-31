@@ -328,7 +328,7 @@ module.exports = function (app, db) {
             console.log("weekBookings", weekBookings)
             for (let item of weekBookings) {
                 console.log("iteam",new Date(convert(item["slot"])));
-                console.log("new Date(convert(2):     ",new Date(convert(2)));
+                console.log("Now date:     ",new Date());
             }
             res.json({
                 data: weekBookings,
