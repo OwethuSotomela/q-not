@@ -334,10 +334,11 @@ module.exports = function (app, db) {
                 console.log("Now date:     ", today);
                 if(slot == today){
                     console.log(true)
+                    newweekBookings.push(item)
                 }
             }
             res.json({
-                data: weekBookings,
+                data: newweekBookings,
             })
         } catch (e) {
             console.log(e)
