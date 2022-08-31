@@ -146,9 +146,13 @@ module.exports = function (app, db) {
             } else {
                 const existAppointment = await db.manyOrNone(`SELECT * FROM appointments`)
                 console.log("existAppointment", existAppointment)
-                if(existAppointment){
-                    throw Error('Appointment with the time picked already exists! Please book another slot')
+
+                for (let item of existAppointment) {
+                    if(item["slot"]){
+                        throw Error('Appointment with the time picked already exists! Please book another slot')
+                    }
                 }
+                
 
                 await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
 
