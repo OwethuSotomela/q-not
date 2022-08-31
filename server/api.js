@@ -102,8 +102,8 @@ module.exports = function (app, db) {
     }
 
     function convert(str) {
-        var date = new Date(str),
-            mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        var date = new Date(str)
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2)
             day = ("0" + date.getDate()).slice(-2);
         return [date.getFullYear(), mnth, day].join("-");
     }
@@ -326,6 +326,10 @@ module.exports = function (app, db) {
 
             const weekBookings = await db.manyOrNone(`SELECT * FROM appointments`);
             console.log("weekBookings", weekBookings)
+            for (let item of weekBookings) {
+                console.log("iteam",new Date(convert(item["slot"])));
+                console.log("new Date(convert(2):     ",new Date(convert(2)));
+            }
             res.json({
                 data: weekBookings,
             })
