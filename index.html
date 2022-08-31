@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-control" content="no-cache">
+  <link rel="icon" type="image/svg+xml" href="/q-not/assets/favicon.17e50649.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Q-Not</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <script type="module" crossorigin src="/q-not/assets/index.175ef2e8.js"></script>
+  <link rel="stylesheet" href="/q-not/assets/index.6b14182e.css">
+</head>
+
+<body>
+
+  <div x-data="isOpen" class="container">
+    <div class="row">
+      <div class="col-12">
+
+        <div x-show="appState == 'WELCOME'" class="landingPage">
+          <center>
+            <img src="/q-not/assets/diff.52884df2.jpg" class="image">
+            <p>LOGIN</p>
+          </center>
+          <h1>Welcome to Khayelitsha Clinic</h1>
+          <a href="#" @click="gotToLogin()">Already have an account? Login</a>
+        </div>
+
+        <div x-show="appState == 'SIGNUP'" class="signup">
+          <span x-text="feedback" class="feedback">Feedback</span>
+          <br>
+          <center>
+            <p>SIGNUP HERE</p>
+          </center>
+          <div class="form-floating">
+            <div class="col-auto">
+              <label>Fullname</label><br>
+              <input type="text" class="input" x-model="user.fullname" placeholder="Enter your firstname">
+            </div>
+            <div class="col-auto">
+              <label>Username</label><br>
+              <input type="text" class="input" x-model="user.username" placeholder="Enter your username">
+            </div>
+            <div class="col-auto">
+              <label>Password</label>
+              <br>
+              <input type="password" class="input" x-model="user.password" placeholder="Create a password"
+                id="myPassword">
+            </div>
+            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+            <div class="col-auto">
+              <label>Role</label><br>
+              <select class="input" id="specificSizeSelect" x-on:click="open = !open" x-model="user.role">
+                <div x-show="open">
+                  <option>-- Select Your Role --</option>
+                  <option>Admin</option>
+                  <option>Patient</option>
+                </div>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label>ID #</label><br>
+              <input type="text" class="input" x-model="user.id_number" placeholder="Enter your ID #" required
+                minlength="10" maxlength="13" size="15">
+            </div>
+            <div class="col-auto">
+              <label>Contact #</label><br>
+              <input type="text" class="input" x-model="user.contact_number" placeholder="Enter your contact #" required
+                minlength="9" maxlength="10" size="15"><br>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox"> Remember me</label><br><br>
+            </div>
+            <div class="signUp">
+              <button @click="regUser()" class="btn btn-outline-secondary">SignUp</button>
+            </div>
+            <br>
+          </div>
+          <a href="#" @click="gotToLogin()">Already have an account? Login</a>
+        </div>
+
+        <div x-show="appState == 'LOGIN'" class="login">
+          <center>
+            <img src="/q-not/assets/diff.52884df2.jpg" class="image">
+            <h1>Welcome to Khayelitsha Clinic</h1>
+            <!-- <p>LOGIN</p> -->
+          </center>
+          <div class="form-floating">
+            <div class="col-auto">
+              <label>Username</label><br>
+              <input type="text" class="input" x-model="logUser.username" placeholder="Enter your username">
+            </div>
+            <div class="col-auto">
+              <label>Password</label><br>
+              <input type="password" class="input" x-model="logUser.password" placeholder="Enter your password"
+                id="myPword">
+            </div>
+            <br>
+            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+            <br><br>
+
+            <button @click="login()" class="btn btn-outline-success">Login</button>
+            <br><br>
+            <a href="#" @click="gotToSignUp()">Don't have account? SignUp</a>
+          </div>
+
+          <div class="popup" id="loginPopup">
+            <img src="data:image/jpeg;base64,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" alt="">
+            <h2>User Doesn't Exist</h2>
+            <p x-text="loginFeed"></p>
+            <button @click="closeLoginPopup()">OK</button>
+          </div>
+        </div>
+
+        <div x-show="appState == 'HOME'" class="homePage">
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+            <li>
+              <a class="nav-link" href="#" @click="goToConfirmation()"><i class="bi bi-calendar2-event"
+                  style="font: size 30px;"></i><br>Appointments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                  style="font: size 30px;"></i><br>
+                Log out
+              </a>
+            </li>
+          </nav>
+          <div class="card text-center">
+            <div class="card-header">
+              <label>Book Appointment</label>
+              <br>
+              <div class="dropdown" x-data="{open: false}">
+                <select id="reason" x-on:click="open = !open" x-model="description">
+                  <div x-show="open">
+                    <br>
+                    <option> --Select reason for appointment-- </option>
+                    <option>Mental health care</option>
+                    <option>Dental Health</option>
+                    <option>Family planning</option>
+                    <option>NBAC</option>
+                    <option>ART</option>
+                    <option>Clinic for chronic diseases</option>
+                    <option>Child Immunization</option>
+                  </div>
+                </select>
+              </div>
+            </div>
+            <h6 x-show="loading" align="center">Loading...</h6>
+            <div x-show="!loading" class="card-body">
+              <div class="flatpickr" align="center">
+                <br>
+                <br>
+                <a class="input-button" title="toggle" data-toggle>
+                  <i class="icon-calendar"></i>
+                </a>
+                <a class="input-button" title="clear" data-clear>
+                  <i class="icon-close"></i>
+                </a>
+              </div>
+              <br>
+            </div>
+            <div class="card-footer text-muted">
+              <button @click="makeAnAppo()" class="btn btn-outline-info">Book an Appointment</button>
+              <div class="popup" id="popup">
+                <img src="/q-not/assets/ch3.a7fc282c.jpeg" alt="">
+                <h2>Thank You!</h2>
+                <p>Your appointment has been created. Thanks!</p>
+                <button @click="closePopup()">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div x-show="appState == 'CONFIRMATION'" class="confirmation">
+          <div class="myBack">
+            <!-- \ -->
+          </div>
+          <div class="card text-center">
+            <nav class="nav nav-tabs">
+              <li><a class="nav-link" href="#" @click="goToMakeAnAppointment()"><i class="bi bi-house-fill"
+                    style="font-size:30px;color:rgb(87, 138, 233)"><br>Home</i></a></li>
+            </nav>
+            <div class="card-header">
+              <label>Your Appointments</label>
+            </div>
+            <div class="card-body">
+              <table>
+                <tr>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Appointment Status</th>
+                  <th>Cancel</th>
+                </tr>
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.status"></h6>
+                    </td>
+                    <td>
+                      <button @click="cancelAppo(slot)" class="btn btn-outline-danger">Cancel</button>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+
+            </div>
+            <div class="card-footer text-muted">
+              <div class="popup" id="cancelPopup">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAsVBMVEX////lIADYAADjJgTfAAD7//3fIwLpHgPiHQLiAAD1IAzfHgD+//nmHwTrHgfsIAT+//b59fP0//b/+v7/+f7udmj58u359fT1///pAADdTyn5+/7val7/+Pj/9fjudWv98O7na13mbFr2//LmdmrraF/0hXj21cz57u7209D76tzfS0nqp5rdJhf08Ozsalr0qLL2hYHtMCD2wcD0prfsbWfyqrL1q6n2wbfjTkXzvb/dffV3AAAIl0lEQVR4nO2df1ujOBDHSyEJNUBWWyssauvqKuuPO13X29t7/y/sQqhSEeikTSjyzOe/dZ9OEwjfzkyGyWiEIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIEj/CeLRWUyyH8+Pv55vliQORmlg2vwou/nv1+PzD/PmYWNI49vruyjxvOTg7vo2NjwCy+YBpCm5f/AcysOIUsd7uCez1LT5iU95tDIfGDUPgfy1SIQQjs859QUTyUsWmzYfMcelvuso83Ni0DyEbCFvoPxyx/c5C6nre4vMtHkaRr4b+kLeSm7W/AaOpmlw+HUsHOaUuNH46+GXeHpkwHycm4/cNevMEbn51IB5CNM0zhbjA+b65RB8lx2MF3OSTg2YJyfHteaX8XR38xDSo/MLL2KchmsX2eUi8k7PyO4PYxycffeE4G5Umg8pZ5F3cR6bfNabCebfEoe71FmbYSj/wJ3J6fyLAfN/J0xaC9fN+1R+X3Kx3N08hJPjSciZL0JaDoH6zJf/9hYnBsx7jIZ+5K+bD4X8AmeyODQw/laka0Gyigqs68GOcvMqMu80rDTPpflMLlSbvxtpMJtXRcag3Mzk9dtg/ng+C2z+9pM0ePEiqQK1F7nQgx3kJiZnp554r2Fr91Cp2UuQ2ryHQXyfKE2pHUIofQDOku3lRomM1BS/wXz+zcm9VT2Nb8ei8DLqhqD0gLLt5UaJTEXD1szL7w1d8XBrc4rk2mP1KrO2lqQenGjLzZsnI9rNu8y7trlKl3fSCW0fgvSUt5GbGSEnUmScepEpCZl/t7QzOcVNRJ2ofQiM0m3kJiW5JyM/vOECRg6NbizNLuc5eedq1M5QyY22dyNFZqIcpVqVLvFDnjxbml3O4zj0NzyHvlxHjGq7H7mjRKVQ1YtMidTZ8S9Ls8v5ZxzyDfewQEdu2j2Z6gWkofdocYZylYLGwXW8m1xkquFS8wwdanWVApRGsfJuTkByU4RLTZ5MBemQW1Wa/NcCcqVz94NCvZvck3EaPZmqZcbv5hZnOHqSTgdgHFx6N2EuNxDvRolMoydTgQrvyeYE41t6AB4MQG5ykTmBikxx2Q7sem0rzxu2oN7kZtZoT0tk1NK37XmTlCzAogAIplIdkSnsvRxZjZ7I4WzZHKLWXXPRKjernIzGmrAdAQejNFZZDNhzE8nnRrTJjRQZIZ/rCP5cZyS1msVYDastiqvAilTxx1zuKq8Mu1iU7Rh56tEeiVd4zeXOqt7NdBpnGiKzY/ZAj/ZsSgU5AxFNLs5J9eFJyfnFJE/8GhItk7RnxD5cfZVc+ZjLDZbfkpC6G6MxhcFNAwhasUCeKmYyXvwQTEmRkX+X/wt6mnfNxG7BKjPdkJOqDvC93OiJTJhn06XIWE93V1jJTUNesUJFbqbay1w/Z7A7dTtEjahcrpSbuJCbN5EBfrZLkSmp2+Vrvw+l3KjNK73735nIlLzlNyGjXO1MvcqNCpfAzzDvXmRKcj2EpI8KlNxcppdgkSmSWjU63B2vjjMsh5Qvt6tsml1BFzfr1pOpQwY/p5A0riKSoxXJ9/n3RPpDMJHZLrlsktlIyc3GVHx5Rxz+k8u7KR9MwCfeNgiaQ2jbQLdTFFz6NqHPWO7HAD2Z7TZ5jKPkBjpoKDyULl0uMt2ES+0E89MiTocsPChySVPenh/ojtdcC0g8oESvnkzX9Xp1aOXLoPib83TdoRUpQGG0HyJTcqjjiLVThEtdVAdpoeVMt9OYFdgvWgFROypcKkOtvqAV1LbTmJ3bLwblZhUudVUtq4VWcqmOxrRVX9BKENbRU5Ep0Ury1tGYPu4LWon6OnoqMiU7y03jNk6v0NqZKpHxf74V133iVx8VTEF3pkqkyFBw9cZ+WeVuYDtTazPsdndpF2QwtY3cAMoa+oLWztQabuT1K1xqZ36VgGqnSnwnueq/yJRcZqcckn8rYfw0u9z3sDWYjuY/tSboOD/no77+ztcx/Hs46OdQqxhvDXOvaNpmy+TiJ/o91CrGK/lEPo1WMd7aDDeX+fUFvWK8NwBlfj1g+PHh8GP84edphp9rG3S+1GTOu59yM/x9C7N7T6KHe0/D3z80uQfs920P2Mo+vtYrmrYZfi3G8OtpbNVEub2pibJT15aX+fWgrk2vNjH8hLWJuvWl9NPVlw6/Rnj4dd5atfqqGO8T1erXdcZrpFKMp/W+xd5SxcN/Z0b3vSe2w3tPprr56VHXGW/Dfdjh3TUz3fz0qOuM13wf+A7vH5rr5gdm+O+QDv894OG/yz389/H30VNh125+YPT6YmwuxtMr8yv6Ytjt7klau3tWABTjaZX5ddLbhKRHL4b708BFq7C3sNufxkKPIR256aDHUHxLhY7IbCrG03Ie3vpEWV2lT54A9fpiAp637lWvr+UdF6BHRqfiV6tfm3QB993ds5ihvZ57lrt7/ptwByIKen0TR3rBtN3unl7IQTmkXGSgsYBe70tut/fl73G46R5a7l/q+uHY5gwBq9R2D1rLq3T4fYSzP5xtusiWe0E7/I/N7p7k2tuUIbXcz1uGUE82/dL49qGtJ/uunfEAPdmp5Z7sw++rT1Ky77MRFnbPRpARcEt3z27Ot5h2092zbgS2zygpshhxJ909J6FbPWfGXGe8um5+RSaqsyqixrOCzHTGq+vmpzSsu0qwhvOeTKVse3DeU35mV/2hWtbP7OqoIrPu3DWDnfHquvl1fO6aYnmcH27nCF/C/PzsvGOjZ+cp89Ky6/M8WjF8NB8EMn9JhJAjoNR1mBDJYm78/EORn3/I3dXxil3v46fTYHXIZCiv9cTWGZZ0dYblbzLqvIavOCj0wO45pMp8pMxPuz6IlEgfMh6ps2T/u1mO4rORUXeRqLNk58VZshmJz1Kr3iiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIKb4HyrNC21mVgq5AAAAAElFTkSuQmCC" alt="">
+                <h2>Cancelled!</h2>
+                <p>Your appointment has been cancelled. Thanks!</p>
+                <button @click="closecancelPopup()">OK</button>
+              </div>
+            </div>
+            <button @click="logout()" class="btn btn-outline-danger">Logout</button>
+          </div>
+        </div>
+
+        <!-- Ace  -->
+        <div x-show="appState == 'ADMINISTRATOR'" class="manage">
+          <div class="admin">
+            <h5 x-text="loggedIn" class="min"></h5>
+            <h5 x-text="user.fullname"></h5>
+          </div>
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+            <li>
+              <a class="nav-link" href="#" @click="goToApproved()"><i class="bi bi-calendar2-event"
+                  style="font: size 30px;"></i><br>Confirmed Appointment</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToSchedule()"><i class="bi bi-calendar2-week"
+                  style="font: size 30px;"></i><br>
+                Schedule </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                  style="font: size 30px;"></i><br>
+                Log out
+              </a>
+            </li>
+            <br>
+          </nav>
+          <div class="card text-center">
+            <div class="card-header">
+              <label><strong>Appointments</strong></label>
+            </div>
+            <div class="card-body">
+              <table>
+                <tr>
+                  <th>Fullnames</th>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Appointment Status</th>
+                  <th>Confirm Appointments</th>
+                </tr>
+                <template x-for="slot in myBooking">
+                  <tr>
+                    <td>
+                      <h6 x-text="slot.fullname"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="slot.status"></h6>
+                    </td>
+                    <td>
+                      <button @click="confirmAnAppo(slot)" class="btn btn-info">Confirm Booking</button>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+              <div class="popup" id="confirmPopup">
+                <img src="/q-not/assets/cm2.1f1c7550.jpeg" alt="">
+                <h2>Approved!</h2>
+                <p>You have approved this appointment. Thanks!</p>
+                <button @click="closeConfirmPopup()">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div x-show="appState == 'APPROVED'" class="approved">
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToConfirm()"><i class="bi bi-check-square-fill"
+                  style="font: size 30px;"></i><br>
+                Pending Appointments </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToSchedule()"><i class="bi bi-calendar2-week"
+                  style="font: size 30px;"></i><br>
+                Schedule </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                  style="font: size 30px;"></i><br>Log out</a>
+            </li>
+          </nav>
+          <div class="card text-center">
+            <div class="card-header">
+              <label><strong>Approved Appointments / Clinic Schedule</strong></label>
+            </div>
+            <div class="card-body">
+              <table>
+                <tr>
+                  <th>Fullnames</th>
+                  <th>ID Number</th>
+                  <th>Description</th>
+                  <th>Date & Time</th>
+                  <th>Status</th>
+                  <th>Cancel Appointment</th>
+                  <th>Completed</th>
+                </tr>
+                <template x-for="approved in confirmedTable">
+                  <tr>
+                    <td>
+                      <h6 x-text="approved.fullname"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.id_number"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.description"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.slot"></h6>
+                    </td>
+                    <td>
+                      <h6 x-text="approved.status"></h6>
+                    </td>
+                    <td>
+                      <button @click="cancelsAnAppo(approved)" class="btn btn-info">Cancel</button>
+                    </td>
+                    <td>
+                      <button @click="removeDone(approved)" class="btn btn-danger">Remove Done</button>
+                    </td>
+                  </tr>
+                </template>
+              </table>
+              <!-- start  -->
+            </div>
+            <div class="card-footer text-muted">
+            </div>
+          </div>
+        </div>
+
+        <div x-show="appState == 'SCHEDULE'">
+          <h2>Display app</h2>
+          <br>
+          <p>Check Day || Weekly || Monthly Appointments</p>
+          <nav class="nav nav-tabs" style="background-color: #e6d1cb;">
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToConfirm()"><i class="bi bi-check-square-fill"
+                  style="font: size 30px;"></i><br>
+                Pending Appointments </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#" @click="goToApproved()"><i class="bi bi-calendar2-event"
+                  style="font: size 30px;"></i><br>Confirmed Appointments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="goToLogin()"><i class="bi bi-box-arrow-right"
+                  style="font: size 30px;"></i><br>
+                Log out
+              </a>
+            </li>
+          </nav>
+
+          <br>
+          <div class="sche">
+
+            <!-- here  -->
+
+            <ul>
+              <li><a @click="dayData()">Day</a></li>
+              <li><a @click="weekData()">Week</a></li>
+              <li><a @click="monthData()">Month</a></li>
+            </ul>
+
+            <!-- end  -->
+          </div>
+          <br>
+
+          <!-- here  -->
+          <table>
+            <tr>
+              <th>Fullnames</th>
+              <th>Description</th>
+              <th>Date & Time</th>
+            </tr>
+            <template x-for="week in getWeekData">
+              <tr>
+                <td>
+                  <h6 x-text="week.fullname"></h6>
+                </td>
+                <td>
+                  <h6 x-text="week.description"></h6>
+                </td>
+                <td>
+                  <h6 x-text="week.slot"></h6>
+                </td>
+              </tr>
+            </template>
+          </table>
+          <!-- end  -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+
+</body>
+
+</html>
