@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-12">
 
-        <div x-show="appState == 'LANDINGPAGE'" class="landingPage">
+        <div x-show="appState == 'WELCOME'" class="landingPage">
           <center>
             <img src="./images/diff.jpg" class="image">
             <p>LOGIN</p>
@@ -86,7 +86,8 @@
         <div x-show="appState == 'LOGIN'" class="login">
           <center>
             <img src="./images/diff.jpg" class="image">
-            <p>LOGIN</p>
+            <h1>Welcome to Khayelitsha Clinic</h1>
+            <!-- <p>LOGIN</p> -->
           </center>
           <div class="form-floating">
             <div class="col-auto">
@@ -381,18 +382,6 @@
 
           <br>
           <div class="sche">
-            <!-- <label>From</label>
-            <br>
-            <input type="text" class="input" x-model="from" placeholder="Enter the date here">
-            <br>
-
-            <label>To</label>
-            <br>
-            <input type="text" class="input" x-model="to" placeholder="Enter the date here">
-            <br>
-            <br>
-
-            <button @click="todayData()" class="btn btn-info">Submit</button> -->
 
             <!-- here  -->
 
@@ -428,27 +417,6 @@
             </template>
           </table>
           <!-- end  -->
-
-          <!-- <table>
-            <tr>
-              <th>Fullnames</th>
-              <th>Description</th>
-              <th>Date & Time</th>
-            </tr>
-            <template x-for="found in collectedData">
-              <tr>
-                <td>
-                  <h6 x-text="found.fullname"></h6>
-                </td>
-                <td>
-                  <h6 x-text="found.description"></h6>
-                </td>
-                <td>
-                  <h6 x-text="found.slot"></h6>
-                </td>
-              </tr>
-            </template>
-          </table> -->
 
         </div>
 
