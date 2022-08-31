@@ -148,7 +148,7 @@ module.exports = function (app, db) {
                 console.log("existAppointment", existAppointment)
 
                 for (let item of existAppointment) {
-                    if(item["slot"]){
+                    if(item["slot"] == bookByDay){
                         throw Error('Appointment with the time picked already exists! Please book another slot')
                     }
                 }
