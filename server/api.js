@@ -326,9 +326,15 @@ module.exports = function (app, db) {
 
             const weekBookings = await db.manyOrNone(`SELECT * FROM appointments`);
             console.log("weekBookings", weekBookings)
+            var newweekBookings = []
             for (let item of weekBookings) {
-                console.log("iteam",new Date(convert(item["slot"])));
-                console.log("Now date:     ",new Date());
+                let slot = convert(item["slot"])
+                let today = convert(new Date())
+                console.log("iteam", slot);
+                console.log("Now date:     ", today);
+                if(slot == today){
+                    console.log(true)
+                }
             }
             res.json({
                 data: weekBookings,
