@@ -375,7 +375,7 @@ module.exports = function (app, db) {
         try {
 
             const weekBookings = await db.manyOrNone(`SELECT * FROM appointments WHERE slot between 'Wed Aug 31 2022' AND 'Fri Sep 03 2022'`);
-
+            console.log("weekBookings", weekBookings)
             res.json({
                 data: weekBookings,
             })
