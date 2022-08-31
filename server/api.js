@@ -144,7 +144,7 @@ module.exports = function (app, db) {
             if (!user) {
                 throw Error('No user')
             } else {
-                const existAppointment = await db.manyOrNone(`SELECT * FROM appointments WHERE slot = $1 AND status = 'Approved'`, [bookByDay])
+                const existAppointment = await db.manyOrNone(`SELECT * FROM appointments`)
                 console.log("existAppointment", existAppointment)
                 if(existAppointment){
                     throw Error('Appointment with the time picked already exists! Please book another slot')
