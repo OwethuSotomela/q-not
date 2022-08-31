@@ -148,7 +148,7 @@ module.exports = function (app, db) {
                 console.log("existAppointment", existAppointment)
 
                 for (let item of existAppointment) {
-                    if(item["slot"] == bookByDay){
+                    if(item["slot"] == bookByDay && item["status"] == "Approved" && item["description"] == description.appoReason){
                         throw Error('Appointment with the time picked already exists! Please book another slot')
                     }
                 }
@@ -237,7 +237,16 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
+            
+
             await db.none(`UPDATE appointments SET status = 'Approved' WHERE id = $1`, [id])
+
+            const currentUpdate = await db.manyOrNone(`SELECT * FROM appointments WHERE id = $1`, [id])
+                console.log("currentUpdate", currentUpdate)
+
+                for (let item of currentUpdate) {
+                    await db.none(`UPDATE appointments SET status = 'Rejected' WHERE slot = $1 AND status = 'Pending...'`, [item["slot"]])
+                }
 
             res.status(200).json({
                 message: 'Successful',
