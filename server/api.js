@@ -321,22 +321,40 @@ module.exports = function (app, db) {
         }
     })
 
-    app.get('/api/week', async function (req, res) {
+    app.get('/api/:pressed', async function (req, res) {
         try {
 
             const weekBookings = await db.manyOrNone(`SELECT * FROM appointments`);
             console.log("weekBookings", weekBookings)
             var newweekBookings = []
-            for (let item of weekBookings) {
-                let slot = convert(item["slot"])
-                let today = convert(new Date())
-                console.log("iteam", slot);
-                console.log("Now date:     ", today);
-                if(slot == today){
-                    console.log(true)
-                    newweekBookings.push(item)
+            const { pressed } = req.params;
+            if (pressed == "day"){
+                for (let item of weekBookings) {
+                    let slot = convert(item["slot"])
+                    let today = convert(new Date())
+                    console.log("iteam", slot);
+                    console.log("Now date:     ", today);
+                    if(slot == today){
+                        console.log("For a day",true)
+                        newweekBookings.push(item)
+                    }
+                }
+            } else if (pressed == "week"){
+                for (let item of weekBookings) {
+                    let slot = new Date(convert(item["slot"]))
+                    let today = new Date(convert(new Date()))
+                    const diffTime = Math.abs(today - slot);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+                    console.log("iteam", slot);
+                    console.log("Now date:     ", today);
+                    console.log("Days Ago:     ", diffDays);
+                    if(diffDays >= 0 && diffDays <= 7){
+                        console.log(" For a week",true)
+                        newweekBookings.push(item)
+                    }
                 }
             }
+            
             res.json({
                 data: newweekBookings,
             })
