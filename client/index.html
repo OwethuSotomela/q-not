@@ -21,10 +21,14 @@
     <div class="row">
       <div class="col-12">
 
-        <!-- here  -->
-
-
-            <!-- end  -->
+        <div x-show="appState == 'LANDINGPAGE'" class="">
+          <center>
+            <img src="./images/diff.jpg" class="image">
+            <p>LOGIN</p>
+          </center>
+          <h1>Welcome to Khayelitsha Clinic</h1>
+          <a href="#" @click="gotToLogin()">Already have an account? Login</a>
+        </div>
 
         <div x-show="appState == 'SIGNUP'" class="signup">
           <span x-text="feedback" class="feedback">Feedback</span>
@@ -396,7 +400,7 @@
               <li><a @click="dayData()">Day</a></li>
               <li><a @click="weekData()">Week</a></li>
               <li><a @click="monthData()">Month</a></li>
-            </ul> 
+            </ul>
 
             <!-- end  -->
           </div>

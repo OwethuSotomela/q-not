@@ -6,6 +6,7 @@ const URL_BASE = "https://q-not-360-degrees.herokuapp.com";
 // const URL_BASE = import.meta.env.VITE_SERVER_URL;
 
 const appState = {
+    LandingPage: "LANDINGPAGE",
     Login: "LOGIN",
     Signup: "SIGNUP",
 
@@ -21,7 +22,7 @@ const appState = {
 export default function EQueue() {
     return {
         booking: [],
-        appState: "LOGIN",
+        appState: "LANDINGPAGE",
         init() {
             this.callFlatPicker();
             if (localStorage["user"] !== "undefined") {

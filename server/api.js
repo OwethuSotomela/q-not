@@ -320,42 +320,11 @@ module.exports = function (app, db) {
             })
         }
     })
-    // }
-
-    // test here 
-
-    app.post('/api/slot', async function (req, res) {
-        try {
-            // var newTime = [];
-            const { time } = req.body;
-            if (time == null) {
-                throw Error('Time not provided')
-            } else {
-                const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
-                console.log(sameTime)
-                // for (var i = 0; i <= sameTime.length; i++) {
-                //     var mySchedule = sameTime[i];
-                //     if (new Date(convert(2)))
-                //         console.log(mySchedule)
-                //     console.log(newTime)
-                // }
-                res.json({
-                    data: sameTime,
-                    message: "Time already taken, pick another time!"
-                })
-            }
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).json({
-                error: error.message
-            })
-        }
-    })
 
     app.get('/api/week', async function (req, res) {
         try {
 
-            const weekBookings = await db.manyOrNone(`SELECT * FROM appointments WHERE slot between 'Wed Aug 31 2022' AND 'Fri Sep 03 2022'`);
+            const weekBookings = await db.manyOrNone(`SELECT * FROM appointments`);
             console.log("weekBookings", weekBookings)
             res.json({
                 data: weekBookings,
