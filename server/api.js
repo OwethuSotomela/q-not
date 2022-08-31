@@ -116,7 +116,7 @@ module.exports = function (app, db) {
             const { username } = req.body;
 
             const { bookByDay } = req.params;
-            console.log("bookByDay",bookByDay)
+            console.log("bookByDay", bookByDay)
 
             const description = req.body;
 
@@ -148,11 +148,11 @@ module.exports = function (app, db) {
                 console.log("existAppointment", existAppointment)
 
                 for (let item of existAppointment) {
-                    if(item["slot"] == bookByDay && item["status"] == "Approved" && item["description"] == description.appoReason){
+                    if (item["slot"] == bookByDay && item["status"] == "Approved" && item["description"] == description.appoReason) {
                         throw Error('Appointment with the time picked already exists! Please book another slot')
                     }
                 }
-                
+
 
                 await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
 
@@ -237,16 +237,14 @@ module.exports = function (app, db) {
 
             const { id } = req.params;
 
-            
-
             await db.none(`UPDATE appointments SET status = 'Approved' WHERE id = $1`, [id])
 
             const currentUpdate = await db.manyOrNone(`SELECT * FROM appointments WHERE id = $1`, [id])
-                console.log("currentUpdate", currentUpdate)
+            console.log("currentUpdate", currentUpdate)
 
-                for (let item of currentUpdate) {
-                    await db.none(`UPDATE appointments SET status = 'Rejected' WHERE slot = $1 AND status = 'Pending...'`, [item["slot"]])
-                }
+            for (let item of currentUpdate) {
+                await db.none(`UPDATE appointments SET status = 'Rejected' WHERE slot = $1 AND status = 'Pending...' AND description= $2`, [item["slot"], item["description"]])
+            }
 
             res.status(200).json({
                 message: 'Successful',
@@ -376,7 +374,7 @@ module.exports = function (app, db) {
     app.get('/api/week', async function (req, res) {
         try {
 
-            const weekBookings = await db.manyOrNone(`SELECT min(slot) FROM appointments WHERE slot between 'Wed Aug 31 2022' AND 'Fri Sep 03 2022'`);
+            const weekBookings = await db.manyOrNone(`SELECT * FROM appointments WHERE slot between 'Wed Aug 31 2022' AND 'Fri Sep 03 2022'`);
 
             res.json({
                 data: weekBookings,
