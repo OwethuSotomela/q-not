@@ -261,7 +261,7 @@ export default function EQueue() {
                 }, 1000)
 
             } catch (err) {
-                alert(err.message);
+                // alert(err.message);
             }
         },
 

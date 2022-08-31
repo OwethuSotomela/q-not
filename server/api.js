@@ -123,22 +123,22 @@ module.exports = function (app, db) {
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
 
             // here 
-            const newTime = []
-            if (bookByDay == null) {
-                throw Error('Provide time')
-            } else {
-                const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id`);
-                console.log(sameTime)
-                for (var i = 0; i <= sameTime.length; i++) {
-                    var bookedSameTime = sameTime[i];
-                    if (new Date(convert(2)))
-                        console.log(bookedSameTime)
-                    console.log(newTime)
-                }
-                res.json({
-                    data: sameTime
-                })
-            }
+            // const newTime = []
+            // if (bookByDay == null) {
+            //     throw Error('Provide time')
+            // } else {
+            //     const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id`);
+            //     console.log(sameTime)
+            //     for (var i = 0; i <= sameTime.length; i++) {
+            //         var bookedSameTime = sameTime[i];
+            //         if (new Date(convert(2)))
+            //             console.log(bookedSameTime)
+            //         console.log(newTime)
+            //     }
+            //     res.json({
+            //         data: sameTime
+            //     })
+            // }
             // end 
 
             if (!user) {
