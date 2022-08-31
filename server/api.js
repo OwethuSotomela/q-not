@@ -146,6 +146,7 @@ module.exports = function (app, db) {
             } else {
                 const existAppointment = await db.oneOrNone(`SELECT * FROM appointments`)
                 console.log("existAppointment", existAppointment.rows)
+                console.log("existAppointment[0]", existAppointment.rows[0])
                 // if(existAppointment){
                 //     throw Error('Appointment with the time picked already exists! Please book another slot')
                 // }
