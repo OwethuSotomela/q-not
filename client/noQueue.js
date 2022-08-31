@@ -539,7 +539,30 @@ export default function EQueue() {
             }
         },
         dayData(){
-            alert('Day')
+            try {
+                axios
+                    .get(`${URL_BASE}/api/day`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                    .then((r) => r.data)
+                    .then((weekData) => {
+                        this.getWeekData = weekData.data.map(date => {
+                            return {
+                                ...date,
+                                slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                            }
+                        });
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
         },
         weekData(){
             try {
@@ -568,7 +591,30 @@ export default function EQueue() {
             }
         },
         monthData(){
-            alert('Month')
+            try {
+                axios
+                    .get(`${URL_BASE}/api/month`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                    .then((r) => r.data)
+                    .then((weekData) => {
+                        this.getWeekData = weekData.data.map(date => {
+                            return {
+                                ...date,
+                                slot: moment(date.slot).format('MMMM Do YYYY h:mm:ss A')
+                            }
+                        });
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        // alert('Error')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
         }
 
     }
