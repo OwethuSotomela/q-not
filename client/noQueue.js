@@ -537,6 +537,9 @@ export default function EQueue() {
                 console.log(error)
             }
         },
+        dayData(){
+            alert('Day')
+        },
         weekData(){
             try {
                 axios
@@ -562,6 +565,9 @@ export default function EQueue() {
             } catch (error) {
                 console.log(error)
             }
+        },
+        monthData(){
+            alert('Month')
         }
 
     }

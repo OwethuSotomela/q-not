@@ -123,34 +123,22 @@ module.exports = function (app, db) {
             const user = await db.oneOrNone(`SELECT * FROM users WHERE username = $1`, [username])
 
             // here 
-            // const { time } = req.params;
-            // console.log(time, "Time")
-
-            // if (time == null) {
-            //     throw Error('Slot not provided!')
-            // }
-            // const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [bookByDay]);
-            // console.log(sameTime, "SameTime")
-
-            // if (time === bookByDay) {
-            //     res.json({
-            //         message: 'Slot taken, please pick another time'
-            //     })
-            // }
-            // else {
-            //     if (!user) {
-            //         throw Error('No user')
-            //     } else {
-
-            //         await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [sameTime, user.id, description.appoReason])
-
-            //         console.log(slot)
-            //         res.status(200).json({
-            //             message: 'A booking has been made',
-            //             user
-            //         })
-            //     }
-            // }
+            const newTime = []
+            if (bookByDay == null) {
+                throw Error('Provide time')
+            } else {
+                const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id`);
+                console.log(sameTime)
+                for (var i = 0; i <= sameTime.length; i++) {
+                    var bookedSameTime = sameTime[i];
+                    if (new Date(convert(2)))
+                        console.log(bookedSameTime)
+                    console.log(newTime)
+                }
+                res.json({
+                    data: sameTime
+                })
+            }
             // end 
 
             if (!user) {
@@ -344,7 +332,7 @@ module.exports = function (app, db) {
             // var newTime = [];
             const { time } = req.body;
             if (time == null) {
-                throw Error('To or From Date not provided')
+                throw Error('Time not provided')
             } else {
                 const sameTime = await db.manyOrNone(`SELECT appointments.id as id, slot, role, users_id, status, description, fullname, id_number, username FROM appointments join users on appointments.users_id = users.id WHERE slot = $1`, [time]);
                 console.log(sameTime)
