@@ -324,7 +324,7 @@ module.exports = function (app, db) {
     app.get('/api/:pressed', async function (req, res) {
         try {
 
-            const weekBookings = await db.manyOrNone(`SELECT * FROM appointments`);
+            const weekBookings = await db.manyOrNone(`SELECT * FROM appointments join users on appointments.users_id = users.id`);
             console.log("weekBookings", weekBookings)
             var newweekBookings = []
             const { pressed } = req.params;
