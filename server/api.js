@@ -116,7 +116,7 @@ module.exports = function (app, db) {
             const { username } = req.body;
 
             const { bookByDay } = req.params;
-            console.log(bookByDay)
+            console.log("bookByDay", bookByDay)
 
             const description = req.body;
 
