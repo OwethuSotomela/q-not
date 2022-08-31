@@ -116,7 +116,7 @@ module.exports = function (app, db) {
             const { username } = req.body;
 
             const { bookByDay } = req.params;
-            console.log("bookByDay", bookByDay)
+            console.log(bookByDay)
 
             const description = req.body;
 
@@ -144,14 +144,11 @@ module.exports = function (app, db) {
             if (!user) {
                 throw Error('No user')
             } else {
-                await db.oneOrNone(`SELECT * FROM appointments`, function (res) {
-                    console.log("RESSSSSSSS", res)
-                })
-                // console.log("existAppointment", existAppointment.rows)
-                // console.log("existAppointment[0]", existAppointment.rows[0])
-                // if(existAppointment){
-                //     throw Error('Appointment with the time picked already exists! Please book another slot')
-                // }
+                const existAppointment = await db.manyOrNone(`SELECT * FROM appointments WHERE slot = $1 AND status = 'Approved'`, [bookByDay])
+                console.log("existAppointment", existAppointment)
+                if(existAppointment){
+                    throw Error('Appointment with the time picked already exists! Please book another slot')
+                }
 
                 await db.none(`INSERT INTO appointments (slot, users_id, description) VALUES ($1, $2, $3)`, [bookByDay, user.id, description.appoReason])
 
