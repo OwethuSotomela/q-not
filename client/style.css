@@ -46,20 +46,10 @@ div.card-body {
   text-align: center;
 }
 
-body {
-  background-color: rgba(228, 128, 41, 0.125);
-  background-color: #FFF1ED;
-  text-align: center;
-}
-
 .form {
   display: flex;
   flex-direction: column;
 
-}
-
-.col-auto {
-  margin-top: 0.3em;
 }
 
 .tag label {
@@ -139,18 +129,12 @@ table th {
 
 /* new  */
 
-.parent{
+.parent {
   margin: 0px;
   width: 70em;
   height: 100vh;
   overflow: hidden;
 }
-/* #call{
-  background-color: #0D6EFD;
-}
-#scheduler_here{
-  background-color: #6fd649;
-} */
 
 @media (max-width: 600px) {
   table {
@@ -188,11 +172,12 @@ table th {
     width: 10em;
   }
 }
-.myBack{
-  background-color:#CCCCCC;
+
+.myBack {
+  background-color: #CCCCCC;
 }
 
-.popup{
+.popup {
   width: 400px;
   background: #CCCCCC;
   border-radius: 6px;
@@ -207,23 +192,27 @@ table th {
   transition: transform 0.4s, top 0.4s;
 
 }
-.open-popup{
+
+.open-popup {
   visibility: visible;
   top: 50%;
   transform: translate(-50%, -50) scale(1);
 }
-.popup img{
+
+.popup img {
   width: 100px;
   margin-top: -50px;
   border-radius: 50%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-.popup h2{
+
+.popup h2 {
   font-size: 38px;
   font-weight: 500;
   margin: 30px 0 10px;
 }
-.popup button{
+
+.popup button {
   width: 100%;
   margin-top: 50px;
   padding: 10px 0;
@@ -237,21 +226,12 @@ table th {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 
 }
-#loginPopup{
+
+#loginPopup {
   background-color: #fff;
 }
-/* new  */
-/* ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-li {
-  display: inline;
-}
- */
 
- ul {
+ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -267,6 +247,46 @@ li a {
   padding: 8px;
   background-color: #dddddd;
 }
-/* .landingPage{
-  height: 50em;
-} */
+
+/* 13 Sep  */
+
+body {
+  background-color: rgba(228, 128, 41, 0.125);
+  background-color: #FFF1ED;
+  text-align: center;
+  padding: 20px;
+}
+
+.signup {
+  background-color: white;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  /* max-width: 500px; */
+}
+
+p {
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-family: Impact, serif;
+
+}
+
+.col-auto {
+  display: flex;
+  flex-direction: row;
+  margin-top: -2px;
+  margin-bottom: -2px; 
+  align-items: center;
+  justify-content: center;
+}
+
+.col-4 {
+  margin-right: -8em;
+}
+
+.col-8 {
+  margin-left: -5em;
+}

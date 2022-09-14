@@ -38,43 +38,66 @@
           </center>
           <div class="form-floating">
             <div class="col-auto">
-              <label>Fullname</label><br>
-              <input type="text" class="input" x-model="user.fullname" placeholder="Enter your firstname">
+              <div class="col-4">
+                <label for="fullname">Fullname:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="fullname" class="input" x-model="user.fullname"
+                  placeholder="Enter your full-name" />
+              </div>
             </div>
             <div class="col-auto">
-              <label>Username</label><br>
-              <input type="text" class="input" x-model="user.username" placeholder="Enter your username">
+              <div class="col-4">
+                <label for="username">Username:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="username" class="input" x-model="user.username"
+                  placeholder="Enter your username">
+              </div>
             </div>
             <div class="col-auto">
-              <label>Password</label>
-              <br>
-              <input type="password" class="input" x-model="user.password" placeholder="Create a password"
-                id="myPassword">
+              <div class="col-4">
+                <label for="password">Password:</label>
+              </div>
+              <div class="col-8">
+                <input type="password" id="password" class="input" x-model="user.password"
+                  placeholder="Create a password" />
+              </div>
             </div>
-            <input type="checkbox" class="checkBox" @click="showPassword()">Show Password
+            <!-- <input type="checkbox" class="checkBox" @click="showPassword()">Show Password -->
             <div class="col-auto">
-              <label>Role</label><br>
-              <select class="input" id="specificSizeSelect" x-on:click="open = !open" x-model="user.role">
-                <div x-show="open">
-                  <option>-- Select Your Role --</option>
-                  <option>Admin</option>
-                  <option>Patient</option>
-                </div>
-              </select>
+              <div class="col-4">
+                <label for="role">Role:</label>
+              </div>
+              <div class="col-8">
+                <select class="input" id="specificSizeSelect" x-on:click="open = !open" x-model="user.role">
+                  <div x-show="open">
+                    <option>-- Select Your Role --</option>
+                    <option>Admin</option>
+                    <option>Patient</option>
+                  </div>
+                </select>
+              </div>
             </div>
             <div class="col-auto">
-              <label>ID #</label><br>
-              <input type="text" class="input" x-model="user.id_number" placeholder="Enter your ID #" required
-                minlength="10" maxlength="13" size="15">
+              <div class="col-4">
+                <label for="id-number">ID Number:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="id-number" class="input" x-model="user.id_number" placeholder="Enter your ID #"
+                  required minlength="10" maxlength="13" />
+              </div>
             </div>
             <div class="col-auto">
-              <label>Contact #</label><br>
-              <input type="text" class="input" x-model="user.contact_number" placeholder="Enter your contact #" required
-                minlength="9" maxlength="10" size="15"><br>
+              <div class="col-4">
+                <label for="contact-number">Contact Number:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="contact-number" class="input" x-model="user.contact_number"
+                  placeholder="Enter your contact #" required minlength="9" maxlength="10" />
+              </div>
             </div>
-            <div class="checkbox">
-              <label><input type="checkbox"> Remember me</label><br><br>
-            </div>
+            <br>
             <div class="signUp">
               <button @click="regUser()" class="btn btn-outline-secondary">SignUp</button>
             </div>
